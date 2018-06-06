@@ -1,4 +1,4 @@
-# Regexper [![Build Status](https://travis-ci.org/javallone/regexper-static.svg?branch=master)](https://travis-ci.org/javallone/regexper-static)
+# Regexper
 
 Code for the http://regexper.com/ site.
 
