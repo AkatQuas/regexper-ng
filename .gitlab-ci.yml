@@ -1,8 +1,5 @@
 image: node:8
 
-variables:
-  BUILD_PATH: ./public
-
 stages:
   - build
 
