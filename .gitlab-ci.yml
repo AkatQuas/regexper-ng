@@ -16,6 +16,7 @@ pages:
     GA_PROP: $PROD_GA_PROPERTY
   script:
   - BUILD_PATH="$(pwd)/public" yarn gulp build
+  - rm -r public/__discard__
   - gzip -k -6 $(find public/ -type f)
   artifacts:
     paths:
