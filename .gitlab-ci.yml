@@ -1,4 +1,4 @@
-image: node:10
+image: node:8
 
 variables:
   BUILD_PATH: ./public
