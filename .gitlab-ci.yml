@@ -1,0 +1,27 @@
+image: node:latest
+
+variables:
+  BUILD_PATH: ./public
+
+stages:
+  - build
+
+cache:
+  paths:
+  - node_modules/
+
+before_script:
+  - yarn install
+
+pages:
+  stage: build
+  variables:
+    GA_PROP: $PROD_GA_PROPERTY
+  script:
+  - gulp build
+  - gzip -k -6 $(find public/ -type f)
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
