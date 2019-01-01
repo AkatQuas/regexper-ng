@@ -18,7 +18,7 @@ pages:
   variables:
     GA_PROP: $PROD_GA_PROPERTY
   script:
-  - gulp build
+  - yarn gulp build
   - gzip -k -6 $(find public/ -type f)
   artifacts:
     paths:
