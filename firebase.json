@@ -1,0 +1,12 @@
+{
+  "hosting": [
+    {
+      "target": "production",
+      "public": "build"
+    },
+    {
+      "target": "preview",
+      "public": "build"
+    }
+  ]
+}

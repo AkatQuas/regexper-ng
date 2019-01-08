@@ -26,6 +26,7 @@
     "docco": "^0.7.0",
     "extract-loader": "^1.0.0",
     "file-loader": "^0.11.2",
+    "firebase-tools": "^6.2.2",
     "folder-toc": "^0.1.0",
     "gulp": "^3.8.10",
     "gulp-connect": "^5.0.0",

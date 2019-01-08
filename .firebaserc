@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "regexper"
+  },
+  "targets": {
+    "regexper": {
+      "hosting": {
+        "production": [
+          "regexper"
+        ],
+        "preview": [
+          "regexper-preview"
+        ]
+      }
+    }
+  }
+}
