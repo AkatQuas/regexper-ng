@@ -69,7 +69,6 @@ export default class Regexper {
     if (expr instanceof Error) {
       this.state = 'has-error';
       this.error.innerHTML = 'Malformed expression in URL';
-      util.track('send', 'event', 'visualization', 'malformed URL');
     } else {
       this.permalinkEnabled = true;
       this.showExpression(expr);
@@ -226,8 +225,7 @@ export default class Regexper {
   //
   // - __expression__ - Regular expression to render
   renderRegexp(expression) {
-    let parseError = false,
-      startTime, endTime;
+    let parseError = false;
 
     // When a render is already in progress, cancel it and try rendering again
     // after a short delay (canceling a render is not instantaneous).
@@ -238,8 +236,6 @@ export default class Regexper {
     }
 
     this.state = 'is-loading';
-    util.track('send', 'event', 'visualization', 'start');
-    startTime = new Date().getTime();
 
     this.running = new Parser(this.svgContainer);
 
@@ -266,21 +262,14 @@ export default class Regexper {
         this.state = 'has-results';
         this.updateLinks();
         this.displayWarnings(this.running.warnings);
-        util.track('send', 'event', 'visualization', 'complete');
-
-        endTime = new Date().getTime();
-        util.track('send', 'timing', 'visualization', 'total time', endTime - startTime);
       })
       // Handle any errors that happened during the rendering pipeline.
       // Swallows parse errors and render cancellations. Any other exceptions
       // are allowed to continue on to be tracked by the global error handler.
       .catch(message => {
         if (message === 'Render cancelled') {
-          util.track('send', 'event', 'visualization', 'cancelled');
           this.state = '';
-        } else if (parseError) {
-          util.track('send', 'event', 'visualization', 'parse error');
-        } else {
+        } else if (!parseError) {
           throw message;
         }
       })
