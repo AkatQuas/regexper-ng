@@ -3,17 +3,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const config = require('./config');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
   devtool: 'source-map',
-  devServer: {
-    contentBase: config.buildRoot
-  },
   entry: './src/js/main.js',
   output: {
-    path: config.buildRoot,
+    path: path.join(__dirname, './build'),
     filename: '[name]-[hash].js'
   },
   plugins: [
