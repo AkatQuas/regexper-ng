@@ -13,6 +13,7 @@ describe('parser/javascript/anchor.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as an Anchor`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__anchor()).toEqual(jasmine.objectContaining(content));
     });
   });

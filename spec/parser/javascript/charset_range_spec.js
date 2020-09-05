@@ -36,6 +36,7 @@ describe('parser/javascript/charset_range.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as a CharsetRange`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__charset_range()).toEqual(jasmine.objectContaining(content));
     });
   });
@@ -50,12 +51,14 @@ describe('parser/javascript/charset_range.js', function() {
   ], str => {
     it(`does not parse "${str}" as a CharsetRange`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__charset_range()).toEqual(null);
     });
   });
 
   it('throws an exception when the range is out of order', function() {
     var parser = new javascript.Parser('z-a');
+
     expect(() => {
       parser.__consume__charset_range();
     }).toThrow('Range out of order in character class: z-a');
@@ -80,6 +83,7 @@ describe('parser/javascript/charset_range.js', function() {
 
     it('renders a hyphen', function() {
       this.node._render();
+
       expect(this.node.container.text).toHaveBeenCalledWith(0, 0, '-');
     });
 
@@ -95,7 +99,7 @@ describe('parser/javascript/charset_range.js', function() {
             this.node.last
           ], { padding: 5 });
           done();
-        });
+        }).catch(done.fail);
     });
 
   });

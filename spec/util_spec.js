@@ -6,11 +6,13 @@ describe('util.js', function() {
 
     it('sets the event type', function() {
       var event = util.customEvent('example');
+
       expect(event.type).toEqual('example');
     });
 
     it('sets the event detail', function() {
       var event = util.customEvent('example', 'detail');
+
       expect(event.detail).toEqual('detail');
     });
 
@@ -40,11 +42,11 @@ describe('util.js', function() {
 
     it('positions each item', function() {
       var svg = Snap(document.createElement('svg')),
-          items = [
-            svg.group(),
-            svg.group(),
-            svg.group()
-          ];
+        items = [
+          svg.group(),
+          svg.group(),
+          svg.group()
+        ];
 
       spyOn(items[0], 'getBBox').and.returnValue({ ay: 5, width: 10 });
       spyOn(items[1], 'getBBox').and.returnValue({ ay: 15, width: 30 });
@@ -57,8 +59,10 @@ describe('util.js', function() {
 
       expect(items[0].transform).toHaveBeenCalledWith(Snap.matrix()
         .translate(0, 10));
+
       expect(items[1].transform).toHaveBeenCalledWith(Snap.matrix()
         .translate(15, 0));
+
       expect(items[2].transform).toHaveBeenCalledWith(Snap.matrix()
         .translate(50, 5));
     });
@@ -69,11 +73,11 @@ describe('util.js', function() {
 
     it('positions each item', function() {
       var svg = Snap(document.createElement('svg')),
-          items = [
-            svg.group(),
-            svg.group(),
-            svg.group()
-          ];
+        items = [
+          svg.group(),
+          svg.group(),
+          svg.group()
+        ];
 
       spyOn(items[0], 'getBBox').and.returnValue({ cx: 5, height: 10 });
       spyOn(items[1], 'getBBox').and.returnValue({ cx: 15, height: 30 });
@@ -86,8 +90,10 @@ describe('util.js', function() {
 
       expect(items[0].transform).toHaveBeenCalledWith(Snap.matrix()
         .translate(10, 0));
+
       expect(items[1].transform).toHaveBeenCalledWith(Snap.matrix()
         .translate(0, 15));
+
       expect(items[2].transform).toHaveBeenCalledWith(Snap.matrix()
         .translate(5, 50));
     });

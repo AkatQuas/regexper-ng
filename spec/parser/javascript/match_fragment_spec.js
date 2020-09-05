@@ -21,6 +21,7 @@ describe('parser/javascript/match_fragment.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as a MatchFragment`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__match_fragment()).toEqual(jasmine.objectContaining(content));
     });
   });
@@ -87,6 +88,7 @@ describe('parser/javascript/match_fragment.js', function() {
 
     it('renders the content', function() {
       this.node._render();
+
       expect(this.node.content.render).toHaveBeenCalledWith('example group');
     });
 
@@ -101,7 +103,7 @@ describe('parser/javascript/match_fragment.js', function() {
           .then(() => {
             expect(this.node.content.transform).toHaveBeenCalledWith('example position');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('renders a skip path and loop path', function(done) {
@@ -111,7 +113,7 @@ describe('parser/javascript/match_fragment.js', function() {
             expect(this.node.repeat.loopPath).toHaveBeenCalledWith('content bbox');
             expect(this.node.container.path).toHaveBeenCalledWith('skip pathloop path');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('renders a loop label', function(done) {
@@ -119,7 +121,7 @@ describe('parser/javascript/match_fragment.js', function() {
           .then(() => {
             expect(this.node.loopLabel).toHaveBeenCalled();
             done();
-          });
+          }).catch(done.fail);
       });
 
     });
@@ -163,6 +165,7 @@ describe('parser/javascript/match_fragment.js', function() {
 
       it('renders a text element', function() {
         this.node.loopLabel();
+
         expect(this.node.container.text).toHaveBeenCalledWith(0, 0, ['example label']);
       });
 
@@ -174,6 +177,7 @@ describe('parser/javascript/match_fragment.js', function() {
 
         it('positions the text element', function() {
           this.node.loopLabel();
+
           expect(this.text.transform).toHaveBeenCalledWith(Snap.matrix()
             .translate(17, 66));
         });
@@ -188,6 +192,7 @@ describe('parser/javascript/match_fragment.js', function() {
 
         it('positions the text element', function() {
           this.node.loopLabel();
+
           expect(this.text.transform).toHaveBeenCalledWith(Snap.matrix()
             .translate(22, 66));
         });
@@ -200,6 +205,7 @@ describe('parser/javascript/match_fragment.js', function() {
 
       it('does not render a text element', function() {
         this.node.loopLabel();
+
         expect(this.node.container.text).not.toHaveBeenCalled();
       });
 

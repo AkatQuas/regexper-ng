@@ -51,6 +51,6 @@ export default {
       .uniq().sort()
       .map(flag => this.flagLabels[flag]).value();
 
-    this.regexp = this.properties.regexp
+    this.regexp = this.properties.regexp;
   }
 };

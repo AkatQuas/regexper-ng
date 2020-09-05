@@ -12,7 +12,7 @@ export default {
     _anchor: {
       get: function() {
         var anchor = this.regexp.getBBox(),
-            matrix = this.transform().localMatrix;
+          matrix = this.transform().localMatrix;
 
         return {
           ax: matrix.x(anchor.ax, anchor.ay),

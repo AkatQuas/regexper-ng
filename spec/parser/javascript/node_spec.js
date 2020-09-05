@@ -10,6 +10,7 @@ describe('parser/javascript/node.js', function() {
 
   it('references the state from Node.state', function() {
     Node.state.example = 'example state';
+
     expect(this.node.state.example).toEqual('example state');
   });
 
@@ -17,12 +18,14 @@ describe('parser/javascript/node.js', function() {
 
     it('extends the node with the module', function() {
       this.node.module = { example: 'value' };
+
       expect(this.node.example).toEqual('value');
     });
 
     it('calls the module #setup method', function() {
       var setup = jasmine.createSpy('setup');
       this.node.module = { setup };
+
       expect(setup).toHaveBeenCalled();
     });
 
@@ -36,6 +39,7 @@ describe('parser/javascript/node.js', function() {
           }
         }
       };
+
       expect(this.node.example).toEqual('value');
       expect(this.node.definedProperties).toBeUndefined();
     });
@@ -48,6 +52,7 @@ describe('parser/javascript/node.js', function() {
       var container = jasmine.createSpyObj('container', ['addClass']);
       this.node.type = 'example type';
       this.node.container = container;
+
       expect(container.addClass).toHaveBeenCalledWith('example type');
     });
 
@@ -59,6 +64,7 @@ describe('parser/javascript/node.js', function() {
 
       it('returns the anchor from the proxy', function() {
         this.node.proxy = { anchor: 'example anchor' };
+
         expect(this.node.anchor).toEqual('example anchor');
       });
 
@@ -68,6 +74,7 @@ describe('parser/javascript/node.js', function() {
 
       it('returns _anchor of the node', function() {
         this.node._anchor = { example: 'value' };
+
         expect(this.node.anchor).toEqual({
           example: 'value'
         });
@@ -92,6 +99,7 @@ describe('parser/javascript/node.js', function() {
         x2: 'right',
         cy: 'center'
       });
+
       expect(this.node.getBBox()).toEqual({
         bbox: 'example bbox',
         anchor: 'example anchor',
@@ -111,6 +119,7 @@ describe('parser/javascript/node.js', function() {
     it('returns the result of calling transform on the container', function() {
       this.node.container = jasmine.createSpyObj('container', ['addClass', 'transform']);
       this.node.container.transform.and.returnValue('transform result');
+
       expect(this.node.transform('matrix')).toEqual('transform result');
       expect(this.node.container.transform).toHaveBeenCalledWith('matrix');
     });
@@ -121,7 +130,7 @@ describe('parser/javascript/node.js', function() {
 
     it('resolves the returned promise when the render is not canceled', function(done) {
       var resolve = jasmine.createSpy('resolve'),
-          reject = jasmine.createSpy('reject');
+        reject = jasmine.createSpy('reject');
 
       this.node.deferredStep('result')
         .then(resolve, reject)
@@ -129,12 +138,12 @@ describe('parser/javascript/node.js', function() {
           expect(resolve).toHaveBeenCalledWith('result');
           expect(reject).not.toHaveBeenCalled();
           done();
-        });
+        }).catch(done.fail);
     });
 
     it('rejects the returned promise when the render is canceled', function(done) {
       var resolve = jasmine.createSpy('resolve'),
-          reject = jasmine.createSpy('reject');
+        reject = jasmine.createSpy('reject');
 
       this.node.state.cancelRender = true;
       this.node.deferredStep('result', 'value')
@@ -143,7 +152,7 @@ describe('parser/javascript/node.js', function() {
           expect(resolve).not.toHaveBeenCalled();
           expect(reject).toHaveBeenCalledWith('Render cancelled');
           done();
-        });
+        }).catch(done.fail);
     });
 
   });
@@ -160,16 +169,19 @@ describe('parser/javascript/node.js', function() {
 
     it('adds a "label" class to the group', function() {
       this.node.renderLabel('example label');
+
       expect(this.group.addClass).toHaveBeenCalledWith('label');
     });
 
     it('creates a rect element', function() {
       this.node.renderLabel('example label');
+
       expect(this.group.rect).toHaveBeenCalled();
     });
 
     it('creates a text element', function() {
       this.node.renderLabel('example label');
+
       expect(this.group.text).toHaveBeenCalledWith(0, 0, ['example label']);
     });
 
@@ -194,7 +206,7 @@ describe('parser/javascript/node.js', function() {
             expect(this.text.transform).toHaveBeenCalledWith(Snap.matrix()
               .translate(5, 22));
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('sets the dimensions of the rect element', function(done) {
@@ -205,7 +217,7 @@ describe('parser/javascript/node.js', function() {
               height: 34
             });
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('resolves with the group element', function(done) {
@@ -213,7 +225,7 @@ describe('parser/javascript/node.js', function() {
           .then(group => {
             expect(group).toEqual(this.group);
             done();
-          });
+          }).catch(done.fail);
       });
 
     });
@@ -235,6 +247,7 @@ describe('parser/javascript/node.js', function() {
 
       it('sets the container', function() {
         this.node.render(this.container);
+
         expect(this.node.container).toEqual(this.container);
       });
 
@@ -254,17 +267,20 @@ describe('parser/javascript/node.js', function() {
 
       it('sets the container', function() {
         this.node.render(this.container);
+
         expect(this.node.container).toEqual(this.container);
       });
 
       it('increments the renderCounter', function() {
         this.node.state.renderCounter = 0;
         this.node.render(this.container);
+
         expect(this.node.state.renderCounter).toEqual(1);
       });
 
       it('calls #_render', function() {
         this.node.render(this.container);
+
         expect(this.node._render).toHaveBeenCalled();
       });
 
@@ -275,7 +291,7 @@ describe('parser/javascript/node.js', function() {
             .then(() => {
               expect(this.node.state.renderCounter).toEqual(41);
               done();
-            });
+            }).catch(done.fail);
           this.node.state.renderCounter = 42;
           this.deferred.resolve();
         });
@@ -286,7 +302,7 @@ describe('parser/javascript/node.js', function() {
             .then(result => {
               expect(result).toEqual(this.node);
               done();
-            });
+            }).catch(done.fail);
         });
 
       });
@@ -313,29 +329,34 @@ describe('parser/javascript/node.js', function() {
 
     it('creates a text element', function() {
       this.node.renderLabeledBox('example label', this.content, { padding: 5 });
+
       expect(this.node.container.text).toHaveBeenCalledWith(0, 0, ['example label']);
     });
 
     it('sets the class on the text element', function() {
       spyOn(this.text, 'addClass').and.callThrough();
       this.node.renderLabeledBox('example label', this.content, { padding: 5 });
+
       expect(this.text.addClass).toHaveBeenCalledWith('example-type-label');
     });
 
     it('creates a rect element', function() {
       this.node.renderLabeledBox('example label', this.content, { padding: 5 });
+
       expect(this.node.container.rect).toHaveBeenCalled();
     });
 
     it('sets the class on the rect element', function() {
       spyOn(this.rect, 'addClass').and.callThrough();
       this.node.renderLabeledBox('example label', this.content, { padding: 5 });
+
       expect(this.rect.addClass).toHaveBeenCalledWith('example-type-box');
     });
 
     it('sets the corner radius on the rect element', function() {
       spyOn(this.rect, 'attr').and.callThrough();
       this.node.renderLabeledBox('example label', this.content, { padding: 5 });
+
       expect(this.rect.attr).toHaveBeenCalledWith({
         rx: 3,
         ry: 3
@@ -363,7 +384,7 @@ describe('parser/javascript/node.js', function() {
             expect(this.text.transform).toHaveBeenCalledWith(Snap.matrix()
               .translate(0, 20));
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('positions the rect element', function(done) {
@@ -373,7 +394,7 @@ describe('parser/javascript/node.js', function() {
             expect(this.rect.transform).toHaveBeenCalledWith(Snap.matrix()
               .translate(0, 20));
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('sets the dimensions of the rect element', function(done) {
@@ -385,7 +406,7 @@ describe('parser/javascript/node.js', function() {
               height: 110
             });
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('sets the dimensions of the rect element (based on the text element)', function(done) {
@@ -402,7 +423,7 @@ describe('parser/javascript/node.js', function() {
               height: 110
             });
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('positions the content element', function(done) {
@@ -412,7 +433,7 @@ describe('parser/javascript/node.js', function() {
             expect(this.content.transform).toHaveBeenCalledWith(Snap.matrix()
               .translate(5, 25));
             done();
-          });
+          }).catch(done.fail);
       });
 
     });

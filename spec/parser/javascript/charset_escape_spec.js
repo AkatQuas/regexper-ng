@@ -25,6 +25,7 @@ describe('parser/javascript/charset_escape.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as a CharsetEscape`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__charset_terminal()).toEqual(jasmine.objectContaining(content));
     });
   });

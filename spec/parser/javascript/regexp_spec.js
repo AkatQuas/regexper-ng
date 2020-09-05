@@ -18,6 +18,7 @@ describe('parser/javascript/regexp.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as a Regexp`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__regexp()).toEqual(jasmine.objectContaining(content));
     });
   });
@@ -78,6 +79,7 @@ describe('parser/javascript/regexp.js', function() {
 
     it('creates a container for the match nodes', function() {
       this.node._render();
+
       expect(this.node.container.group).toHaveBeenCalled();
       expect(this.group.addClass).toHaveBeenCalledWith('regexp-matches');
       expect(this.group.transform).toHaveBeenCalledWith(Snap.matrix()
@@ -86,6 +88,7 @@ describe('parser/javascript/regexp.js', function() {
 
     it('renders each match node', function() {
       this.node._render();
+
       expect(this.node.matches[0].render).toHaveBeenCalledWith('group 0');
       expect(this.node.matches[1].render).toHaveBeenCalledWith('group 1');
       expect(this.node.matches[2].render).toHaveBeenCalledWith('group 2');
@@ -104,7 +107,7 @@ describe('parser/javascript/regexp.js', function() {
           .then(() => {
             expect(util.spaceVertically).toHaveBeenCalledWith(this.node.matches, { padding: 5 });
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('renders the sides and curves into the container', function(done) {
@@ -117,7 +120,7 @@ describe('parser/javascript/regexp.js', function() {
             expect(this.node.makeSide).toHaveBeenCalledWith('container bbox', this.node.matches[2]);
             expect(this.node.container.path).toHaveBeenCalledWith('curvecurvecurvesideside');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('renders the connectors into the match container', function(done) {
@@ -128,7 +131,7 @@ describe('parser/javascript/regexp.js', function() {
             expect(this.node.makeConnector).toHaveBeenCalledWith('group bbox', this.node.matches[2]);
             expect(this.group.path).toHaveBeenCalledWith('connectorconnectorconnector');
             done();
-          });
+          }).catch(done.fail);
       });
 
     });

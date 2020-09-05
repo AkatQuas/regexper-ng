@@ -20,7 +20,7 @@ export default {
     ))
       .then(() => {
         let containerBox,
-            paths;
+          paths;
 
         // Space matches vertically in the match container.
         util.spaceVertically(this.matches, {
@@ -57,14 +57,14 @@ export default {
   // - __match__ - Match node that the line will be drawn to.
   makeSide(containerBox, match) {
     let box = match.getBBox(),
-        distance = Math.abs(box.ay - containerBox.cy);
+      distance = Math.abs(box.ay - containerBox.cy);
 
     // Only need to draw side lines if the match is more than 15 pixels from
     // the vertical center of the rendered regexp. Less that 15 pixels will be
     // handled by the curve directly.
     if (distance >= 15) {
       let shift = (box.ay > containerBox.cy) ? 10 : -10,
-          edge = box.ay - shift;
+        edge = box.ay - shift;
 
       return [
         `M0,${containerBox.cy}q10,0 10,${shift}V${edge}`,
@@ -80,7 +80,7 @@ export default {
   // - __match__ - Match node that the line will be drawn to.
   makeCurve(containerBox, match) {
     let box = match.getBBox(),
-        distance = Math.abs(box.ay - containerBox.cy);
+      distance = Math.abs(box.ay - containerBox.cy);
 
     if (distance >= 15) {
       // For match nodes more than 15 pixels from the center of the regexp, a

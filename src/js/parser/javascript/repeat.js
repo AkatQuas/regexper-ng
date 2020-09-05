@@ -80,7 +80,7 @@ export default {
 
     if (this.hasSkip) {
       let vert = Math.max(0, box.ay - box.y - 10),
-          horiz = box.width - 10;
+        horiz = box.width - 10;
 
       paths.push(`M0,${box.ay}q10,0 10,-10v${-vert}q0,-10 10,-10h${horiz}q10,0 10,10v${vert}q0,10 10,10`);
 
@@ -119,4 +119,4 @@ export default {
     this.hasSkip = (this.minimum === 0);
     this.hasLoop = (this.maximum === -1 || this.maximum > 1);
   }
-}
+};

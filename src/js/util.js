@@ -37,7 +37,7 @@ function normalizeBBox(box) {
 // - __options.padding__ - Number of pixels to leave between items
 function spaceHorizontally(items, options) {
   var verticalCenter,
-      values;
+    values;
 
   options = _.defaults(options || {}, {
     padding: 0
@@ -68,7 +68,7 @@ function spaceHorizontally(items, options) {
 // - __options.padding__ - Number of pixels to leave between items
 function spaceVertically(items, options) {
   var horizontalCenter,
-      values;
+    values;
 
   options = _.defaults(options || {}, {
     padding: 0

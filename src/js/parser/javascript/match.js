@@ -15,8 +15,8 @@ export default {
     _anchor: {
       get: function() {
         var start = util.normalizeBBox(this.start.getBBox()),
-            end = util.normalizeBBox(this.end.getBBox()),
-            matrix = this.transform().localMatrix;
+          end = util.normalizeBBox(this.end.getBBox()),
+          matrix = this.transform().localMatrix;
 
         return {
           ax: matrix.x(start.ax, start.ay),
@@ -31,7 +31,7 @@ export default {
   _render() {
     // Render each of the match fragments.
     let partPromises = _.map(this.parts, part => part.render(this.container.group())),
-        items = _(partPromises).compact().value();
+      items = _(partPromises).compact().value();
 
     // Handle the situation where a regular expression of `()` is rendered.
     // This leads to a Match node with no fragments. Something must be rendered

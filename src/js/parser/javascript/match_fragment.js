@@ -14,7 +14,7 @@ export default {
     _anchor: {
       get: function() {
         var anchor = this.content.getBBox(),
-            matrix = this.transform().localMatrix;
+          matrix = this.transform().localMatrix;
 
         return {
           ax: matrix.x(anchor.ax, anchor.ay),
@@ -53,13 +53,13 @@ export default {
   // be matched.
   loopLabel() {
     let labelStr = this.repeat.label,
-        tooltipStr = this.repeat.tooltip;
+      tooltipStr = this.repeat.tooltip;
 
     if (labelStr) {
       let label = this.container.text(0, 0, [labelStr])
-            .addClass('repeat-label'),
-          labelBox = label.getBBox(),
-          box = this.getBBox();
+          .addClass('repeat-label'),
+        labelBox = label.getBBox(),
+        box = this.getBBox();
 
       if (tooltipStr) {
         let tooltip = this.container.el('title')

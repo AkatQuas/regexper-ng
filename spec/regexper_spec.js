@@ -9,12 +9,12 @@ describe('regexper.js', function() {
     this.root = document.createElement('div');
     this.root.innerHTML = [
       '<form id="regexp-form" action="/">',
-        '<input type="text" id="regexp-input">',
-        '<ul class="example">',
-          '<ul><a href="#" data-action="permalink"></a></ul>',
-          '<ul><a href="#" data-action="download-svg"></a></ul>',
-          '<ul><a href="#" data-action="download-png"></a></ul>',
-        '</ul>',
+      '<input type="text" id="regexp-input">',
+      '<ul class="example">',
+      '<ul><a href="#" data-action="permalink"></a></ul>',
+      '<ul><a href="#" data-action="download-svg"></a></ul>',
+      '<ul><a href="#" data-action="download-png"></a></ul>',
+      '</ul>',
       '</form>',
       '<div id="error"></div>',
       '<ul id="warnings"></ul>',
@@ -43,12 +43,14 @@ describe('regexper.js', function() {
 
       it('does not prevent the default action', function() {
         this.regexper.keypressListener(this.event);
+
         expect(this.event.returnValue).not.toEqual(false);
         expect(this.event.preventDefault).not.toHaveBeenCalled();
       });
 
       it('does not trigger a submit event', function() {
         this.regexper.keypressListener(this.event);
+
         expect(this.regexper.form.dispatchEvent).not.toHaveBeenCalled();
       });
 
@@ -63,12 +65,14 @@ describe('regexper.js', function() {
 
       it('does not prevent the default action', function() {
         this.regexper.keypressListener(this.event);
+
         expect(this.event.returnValue).not.toEqual(false);
         expect(this.event.preventDefault).not.toHaveBeenCalled();
       });
 
       it('does not trigger a submit event', function() {
         this.regexper.keypressListener(this.event);
+
         expect(this.regexper.form.dispatchEvent).not.toHaveBeenCalled();
       });
 
@@ -83,6 +87,7 @@ describe('regexper.js', function() {
 
       it('prevents the default action', function() {
         this.regexper.keypressListener(this.event);
+
         expect(this.event.returnValue).not.toEqual(true);
         expect(this.event.preventDefault).toHaveBeenCalled();
       });
@@ -91,9 +96,11 @@ describe('regexper.js', function() {
         var event;
 
         this.regexper.keypressListener(this.event);
+
         expect(this.regexper.form.dispatchEvent).toHaveBeenCalled();
 
         event = this.regexper.form.dispatchEvent.calls.mostRecent().args[0];
+
         expect(event.type).toEqual('submit');
       });
 
@@ -116,6 +123,7 @@ describe('regexper.js', function() {
 
       it('does not cancel the parser', function() {
         this.regexper.documentKeypressListener(this.event);
+
         expect(this.regexper.running.cancel).not.toHaveBeenCalled();
       });
 
@@ -129,6 +137,7 @@ describe('regexper.js', function() {
 
       it('cancels the parser', function() {
         this.regexper.documentKeypressListener(this.event);
+
         expect(this.regexper.running.cancel).toHaveBeenCalled();
       });
 
@@ -147,12 +156,14 @@ describe('regexper.js', function() {
 
     it('prevents the default action', function() {
       this.regexper.submitListener(this.event);
+
       expect(this.event.returnValue).not.toEqual(true);
       expect(this.event.preventDefault).toHaveBeenCalled();
     });
 
     it('sets the location.hash', function() {
       this.regexper.submitListener(this.event);
+
       expect(this.regexper._setHash).toHaveBeenCalledWith('example value');
     });
 
@@ -164,12 +175,14 @@ describe('regexper.js', function() {
 
       it('disables the permalink', function() {
         this.regexper.submitListener(this.event);
+
         expect(this.regexper.permalinkEnabled).toEqual(false);
       });
 
       it('shows the expression directly', function() {
         spyOn(this.regexper, 'showExpression');
         this.regexper.submitListener(this.event);
+
         expect(this.regexper.showExpression).toHaveBeenCalledWith('example value');
       });
 
@@ -187,12 +200,14 @@ describe('regexper.js', function() {
 
       it('displays an error message', function() {
         this.regexper.hashchangeListener();
+
         expect(this.regexper.state).toEqual('has-error');
         expect(this.regexper.error.innerHTML).toEqual('Malformed expression in URL');
       });
 
       it('tracks the event', function() {
         this.regexper.hashchangeListener();
+
         expect(util.track).toHaveBeenCalledWith('send', 'event', 'visualization', 'malformed URL');
       });
 
@@ -206,12 +221,14 @@ describe('regexper.js', function() {
 
       it('enables the permalink', function() {
         this.regexper.hashchangeListener();
+
         expect(this.regexper.permalinkEnabled).toEqual(true);
       });
 
       it('shows the expression from the hash', function() {
         spyOn(this.regexper, 'showExpression');
         this.regexper.hashchangeListener();
+
         expect(this.regexper.showExpression).toHaveBeenCalledWith('example hash value');
       });
 
@@ -231,36 +248,44 @@ describe('regexper.js', function() {
     it('binds #keypressListener to keypress on the text field', function() {
       spyOn(this.regexper.field, 'addEventListener');
       this.regexper.bindListeners();
+
       expect(this.regexper.field.addEventListener).toHaveBeenCalledWith('keypress', jasmine.any(Function));
 
       this.regexper.field.addEventListener.calls.mostRecent().args[1]();
+
       expect(this.regexper.keypressListener).toHaveBeenCalled();
     });
 
     it('binds #submitListener to submit on the form', function() {
       spyOn(this.regexper.form, 'addEventListener');
       this.regexper.bindListeners();
+
       expect(this.regexper.form.addEventListener).toHaveBeenCalledWith('submit', jasmine.any(Function));
 
       this.regexper.form.addEventListener.calls.mostRecent().args[1]();
+
       expect(this.regexper.submitListener).toHaveBeenCalled();
     });
 
     it('binds #documentKeypressListener to keyup on the root', function() {
       spyOn(this.regexper.root, 'addEventListener');
       this.regexper.bindListeners();
+
       expect(this.regexper.root.addEventListener).toHaveBeenCalledWith('keyup', jasmine.any(Function));
 
       this.regexper.root.addEventListener.calls.mostRecent().args[1]();
+
       expect(this.regexper.documentKeypressListener).toHaveBeenCalled();
     });
 
     it('binds #hashchangeListener to hashchange on the window', function() {
       spyOn(window, 'addEventListener');
       this.regexper.bindListeners();
+
       expect(window.addEventListener).toHaveBeenCalledWith('hashchange', jasmine.any(Function));
 
       window.addEventListener.calls.mostRecent().args[1]();
+
       expect(this.regexper.hashchangeListener).toHaveBeenCalled();
     });
 
@@ -274,11 +299,13 @@ describe('regexper.js', function() {
 
     it('sets the text field value', function() {
       this.regexper.showExpression('example expression');
+
       expect(this.regexper.field.value).toEqual('example expression');
     });
 
     it('clears the state', function() {
       this.regexper.showExpression('');
+
       expect(this.regexper.state).toEqual('');
     });
 
@@ -286,6 +313,7 @@ describe('regexper.js', function() {
 
       it('renders the expression', function() {
         this.regexper.showExpression('example expression');
+
         expect(this.regexper.renderRegexp).toHaveBeenCalledWith('example expression');
       });
 
@@ -302,6 +330,7 @@ describe('regexper.js', function() {
 
     it('builds the blob URL from the SVG image', function() {
       this.regexper.updateLinks();
+
       expect(this.regexper.buildBlobURL).toHaveBeenCalledWith('example image');
     });
 
@@ -313,6 +342,7 @@ describe('regexper.js', function() {
 
       it('sets the download link href', function() {
         this.regexper.updateLinks();
+
         expect(this.regexper.downloadSvg.href).toEqual('http://example.com/blob');
       });
 
@@ -326,6 +356,7 @@ describe('regexper.js', function() {
 
       it('hides the download link', function() {
         this.regexper.updateLinks();
+
         expect(this.regexper.links.className).toMatch(/\bexample\b/);
         expect(this.regexper.links.className).toMatch(/\bhide-download\b/);
       });
@@ -340,6 +371,7 @@ describe('regexper.js', function() {
 
       it('sets the permalink href', function() {
         this.regexper.updateLinks();
+
         expect(this.regexper.permalink.href).toEqual(location.toString());
       });
 
@@ -353,6 +385,7 @@ describe('regexper.js', function() {
 
       it('hides the permalink', function() {
         this.regexper.updateLinks();
+
         expect(this.regexper.links.className).toMatch(/\bexample\b/);
         expect(this.regexper.links.className).toMatch(/\bhide-permalink\b/);
       });
@@ -366,6 +399,7 @@ describe('regexper.js', function() {
     it('adds a list item for each warning', function() {
       spyOn(util, 'icon').and.returnValue('(icon-markup)');
       this.regexper.displayWarnings(['warning 1', 'warning 2']);
+
       expect(this.regexper.warnings.innerHTML).toEqual('<li class="inline-icon">(icon-markup)warning 1</li><li class="inline-icon">(icon-markup)warning 2</li>');
     });
 
@@ -386,21 +420,25 @@ describe('regexper.js', function() {
 
     it('sets the state to "is-loading"', function() {
       this.regexper.renderRegexp('example expression');
+
       expect(this.regexper.state).toEqual('is-loading');
     });
 
     it('tracks the beginning of the render', function() {
       this.regexper.renderRegexp('example expression');
+
       expect(util.track).toHaveBeenCalledWith('send', 'event', 'visualization', 'start');
     });
 
     it('keeps a copy of the running property parser', function() {
       this.regexper.renderRegexp('example expression');
+
       expect(this.regexper.running).toBeTruthy();
     });
 
     it('parses the expression', function() {
       this.regexper.renderRegexp('example expression');
+
       expect(this.regexper.running.parse).toHaveBeenCalledWith('example expression');
     });
 
@@ -415,7 +453,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(this.regexper.state).toEqual('has-error');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('displays the error message', function(done) {
@@ -423,7 +461,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(this.regexper.error.innerHTML).toEqual('Error: example parse error');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('tracks the parse error', function(done) {
@@ -431,7 +469,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(util.track).toHaveBeenCalledWith('send', 'event', 'visualization', 'parse error');
             done();
-          });
+          }).catch(done.fail);
       });
 
     });
@@ -449,7 +487,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(this.parser.render).toHaveBeenCalled();
             done();
-          });
+          }).catch(done.fail);
       });
 
     });
@@ -467,7 +505,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(this.regexper.state).toEqual('has-results');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('updates the links', function(done) {
@@ -475,7 +513,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(this.regexper.updateLinks).toHaveBeenCalled();
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('displays the warnings', function(done) {
@@ -483,7 +521,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(this.regexper.displayWarnings).toHaveBeenCalled();
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('tracks the complete render', function(done) {
@@ -491,7 +529,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(util.track).toHaveBeenCalledWith('send', 'event', 'visualization', 'complete');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('sets the running property to false', function(done) {
@@ -499,7 +537,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(this.regexper.running).toBeFalsy();
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('tracks the total rendering time', function(done) {
@@ -507,7 +545,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(util.track).toHaveBeenCalledWith('send', 'timing', 'visualization', 'total time', jasmine.any(Number));
             done();
-          });
+          }).catch(done.fail);
       });
 
     });
@@ -525,7 +563,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(this.regexper.state).toEqual('');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('tracks the cancelled render', function(done) {
@@ -533,7 +571,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(util.track).toHaveBeenCalledWith('send', 'event', 'visualization', 'cancelled');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('sets the running property to false', function(done) {
@@ -541,7 +579,7 @@ describe('regexper.js', function() {
           .then(() => {
             expect(this.regexper.running).toBeFalsy();
             done();
-          });
+          }).catch(done.fail);
       });
 
     });
@@ -559,7 +597,7 @@ describe('regexper.js', function() {
           .then(fail, () => {
             expect(this.regexper.running).toBeFalsy();
             done();
-          });
+          }).catch(done.fail);
       });
 
     });

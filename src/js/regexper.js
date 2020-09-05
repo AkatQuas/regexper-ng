@@ -110,7 +110,7 @@ export default class Regexper {
   // URLs.
   _getHash() {
     try {
-      let hash = location.hash.slice(1)
+      let hash = location.hash.slice(1);
       return this.buggyHash ? hash : decodeURIComponent(hash);
     }
     catch(e) {
@@ -212,7 +212,7 @@ export default class Regexper {
   // - __warnings__ - Array of warning messages to display.
   displayWarnings(warnings) {
     this.warnings.innerHTML = _.map(warnings, warning => (
-      `<li class="inline-icon">${util.icon("#warning")}${warning}</li>`
+      `<li class="inline-icon">${util.icon('#warning')}${warning}</li>`
     )).join('');
   }
 
@@ -221,7 +221,7 @@ export default class Regexper {
   // - __expression__ - Regular expression to render
   renderRegexp(expression) {
     let parseError = false,
-        startTime, endTime;
+      startTime, endTime;
 
     // When a render is already in progress, cancel it and try rendering again
     // after a short delay (canceling a render is not instantaneous).

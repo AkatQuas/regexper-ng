@@ -117,14 +117,14 @@ export default class Node {
   // - __text__ - String or array of strings to render as a label.
   renderLabel(text) {
     let group = this.container.group()
-          .addClass('label'),
-        rect = group.rect(),
-        label = group.text(0, 0, _.flatten([text]));
+        .addClass('label'),
+      rect = group.rect(),
+      label = group.text(0, 0, _.flatten([text]));
 
     return this.deferredStep()
       .then(() => {
         let box = label.getBBox(),
-            margin = 5;
+          margin = 5;
 
         label.transform(Snap.matrix()
           .translate(margin, box.height / 2 + 2 * margin));
@@ -146,13 +146,13 @@ export default class Node {
   //    the box.
   renderLabeledBox(text, content, options) {
     let label = this.container.text(0, 0, _.flatten([text]))
-          .addClass(`${this.type}-label`),
-        box = this.container.rect()
-          .addClass(`${this.type}-box`)
-          .attr({
-            rx: 3,
-            ry: 3
-          });
+        .addClass(`${this.type}-label`),
+      box = this.container.rect()
+        .addClass(`${this.type}-box`)
+        .attr({
+          rx: 3,
+          ry: 3
+        });
 
     options = _.defaults(options || {}, {
       padding: 0
@@ -164,9 +164,9 @@ export default class Node {
     return this.deferredStep()
       .then(() => {
         let labelBox = label.getBBox(),
-            contentBox = content.getBBox(),
-            boxWidth = Math.max(contentBox.width + options.padding * 2, labelBox.width),
-            boxHeight = contentBox.height + options.padding * 2;
+          contentBox = content.getBBox(),
+          boxWidth = Math.max(contentBox.width + options.padding * 2, labelBox.width),
+          boxHeight = contentBox.height + options.padding * 2;
 
         label.transform(Snap.matrix()
           .translate(0, labelBox.height));
@@ -183,4 +183,4 @@ export default class Node {
           .translate(boxWidth / 2 - contentBox.cx, labelBox.height + options.padding));
       });
   }
-};
+}

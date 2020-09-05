@@ -40,6 +40,7 @@ describe('parser/javascript/root.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as a Root`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__root()).toEqual(jasmine.objectContaining(content));
     });
   });
@@ -75,6 +76,7 @@ describe('parser/javascript/root.js', function() {
 
     it('renders the regexp', function() {
       this.node._render();
+
       expect(this.node.regexp.render).toHaveBeenCalledWith('group element');
     });
 
@@ -86,6 +88,7 @@ describe('parser/javascript/root.js', function() {
 
       it('renders a text element', function() {
         this.node._render();
+
         expect(this.node.container.text).toHaveBeenCalledWith(0, 0, 'Flags: example, flags');
       });
 
@@ -99,6 +102,7 @@ describe('parser/javascript/root.js', function() {
 
       it('does not render a text element', function() {
         this.node._render();
+
         expect(this.node.container.text).not.toHaveBeenCalled();
       });
 
@@ -122,7 +126,7 @@ describe('parser/javascript/root.js', function() {
           .then(() => {
             expect(this.node.container.path).toHaveBeenCalledWith('M1,2H0M3,2H14');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('renders circle elements before and after the regexp', function(done) {
@@ -131,7 +135,7 @@ describe('parser/javascript/root.js', function() {
             expect(this.node.container.circle).toHaveBeenCalledWith(0, 2, 5);
             expect(this.node.container.circle).toHaveBeenCalledWith(14, 2, 5);
             done();
-          });
+          }).catch(done.fail);
       });
 
       describe('when there are flags', function() {
@@ -146,7 +150,7 @@ describe('parser/javascript/root.js', function() {
               expect(this.node.regexp.transform).toHaveBeenCalledWith(Snap.matrix()
                 .translate(10, 20));
               done();
-            });
+            }).catch(done.fail);
         });
 
       });
@@ -163,7 +167,7 @@ describe('parser/javascript/root.js', function() {
               expect(this.node.regexp.transform).toHaveBeenCalledWith(Snap.matrix()
                 .translate(10, 0));
               done();
-            });
+            }).catch(done.fail);
         });
 
       });

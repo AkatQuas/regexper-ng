@@ -5,6 +5,7 @@ describe('parser/javascript/literal.js', function() {
 
   it('parses "x" as a Literal', function() {
     var parser = new javascript.Parser('x');
+
     expect(parser.__consume__terminal()).toEqual(jasmine.objectContaining({
       type: 'literal',
       literal: 'x',
@@ -14,6 +15,7 @@ describe('parser/javascript/literal.js', function() {
 
   it('parses "\\x" as a Literal', function() {
     var parser = new javascript.Parser('\\x');
+
     expect(parser.__consume__terminal()).toEqual(jasmine.objectContaining({
       type: 'literal',
       literal: 'x',
@@ -35,6 +37,7 @@ describe('parser/javascript/literal.js', function() {
 
     it('renders a label', function() {
       this.node._render();
+
       expect(this.node.renderLabel).toHaveBeenCalledWith(['\u201c', 'a', '\u201d']);
     });
 
@@ -44,7 +47,7 @@ describe('parser/javascript/literal.js', function() {
           expect(label.selectAll('tspan')[0].hasClass('quote')).toBeTruthy();
           expect(label.selectAll('tspan')[2].hasClass('quote')).toBeTruthy();
           done();
-        });
+        }).catch(done.fail);
     });
 
     it('sets the edge radius of the rect', function(done) {
@@ -55,7 +58,7 @@ describe('parser/javascript/literal.js', function() {
             ry: '3'
           }));
           done();
-        });
+        }).catch(done.fail);
     });
 
   });
@@ -69,6 +72,7 @@ describe('parser/javascript/literal.js', function() {
 
     it('appends to the literal value', function() {
       this.node.merge({ literal: 'b' });
+
       expect(this.node.literal).toEqual('ab');
     });
 

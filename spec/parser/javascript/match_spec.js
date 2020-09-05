@@ -32,6 +32,7 @@ describe('parser/javascript/match.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as a Match`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__match()).toEqual(jasmine.objectContaining(content));
     });
   });
@@ -102,6 +103,7 @@ describe('parser/javascript/match.js', function() {
 
     it('renders each part', function() {
       this.node._render();
+
       expect(this.node.parts[0].render).toHaveBeenCalledWith('example group');
       expect(this.node.parts[1].render).toHaveBeenCalledWith('example group');
       expect(this.node.parts[2].render).toHaveBeenCalledWith('example group');
@@ -124,7 +126,7 @@ describe('parser/javascript/match.js', function() {
             expect(this.node.start).toEqual('part 0');
             expect(this.node.end).toEqual('part 2');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('spaces the items horizontally', function(done) {
@@ -136,7 +138,7 @@ describe('parser/javascript/match.js', function() {
               'part 2'
             ], { padding: 10 });
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('renders the connector paths', function(done) {
@@ -147,9 +149,10 @@ describe('parser/javascript/match.js', function() {
               'part 1',
               'part 2'
             ]);
+
             expect(this.node.container.path).toHaveBeenCalledWith('connector paths');
             done();
-          });
+          }).catch(done.fail);
       });
 
     });

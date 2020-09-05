@@ -45,6 +45,7 @@ describe('parser/javascript/charset.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as a Charset`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__charset()).toEqual(jasmine.objectContaining(content));
     });
   });
@@ -54,6 +55,7 @@ describe('parser/javascript/charset.js', function() {
 
     Node.state = { warnings: [] };
     node = new javascript.Parser('[\\c]').__consume__charset();
+
     expect(node.state.warnings).toEqual(['The character set "[\\c]" contains the \\c escape followed by a character other than A-Z. This can lead to different behavior depending on browser. The representation here is the most common interpretation.']);
   });
 
@@ -112,11 +114,13 @@ describe('parser/javascript/charset.js', function() {
 
     it('creates a cotainer for the parts of the charset', function() {
       this.node._render();
+
       expect(this.node.partContainer).toEqual(this.partContainer);
     });
 
     it('renders each item', function() {
       this.node._render();
+
       expect(this.node.elements[0].render).toHaveBeenCalledWith('group 0');
       expect(this.node.elements[1].render).toHaveBeenCalledWith('group 1');
       expect(this.node.elements[2].render).toHaveBeenCalledWith('group 2');
@@ -135,7 +139,7 @@ describe('parser/javascript/charset.js', function() {
           .then(() => {
             expect(util.spaceVertically).toHaveBeenCalledWith(this.node.elements, { padding: 5 });
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('renders a labeled box', function(done) {
@@ -144,7 +148,7 @@ describe('parser/javascript/charset.js', function() {
             expect(this.node.renderLabeledBox).toHaveBeenCalledWith('example label', this.partContainer, { padding: 5 });
             expect(result).toEqual('labeled box promise');
             done();
-          });
+          }).catch(done.fail);
       });
 
     });

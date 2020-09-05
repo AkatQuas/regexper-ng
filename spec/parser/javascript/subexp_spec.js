@@ -26,6 +26,7 @@ describe('parser/javascript/subexp.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as a Subexp`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__subexp()).toEqual(jasmine.objectContaining(content));
     });
   });
@@ -66,13 +67,14 @@ describe('parser/javascript/subexp.js', function() {
       this.node = new javascript.Parser('(test)').__consume__subexp();
       this.node.regexp = jasmine.createSpyObj('regexp', ['render']);
       this.node.container = jasmine.createSpyObj('container', ['addClass', 'group']);
-      spyOn(this.node, 'label').and.returnValue('example label')
+      spyOn(this.node, 'label').and.returnValue('example label');
 
       this.node.regexp.render.and.returnValue(this.renderDeferred.promise);
     });
 
     it('renders the regexp', function() {
       this.node._render();
+
       expect(this.node.regexp.render).toHaveBeenCalled();
     });
 
@@ -83,7 +85,7 @@ describe('parser/javascript/subexp.js', function() {
         .then(() => {
           expect(this.node.renderLabeledBox).toHaveBeenCalledWith('example label', this.node.regexp, { padding: 10 });
           done();
-        });
+        }).catch(done.fail);
     });
 
   });
@@ -110,6 +112,7 @@ describe('parser/javascript/subexp.js', function() {
     }, (data, str) => {
       it(`generates the correct label for "${str}"`, function() {
         var node = new javascript.Parser(str).__consume__subexp();
+
         expect(node.label()).toEqual(data.label);
         expect(node.state.groupCounter).toEqual(data.groupCounter);
       });

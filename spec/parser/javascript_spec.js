@@ -32,6 +32,7 @@ describe('parser/javascript.js', function() {
     it('adds the "svg-container" class', function() {
       spyOn(this.parser, '_addClass');
       this.parser.container = document.createElement('div');
+
       expect(this.parser._addClass).toHaveBeenCalledWith('svg-container');
     });
 
@@ -46,6 +47,7 @@ describe('parser/javascript.js', function() {
     it('adds the "loading" class', function() {
       spyOn(this.parser, '_addClass');
       this.parser.parse('example expression');
+
       expect(this.parser._addClass).toHaveBeenCalledWith('loading');
     });
 
@@ -54,7 +56,7 @@ describe('parser/javascript.js', function() {
         .then(() => {
           expect(regexpParser.parse).toHaveBeenCalledWith('example expression');
           done();
-        });
+        }).catch(done.fail);
     });
 
     it('replaces newlines with "\\n"', function(done) {
@@ -62,7 +64,7 @@ describe('parser/javascript.js', function() {
         .then(() => {
           expect(regexpParser.parse).toHaveBeenCalledWith('multiline\\nexpression');
           done();
-        });
+        }).catch(done.fail);
     });
 
     it('resolves the returned promise with the parser instance', function(done) {
@@ -70,7 +72,7 @@ describe('parser/javascript.js', function() {
         .then(result => {
           expect(result).toEqual(this.parser);
           done();
-        });
+        }).catch(done.fail);
     });
 
     it('rejects the returned promise with the exception thrown', function(done) {
@@ -79,7 +81,7 @@ describe('parser/javascript.js', function() {
         .then(null, result => {
           expect(result).toBeDefined();
           done();
-        });
+        }).catch(done.fail);
     });
 
   });
@@ -94,6 +96,7 @@ describe('parser/javascript.js', function() {
 
     it('render the parsed expression', function() {
       this.parser.render();
+
       expect(this.parser.parsed.render).toHaveBeenCalled();
     });
 
@@ -117,7 +120,7 @@ describe('parser/javascript.js', function() {
             expect(this.result.transform).toHaveBeenCalledWith(Snap.matrix()
               .translate(6, 8));
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('sets the dimensions of the image', function(done) {
@@ -128,7 +131,7 @@ describe('parser/javascript.js', function() {
             expect(svg.getAttribute('width')).toEqual('62');
             expect(svg.getAttribute('height')).toEqual('44');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('removes the "loading" class', function(done) {
@@ -137,7 +140,7 @@ describe('parser/javascript.js', function() {
           .then(() => {
             expect(this.parser._removeClass).toHaveBeenCalledWith('loading');
             done();
-          });
+          }).catch(done.fail);
       });
 
       it('removes the progress element', function(done) {
@@ -145,7 +148,7 @@ describe('parser/javascript.js', function() {
           .then(() => {
             expect(this.container.querySelector('.loading')).toBeNull();
             done();
-          });
+          }).catch(done.fail);
       });
 
     });
@@ -156,6 +159,7 @@ describe('parser/javascript.js', function() {
 
     it('sets the cancelRender state to true', function() {
       this.parser.cancel();
+
       expect(this.parser.state.cancelRender).toEqual(true);
     });
 
@@ -165,6 +169,7 @@ describe('parser/javascript.js', function() {
 
     it('returns the content of the warnings state variable', function() {
       this.parser.state.warnings.push('example');
+
       expect(this.parser.warnings).toEqual(['example']);
     });
 

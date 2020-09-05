@@ -155,6 +155,7 @@ describe('parser/javascript/repeat.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as a Repeat`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__repeat()).toEqual(jasmine.objectContaining(content));
     });
   });
@@ -190,6 +191,7 @@ describe('parser/javascript/repeat.js', function() {
       it(`translates to [${t.translate.x}, ${t.translate.y}] when hasLoop is ${t.hasLoop} and hasSkip is ${t.hasSkip}`, function() {
         this.node.hasLoop = t.hasLoop;
         this.node.hasSkip = t.hasSkip;
+
         expect(this.node.contentPosition).toEqual(Snap.matrix()
           .translate(t.translate.x, t.translate.y));
       });
@@ -259,6 +261,7 @@ describe('parser/javascript/repeat.js', function() {
       it(`is "${t.label}" when minimum=${t.minimum} and maximum=${t.maximum}`, function() {
         this.node.minimum = t.minimum;
         this.node.maximum = t.maximum;
+
         expect(this.node.label).toEqual(t.label);
       });
     });
@@ -327,6 +330,7 @@ describe('parser/javascript/repeat.js', function() {
       it(`is "${t.tooltip}" when minimum=${t.minimum} and maximum=${t.maximum}`, function() {
         this.node.minimum = t.minimum;
         this.node.maximum = t.maximum;
+
         expect(this.node.tooltip).toEqual(t.tooltip);
       });
     });
@@ -347,12 +351,14 @@ describe('parser/javascript/repeat.js', function() {
 
     it('returns nothing when there is no skip', function() {
       this.node.hasSkip = false;
+
       expect(this.node.skipPath(this.box)).toEqual([]);
     });
 
     it('returns a path when there is a skip', function() {
       this.node.hasSkip = true;
       this.node.greedy = true;
+
       expect(this.node.skipPath(this.box)).toEqual([
         'M0,22q10,0 10,-10v-1q0,-10 10,-10h23q10,0 10,10v1q0,10 10,10'
       ]);
@@ -361,6 +367,7 @@ describe('parser/javascript/repeat.js', function() {
     it('returns a path with arrow when there is a non-greedy skip', function() {
       this.node.hasSkip = true;
       this.node.greedy = false;
+
       expect(this.node.skipPath(this.box)).toEqual([
         'M0,22q10,0 10,-10v-1q0,-10 10,-10h23q10,0 10,10v1q0,10 10,10',
         'M10,7l5,5m-5,-5l-5,5'
@@ -385,12 +392,14 @@ describe('parser/javascript/repeat.js', function() {
 
     it('returns nothing when there is no loop', function() {
       this.node.hasLoop = false;
+
       expect(this.node.loopPath(this.box)).toEqual([]);
     });
 
     it('returns a path when there is a loop', function() {
       this.node.hasLoop = true;
       this.node.greedy = false;
+
       expect(this.node.loopPath(this.box)).toEqual([
         'M11,33q-10,0 -10,10v1q0,10 10,10h55q10,0 10,-10v-1q0,-10 -10,-10'
       ]);
@@ -399,6 +408,7 @@ describe('parser/javascript/repeat.js', function() {
     it('returns a path with arrow when there is a greedy loop', function() {
       this.node.hasLoop = true;
       this.node.greedy = true;
+
       expect(this.node.loopPath(this.box)).toEqual([
         'M11,33q-10,0 -10,10v1q0,10 10,10h55q10,0 10,-10v-1q0,-10 -10,-10',
         'M32,48l5,-5m-5,5l-5,-5'

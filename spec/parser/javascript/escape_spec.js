@@ -35,6 +35,7 @@ describe('parser/javascript/escape.js', function() {
   }, (content, str) => {
     it(`parses "${str}" as an Escape`, function() {
       var parser = new javascript.Parser(str);
+
       expect(parser.__consume__terminal()).toEqual(jasmine.objectContaining(content));
     });
   });
@@ -53,6 +54,7 @@ describe('parser/javascript/escape.js', function() {
 
     it('renders a label', function() {
       this.node._render();
+
       expect(this.node.renderLabel).toHaveBeenCalledWith('word boundary');
     });
 
@@ -64,7 +66,7 @@ describe('parser/javascript/escape.js', function() {
             ry: '3'
           }));
           done();
-        });
+        }).catch(done.fail);
     });
 
   });
