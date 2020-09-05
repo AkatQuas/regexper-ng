@@ -168,19 +168,19 @@ describe('parser/javascript/node.js', function() {
     });
 
     it('adds a "label" class to the group', function() {
-      this.node.renderLabel('example label');
+      this.node.renderLabel('example label').catch(() => {});
 
       expect(this.group.addClass).toHaveBeenCalledWith('label');
     });
 
     it('creates a rect element', function() {
-      this.node.renderLabel('example label');
+      this.node.renderLabel('example label').catch(() => {});
 
       expect(this.group.rect).toHaveBeenCalled();
     });
 
     it('creates a text element', function() {
-      this.node.renderLabel('example label');
+      this.node.renderLabel('example label').catch(() => {});
 
       expect(this.group.text).toHaveBeenCalledWith(0, 0, ['example label']);
     });

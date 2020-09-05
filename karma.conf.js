@@ -1,3 +1,5 @@
+const webpackConfig = require('./webpack.config.js');
+
 module.exports = function(karma) {
   karma.set({
     frameworks: ['jasmine'],
@@ -13,23 +15,8 @@ module.exports = function(karma) {
     singleRun: false,
     webpack: {
       devtool: 'inline-source-map',
-      module: {
-        loaders: [
-          {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader'
-          },
-          {
-            test: require.resolve('snapsvg'),
-            loader: 'imports-loader?this=>window,fix=>module.exports=0'
-          },
-          {
-            test: /\.peg$/,
-            loader: require.resolve('./lib/canopy-loader')
-          }
-        ]
-      }
+      mode: 'development',
+      module: webpackConfig.module
     }
   });
 };
