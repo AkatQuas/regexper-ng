@@ -8,7 +8,7 @@ module.exports = function(karma) {
     reporters: ['progress', 'notify'],
     colors: true,
     logLevel: karma.LOG_INFO,
-    browsers: ['Firefox'],
+    browsers: ['Chrome'],
     autoWatch: true,
     singleRun: false,
     webpack: {
