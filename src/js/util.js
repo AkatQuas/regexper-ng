@@ -97,7 +97,7 @@ function spaceVertically(items, options) {
 //
 // - __delay__ - Time in milliseconds to wait before resolving promise.
 function wait(delay) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(resolve, delay);
   });
 }

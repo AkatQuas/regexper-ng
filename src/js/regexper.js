@@ -186,15 +186,21 @@ export default class Regexper {
               this.downloadPng.href = URL.createObjectURL(window.pngBlob);
               this.links.className = this.links.className.replace(/\bhide-download-png\b/, '');
             }
-            catch(e) {}
+            catch(e) {
+              // Ignore errors
+            }
           }, 'image/png');
         }
-        catch(e) {}
+        catch(e) {
+          // Ignore errors
+        }
       };
       loader.src = 'data:image/svg+xml,' + encodeURIComponent(svg.innerHTML);
       classes.push('hide-download-png');
     }
-    catch(e) {}
+    catch(e) {
+      // Ignore errors
+    }
 
     // Create the 'permalink' URL.
     if (this.permalinkEnabled) {

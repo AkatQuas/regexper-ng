@@ -5,5 +5,18 @@
   "env": {
     "jasmine": true
   },
-  "extends": "plugin:jasmine/recommended"
+  "extends": "plugin:jasmine/recommended",
+  "rules": {
+    "jasmine/no-spec-dupes": [
+      1,
+      "branch"
+    ],
+    "jasmine/no-suite-dupes": [
+      1,
+      "branch"
+    ],
+    "jasmine/prefer-toHaveBeenCalledWith": [
+      0
+    ]
+  }
 }
