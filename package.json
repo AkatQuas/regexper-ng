@@ -10,6 +10,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "docs": "docco-toc --output ./docs $(find ./src/js -name '*.js')",
     "pretest": "eslint .",
     "test": "karma start --single-run",
     "build": "webpack",
@@ -23,7 +24,6 @@
     "babel-loader": "^8.1.0",
     "canopy": "^0.2.0",
     "css-loader": "^4.2.2",
-    "docco": "^0.7.0",
     "eslint": "^7.8.1",
     "eslint-plugin-jasmine": "^4.1.1",
     "file-loader": "^6.1.0",
@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^6.1.0"
+    "copy-webpack-plugin": "^6.1.0",
+    "docco-toc": "^0.7.4"
   }
 }

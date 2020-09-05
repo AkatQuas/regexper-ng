@@ -3682,9 +3682,10 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docco@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/docco/-/docco-0.7.0.tgz#d606e5a990cba052ca1e1803a9c587ecee3c5c38"
+docco-toc@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/docco-toc/-/docco-toc-0.7.4.tgz#3cb1cb0c78c658f705ea4fef7516852c97f2e794"
+  integrity sha1-PLHLDHjGWPcF6k/vdRaFLJfy55Q=
   dependencies:
     commander ">= 0.5.2"
     fs-extra ">= 0.6.0"

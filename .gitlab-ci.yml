@@ -19,8 +19,7 @@ stages:
     paths:
       - build/
   script:
-    - yarn gulp build
-    - rm -r build/__discard__
+    - yarn build
     - gzip -k -6 $(find build/ -type f)
 
 .deploy_template: &deploy_template
@@ -41,14 +40,12 @@ build-preview:
   <<: *preview_job
   variables:
     DEPLOY_ENV: preview
-    GA_PROP: $PREVIEW_GA_PROPERTY
 
 build-production:
   <<: *build_template
   <<: *production_job
   variables:
     DEPLOY_ENV: production
-    GA_PROP: $PROD_GA_PROPERTY
 
 deploy-preview:
   <<: *deploy_template
