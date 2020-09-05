@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>Regexper{{#if file.frontMatter.title}} - {{file.frontMatter.title}}{{/if}}</title>
+    <title>Regexper{{#if htmlWebpackPlugin.options.title}} - {{htmlWebpackPlugin.options.title}}{{/if}}</title>
 
     <meta name="description" content="Regular expression visualizer using railroad diagrams" />
     <meta name="viewport" content="width=device-width" />
@@ -13,8 +13,7 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="author" href="humans.txt" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Bangers&text=Regxpr" />
-    <link rel="stylesheet" href="/css/main.css" />
-    <!-- Built: {{date}} -->
+    <!-- Built: {{htmlWebpackPlugin.options.date}} -->
   </head>
   <body>
     <header>
@@ -40,25 +39,3 @@
     </header>
 
     <main id="content">
-      {{#block "body"}}{{/block}}
-    </main>
-
-    <footer>
-      {{#block "footer"}}
-        <ul class="inline-list">
-          <li>Created by <a href="mailto:jeff.avallone@gmail.com">Jeff Avallone</a></li>
-          <li>
-            Generated images licensed:
-            <a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" src="https://licensebuttons.net/l/by/3.0/80x15.png" /></a>
-          </li>
-        </ul>
-
-        <script type="text/html" id="svg-container-base">
-          {{> "svg_template"}}
-        </script>
-      {{/block}}
-    </footer>
-
-    {{> "open_iconic"}}
-  </body>
-</html>

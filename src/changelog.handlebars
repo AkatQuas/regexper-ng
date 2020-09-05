@@ -1,0 +1,14 @@
+{{> page_top}}
+
+<div class="copy changelog">
+  <dl>
+    {{#each htmlWebpackPlugin.options.changelog}}
+      <dt>{{label}}</dt>
+      {{#each changes}}
+        <dd>{{{this}}}</dd>
+      {{/each}}
+    {{/each}}
+  </dl>
+</div>
+
+{{> page_bottom}}
