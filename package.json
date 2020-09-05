@@ -10,7 +10,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "pretest": "eslint lib/ src/ spec/",
+    "pretest": "eslint .",
     "test": "karma start --single-run",
     "build": "gulp build",
     "start": "gulp"

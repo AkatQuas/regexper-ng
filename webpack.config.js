@@ -1,6 +1,6 @@
 var webpack = require('webpack'),
-    bourbon = require('bourbon'),
-    config = require('./config');
+  bourbon = require('bourbon'),
+  config = require('./config');
 
 module.exports = {
   devtool: 'source-map',

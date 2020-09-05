@@ -1,17 +1,17 @@
 const gulp = require('gulp-help')(require('gulp')),
-      _ = require('lodash'),
-      notify = require('gulp-notify'),
-      folderToc = require('folder-toc'),
-      docco = require('gulp-docco'),
-      connect = require('gulp-connect'),
-      hb = require('gulp-hb'),
-      frontMatter = require('gulp-front-matter'),
-      rename = require('gulp-rename'),
-      config = require('./config'),
-      gutil = require('gulp-util'),
-      webpack = require('webpack')
-      webpackConfig = require('./webpack.config'),
-      fs = require('fs');
+  _ = require('lodash'),
+  notify = require('gulp-notify'),
+  folderToc = require('folder-toc'),
+  docco = require('gulp-docco'),
+  connect = require('gulp-connect'),
+  hb = require('gulp-hb'),
+  frontMatter = require('gulp-front-matter'),
+  rename = require('gulp-rename'),
+  config = require('./config'),
+  gutil = require('gulp-util'),
+  webpack = require('webpack'),
+  webpackConfig = require('./webpack.config'),
+  fs = require('fs');
 
 gulp.task('default', 'Auto-rebuild site on changes.', ['server', 'docs'], function() {
   gulp.watch(config.globs.other, ['static']);
