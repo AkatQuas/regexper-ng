@@ -25,8 +25,8 @@ stages:
 .deploy_template: &deploy_template
   stage: deploy
   script:
-    - yarn firebase use --token $FIREBASE_DEPLOY_KEY default
-    - yarn firebase deploy --only hosting:$DEPLOY_ENV -m "Pipeline $CI_PIPELINE_ID, Build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_KEY
+    - yarn firebase use default
+    - yarn firebase deploy --only hosting:$DEPLOY_ENV -m "Pipeline $CI_PIPELINE_ID, Build $CI_BUILD_ID" --non-interactive
 
 cache:
   paths:
