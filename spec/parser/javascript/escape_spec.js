@@ -196,6 +196,7 @@ describe('parser/javascript/escape.js', function () {
       '\\p{Space_Separator}': { label: 'Space Separator', ordinal: -1 },
       '\\P{Zs}': { label: 'non-Space Separator', ordinal: -1 },
       '\\P{Space_Separator}': { label: 'non-Space Separator', ordinal: -1 },
+      '\\k<title>': { label: 'Back reference (group = title)', ordinal: -1 },
     },
     (content, str) => {
       it(`parses "${str}" as an Escape`, function () {

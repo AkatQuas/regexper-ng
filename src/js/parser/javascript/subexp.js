@@ -10,23 +10,23 @@ export default {
     // Default anchor is overridden to move it down to account for the group
     // label and outline box.
     _anchor: {
-      get: function() {
+      get: function () {
         var anchor = this.regexp.getBBox(),
           matrix = this.transform().localMatrix;
 
         return {
           ax: matrix.x(anchor.ax, anchor.ay),
           ax2: matrix.x(anchor.ax2, anchor.ay),
-          ay: matrix.y(anchor.ax, anchor.ay)
+          ay: matrix.y(anchor.ax, anchor.ay),
         };
-      }
-    }
+      },
+    },
   },
 
   labelMap: {
-    '?:': '',
+    '?:': 'non-capturing',
     '?=': 'positive lookahead',
-    '?!': 'negative lookahead'
+    '?!': 'negative lookahead',
   },
 
   // Renders the subexp into the currently set container.
@@ -37,17 +37,28 @@ export default {
     let label = this.label();
 
     // Render the contained regexp.
-    return this.regexp.render(this.container.group())
-      // Create the labeled box around the regexp.
-      .then(() => this.renderLabeledBox(label, this.regexp, {
-        padding: 10
-      }));
+    return (
+      this.regexp
+        .render(this.container.group())
+        // Create the labeled box around the regexp.
+        .then(() =>
+          this.renderLabeledBox(label, this.regexp, {
+            padding: 10,
+          })
+        )
+    );
   },
 
   // Returns the label for the subexpression.
   label() {
     if (_.has(this.labelMap, this.properties.capture.textValue)) {
       return this.labelMap[this.properties.capture.textValue];
+    } else if (
+      this.properties.capture &&
+      this.properties.capture.properties &&
+      this.properties.capture.properties.name
+    ) {
+      return `group #${this.properties.capture.properties.name.textValue}`;
     } else {
       return `group #${this.state.groupCounter++}`;
     }
@@ -59,8 +70,9 @@ export default {
     this.regexp = this.properties.regexp;
 
     // If there is no need for a label, then proxy to the nested regexp.
-    if (this.properties.capture.textValue == '?:') {
-      this.proxy = this.regexp;
-    }
-  }
+    // UPDATED AT "2021/11/04 22:02", we like the label "non-capturing"
+    // if (this.properties.capture.textValue == '?:') {
+    //   this.proxy = this.regexp;
+    // }
+  },
 };

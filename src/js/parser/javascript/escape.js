@@ -131,6 +131,9 @@ export default {
       return ['null', 0, true];
     }
   },
+  k() {
+    return [`Back reference (group = ${this.arg})`, -1, false];
+  },
   c() {
     return [
       `ctrl-${this.arg.toUpperCase()}`,
