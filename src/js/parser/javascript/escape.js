@@ -14,19 +14,74 @@ function hex(value) {
   return `(0x${str})`;
 }
 
+// [Unicode Property Syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes#syntax)
+// TODO Script and Script_Extensions
+function unicodeProperty(arg) {
+  // [General_Category (gc)](https://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#:~:text=%23%20General_Category%20(gc))
+  var gcMap = {
+    C: 'Other',
+    Cc: 'Control',
+    Cf: 'Format',
+    Cn: 'Unassigned',
+    Co: 'Private_Use',
+    Cs: 'Surrogate',
+    L: 'Letter',
+    LC: 'Cased_Letter',
+    Ll: 'Lowercase_Letter',
+    Lm: 'Modifier_Letter',
+    Lo: 'Other_Letter',
+    Lt: 'Titlecase_Letter',
+    Lu: 'Uppercase_Letter',
+    M: 'Mark',
+    Mc: 'Spacing_Mark',
+    Me: 'Enclosing_Mark',
+    Mn: 'Nonspacing_Mark',
+    N: 'Number',
+    Nd: 'Decimal_Number',
+    Nl: 'Letter_Number',
+    No: 'Other_Number',
+    P: 'Punctuation',
+    Pc: 'Connector_Punctuation',
+    Pd: 'Dash_Punctuation',
+    Pe: 'Close_Punctuation',
+    Pf: 'Final_Punctuation',
+    Pi: 'Initial_Punctuation',
+    Po: 'Other_Punctuation',
+    Ps: 'Open_Punctuation',
+    S: 'Symbol',
+    Sc: 'Currency_Symbol',
+    Sk: 'Modifier_Symbol',
+    Sm: 'Math_Symbol',
+    So: 'Other_Symbol',
+    Z: 'Separator',
+    Zl: 'Line_Separator',
+    Zp: 'Paragraph_Separator',
+    Zs: 'Space_Separator',
+  };
+  var temp = gcMap[arg];
+  if (temp) {
+    arg = temp;
+  }
+  if (arg.slice(0, 7) === 'Initial') {
+    // skip
+  } else if (arg.slice(0, 2) == 'In') {
+    arg = 'in ' + arg.slice(2);
+  }
+  return arg.replace(/_/g, ' ');
+}
+
 export default {
   type: 'escape',
 
   // Renders the escape into the currently set container.
   _render() {
-    return this.renderLabel(this.label)
-      .then(label => {
-        label.select('rect').attr({
-          rx: 3,
-          ry: 3
-        });
-        return label;
+    return this.renderLabel(this.label).then((label) => {
+      label.select('rect').attr({
+        rx: 3,
+        ry: 3,
       });
+      return label;
+    });
   },
 
   setup() {
@@ -69,7 +124,7 @@ export default {
   7: ['Back reference (group = 7)', -1, false],
   8: ['Back reference (group = 8)', -1, false],
   9: ['Back reference (group = 9)', -1, false],
-  0: function() {
+  0: function () {
     if (this.arg) {
       return [`octal: ${this.arg}`, parseInt(this.arg, 8), true];
     } else {
@@ -77,12 +132,22 @@ export default {
     }
   },
   c() {
-    return [`ctrl-${this.arg.toUpperCase()}`, this.arg.toUpperCase().charCodeAt(0) - 64, true];
+    return [
+      `ctrl-${this.arg.toUpperCase()}`,
+      this.arg.toUpperCase().charCodeAt(0) - 64,
+      true,
+    ];
+  },
+  p() {
+    return [unicodeProperty(this.arg), -1, false];
+  },
+  P() {
+    return ['non-' + unicodeProperty(this.arg), -1, false];
   },
   x() {
     return [`0x${this.arg.toUpperCase()}`, parseInt(this.arg, 16), false];
   },
   u() {
     return [`U+${this.arg.toUpperCase()}`, parseInt(this.arg, 16), false];
-  }
+  },
 };
