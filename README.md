@@ -1,6 +1,8 @@
 # Regexper
 
-Code for the http://regexper.com/ site.
+[Code](https://gitlab.com/javallone/regexper-static) for the http://regexper.com/ site.
+
+[Code](https://github.com/AkatQuas/regexper-ng) for the https://akatquas.github.io/regexper-ng/ site.
 
 ## Contributing
 

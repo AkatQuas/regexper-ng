@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
     <meta name="theme-color" content="#bada55" />
 
-    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="shortcut icon" href="{{#if htmlWebpackPlugin.options.distUrl}}{{htmlWebpackPlugin.options.distUrl}}{{/if}}/favicon.ico" />
     <link rel="author" href="humans.txt" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Bangers&text=Regxpr" />
     <!-- Built: {{htmlWebpackPlugin.options.date}} -->
@@ -18,7 +18,7 @@
   <body>
     <header>
       <div class="logo">
-        <h1><a href="/">Regexper</a></h1>
+        <h1><a href="{{#if htmlWebpackPlugin.options.distUrl}}{{htmlWebpackPlugin.options.distUrl}}{{/if}}/">Regexper</a></h1>
         <!-- n. One who regexpes -->
         <span>You thought you only had two problems&hellip;</span>
       </div>
@@ -26,10 +26,10 @@
       <nav>
         <ul>
           <li>
-            <a class="inline-icon" href="/changelog.html">{{icon "#list-rich"}}Changelog</a>
+            <a class="inline-icon" href="{{#if htmlWebpackPlugin.options.distUrl}}{{htmlWebpackPlugin.options.distUrl}}{{/if}}/changelog.html">{{icon "#list-rich"}}Changelog</a>
           </li>
           <li>
-            <a class="inline-icon" href="/documentation.html">{{icon "#document"}}Documentation</a>
+            <a class="inline-icon" href="{{#if htmlWebpackPlugin.options.distUrl}}{{htmlWebpackPlugin.options.distUrl}}{{/if}}/documentation.html">{{icon "#document"}}Documentation</a>
           </li>
           <li>
             Source on <a class="inline-icon" href="https://gitlab.com/javallone/regexper-static">{{icon "#code"}}GitLab</a> or

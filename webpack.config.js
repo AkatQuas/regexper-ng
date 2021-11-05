@@ -4,6 +4,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+/**
+ * Leave it to be empty string if no need
+ */
+const distUrl =
+  typeof process.env.DIST_URL === 'string' ? process.env.DIST_URL : '';
+
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
   devtool: 'source-map',
@@ -15,19 +21,19 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: './static' },
-      ],
+      patterns: [{ from: './static' }],
     }),
     new HtmlWebpackPlugin({
       template: './src/index.handlebars',
       title: false,
+      distUrl,
       date: new Date().toISOString(),
     }),
     new HtmlWebpackPlugin({
       template: './src/changelog.handlebars',
       filename: 'changelog.html',
       title: 'Changelog',
+      distUrl,
       date: new Date().toISOString(),
       changelog: require('./changelog.json'),
     }),
@@ -35,12 +41,14 @@ module.exports = {
       template: './src/documentation.handlebars',
       filename: 'documentation.html',
       title: 'Documentation',
+      distUrl,
       date: new Date().toISOString(),
     }),
     new HtmlWebpackPlugin({
       template: './src/404.handlebars',
       filename: '404.html',
       title: 'Page Not Found',
+      distUrl,
       date: new Date().toISOString(),
     }),
     new MiniCssExtractPlugin({
@@ -69,11 +77,7 @@ module.exports = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loaders: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader',
-        ],
+        loaders: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.handlebars$/,

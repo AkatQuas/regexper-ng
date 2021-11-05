@@ -6,6 +6,8 @@
     Creator: Jeff Avallone
     Site: http://gitlab.com/javallone
     Twitter: @javallone
+    Contributor: AkatQuas
+    Site: https://github.com/AkatQuas
 
 # THANKS
 

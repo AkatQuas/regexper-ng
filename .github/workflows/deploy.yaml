@@ -1,0 +1,25 @@
+name: gh-pages publisher 🚀
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  publish-gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      # - run: pwd && ls -al
+      # - run: sed -i -E 's#href="/([a-z])#href="/regexper-ng/\1#g' lib/partials/page_top.handlebars
+      # - run: sed -i -E 's#a href="/"#a href="/regexper-ng/"#g' lib/partials/page_top.handlebars
+      # - run: cat lib/partials/page_top.handlebars
+      - run: yarn install && yarn build
+        env:
+          DIST_URL: /regexper-ng
+      - run: git config user.name "AkatQuas" && git config user.email "noreply@github.com"
+      - run: npx gh-pages --dist build --no-history --branch gh-pages --repo "https://$GH_TOKEN@github.com/AkatQuas/regexper-ng"
+        env:
+          GH_TOKEN: ${{secrets.AUTOMATION_SECRET}}
