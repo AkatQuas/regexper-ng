@@ -131,7 +131,7 @@ export default class Node {
 
         rect.attr({
           width: box.width + 2 * margin,
-          height: box.height + 2 * margin
+          height: box.height + 2 * margin,
         });
 
         return group;
@@ -151,11 +151,11 @@ export default class Node {
         .addClass(`${this.type}-box`)
         .attr({
           rx: 3,
-          ry: 3
+          ry: 3,
         });
 
     options = _.defaults(options || {}, {
-      padding: 0
+      padding: 0,
     });
 
     this.container.prepend(label);
@@ -176,7 +176,7 @@ export default class Node {
             .translate(0, labelBox.height))
           .attr({
             width: boxWidth,
-            height: boxHeight
+            height: boxHeight,
           });
 
         content.transform(Snap.matrix()

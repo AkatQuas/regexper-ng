@@ -7,17 +7,17 @@ describe('parser/javascript/match_fragment.js', function() {
   _.forIn({
     'a': {
       proxy: jasmine.objectContaining({ textValue: 'a' }),
-      canMerge: true
+      canMerge: true,
     },
     '\\b': {
       proxy: jasmine.objectContaining({ textValue: '\\b' }),
-      canMerge: false
+      canMerge: false,
     },
     'a*': {
       content: jasmine.objectContaining({ textValue: 'a' }),
       repeat: jasmine.objectContaining({ textValue: '*' }),
-      canMerge: false
-    }
+      canMerge: false,
+    },
   }, (content, str) => {
     it(`parses "${str}" as a MatchFragment`, function() {
       var parser = new javascript.Parser(str);
@@ -36,12 +36,12 @@ describe('parser/javascript/match_fragment.js', function() {
           return {
             ax: 1,
             ax2: 2,
-            ay: 3
+            ay: 3,
           };
-        }
+        },
       };
       spyOn(this.node, 'transform').and.returnValue({
-        localMatrix: Snap.matrix().translate(10, 20)
+        localMatrix: Snap.matrix().translate(10, 20),
       });
     });
 
@@ -49,7 +49,7 @@ describe('parser/javascript/match_fragment.js', function() {
       expect(this.node._anchor).toEqual({
         ax: 11,
         ax2: 12,
-        ay: 23
+        ay: 23,
       });
     });
 
@@ -64,7 +64,7 @@ describe('parser/javascript/match_fragment.js', function() {
         'addClass',
         'group',
         'prepend',
-        'path'
+        'path',
       ]);
       this.node.container.group.and.returnValue('example group');
 
@@ -72,7 +72,7 @@ describe('parser/javascript/match_fragment.js', function() {
       this.node.content = jasmine.createSpyObj('content', [
         'render',
         'transform',
-        'getBBox'
+        'getBBox',
       ]);
       this.node.content.getBBox.and.returnValue('content bbox');
       this.node.content.render.and.returnValue(this.renderDeferred.promise);
@@ -80,7 +80,7 @@ describe('parser/javascript/match_fragment.js', function() {
       this.node.repeat = {
         contentPosition: 'example position',
         skipPath: jasmine.createSpy('skipPath').and.returnValue('skip path'),
-        loopPath: jasmine.createSpy('loopPath').and.returnValue('loop path')
+        loopPath: jasmine.createSpy('loopPath').and.returnValue('loop path'),
       };
 
       spyOn(this.node, 'loopLabel');
@@ -137,23 +137,23 @@ describe('parser/javascript/match_fragment.js', function() {
 
       this.node.container = jasmine.createSpyObj('container', [
         'addClass',
-        'text'
+        'text',
       ]);
 
       this.text = jasmine.createSpyObj('text', [
         'addClass',
         'getBBox',
-        'transform'
+        'transform',
       ]);
       this.node.container.text.and.returnValue(this.text);
       this.text.addClass.and.returnValue(this.text);
       this.text.getBBox.and.returnValue({
         width: 11,
-        height: 22
+        height: 22,
       });
       spyOn(this.node, 'getBBox').and.returnValue({
         x2: 33,
-        y2: 44
+        y2: 44,
       });
     });
 

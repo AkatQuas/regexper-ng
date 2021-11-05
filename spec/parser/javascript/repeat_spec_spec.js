@@ -7,7 +7,7 @@ describe('parser/javascript/repeat_spec.js', function() {
 
     expect(parser.__consume__repeat_spec()).toEqual(jasmine.objectContaining({
       minimum: 24,
-      maximum: 42
+      maximum: 42,
     }));
   });
 
@@ -16,7 +16,7 @@ describe('parser/javascript/repeat_spec.js', function() {
 
     expect(parser.__consume__repeat_spec()).toEqual(jasmine.objectContaining({
       minimum: 24,
-      maximum: -1
+      maximum: -1,
     }));
   });
 
@@ -25,7 +25,7 @@ describe('parser/javascript/repeat_spec.js', function() {
 
     expect(parser.__consume__repeat_spec()).toEqual(jasmine.objectContaining({
       minimum: 24,
-      maximum: 24
+      maximum: 24,
     }));
   });
 

@@ -5,7 +5,7 @@ beforeEach(function() {
   template.setAttribute('id', 'svg-container-base');
   template.innerHTML = [
     '<div class="svg"><svg></svg></div>',
-    '<div class="progress"><div></div></div>'
+    '<div class="progress"><div></div></div>',
   ].join('');
   document.body.appendChild(template);
 

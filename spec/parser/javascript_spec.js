@@ -108,7 +108,7 @@ describe('parser/javascript.js', function() {
           x: 4,
           y: 2,
           width: 42,
-          height: 24
+          height: 24,
         });
 
         this.renderPromise.resolve(this.result);

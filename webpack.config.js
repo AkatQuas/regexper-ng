@@ -10,61 +10,61 @@ module.exports = {
   entry: './src/js/main.js',
   output: {
     path: path.join(__dirname, './build'),
-    filename: '[name]-[hash].js'
+    filename: '[name]-[hash].js',
   },
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
-        { from: './static' }
-      ]
+        { from: './static' },
+      ],
     }),
     new HtmlWebpackPlugin({
       template: './src/index.handlebars',
       title: false,
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
     }),
     new HtmlWebpackPlugin({
       template: './src/changelog.handlebars',
       filename: 'changelog.html',
       title: 'Changelog',
       date: new Date().toISOString(),
-      changelog: require('./changelog.json')
+      changelog: require('./changelog.json'),
     }),
     new HtmlWebpackPlugin({
       template: './src/documentation.handlebars',
       filename: 'documentation.html',
       title: 'Documentation',
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
     }),
     new HtmlWebpackPlugin({
       template: './src/404.handlebars',
       filename: '404.html',
       title: 'Page Not Found',
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
     }),
     new MiniCssExtractPlugin({
-      filename: '[name]-[hash].css'
-    })
+      filename: '[name]-[hash].css',
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       },
       {
         test: require.resolve('snapsvg'),
         loader: 'imports-loader',
         options: {
           wrapper: 'window',
-          additionalCode: 'module.exports = 0;'
-        }
+          additionalCode: 'module.exports = 0;',
+        },
       },
       {
         test: /\.peg$/,
-        loader: require.resolve('./lib/canopy-loader')
+        loader: require.resolve('./lib/canopy-loader'),
       },
       {
         test: /\.scss$/,
@@ -72,8 +72,8 @@ module.exports = {
         loaders: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          'sass-loader'
-        ]
+          'sass-loader',
+        ],
       },
       {
         test: /\.handlebars$/,
@@ -82,10 +82,10 @@ module.exports = {
           partialDirs: [path.resolve(__dirname, 'lib/partials')],
           helperDirs: [path.resolve(__dirname, 'lib/helpers')],
           precompileOptions: {
-            knownHelpersOnly: false
-          }
-        }
-      }
-    ]
-  }
+            knownHelpersOnly: false,
+          },
+        },
+      },
+    ],
+  },
 };

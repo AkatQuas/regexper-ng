@@ -21,10 +21,10 @@ export default {
         return {
           ax: matrix.x(start.ax, start.ay),
           ax2: matrix.x(end.ax2, end.ay),
-          ay: matrix.y(start.ax, start.ay)
+          ay: matrix.y(start.ax, start.ay),
         };
-      }
-    }
+      },
+    },
   },
 
   // Renders the match into the currently set container.
@@ -50,7 +50,7 @@ export default {
         this.end = _.last(items);
 
         util.spaceHorizontally(items, {
-          padding: 10
+          padding: 10,
         });
 
         // Add lines between each item.
@@ -98,5 +98,5 @@ export default {
     if (this.parts.length === 1) {
       this.proxy = this.parts[0];
     }
-  }
+  },
 };

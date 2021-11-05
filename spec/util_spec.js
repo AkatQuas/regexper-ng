@@ -25,14 +25,14 @@ describe('util.js', function() {
         x: 'bbox x',
         x2: 'bbox x2',
         cy: 'bbox cy',
-        ay: 'bbox ay'
+        ay: 'bbox ay',
       })).toEqual({
         x: 'bbox x',
         x2: 'bbox x2',
         cy: 'bbox cy',
         ax: 'bbox x',
         ax2: 'bbox x2',
-        ay: 'bbox ay'
+        ay: 'bbox ay',
       });
     });
 
@@ -45,7 +45,7 @@ describe('util.js', function() {
         items = [
           svg.group(),
           svg.group(),
-          svg.group()
+          svg.group(),
         ];
 
       spyOn(items[0], 'getBBox').and.returnValue({ ay: 5, width: 10 });
@@ -76,7 +76,7 @@ describe('util.js', function() {
         items = [
           svg.group(),
           svg.group(),
-          svg.group()
+          svg.group(),
         ];
 
       spyOn(items[0], 'getBBox').and.returnValue({ cx: 5, height: 10 });

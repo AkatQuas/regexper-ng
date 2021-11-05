@@ -5,7 +5,7 @@ module.exports = function(karma) {
     frameworks: ['jasmine'],
     files: [ 'spec/test_index.js' ],
     preprocessors: {
-      'spec/test_index.js': ['webpack', 'sourcemap']
+      'spec/test_index.js': ['webpack', 'sourcemap'],
     },
     reporters: ['progress', 'notify'],
     colors: true,
@@ -16,7 +16,7 @@ module.exports = function(karma) {
     webpack: {
       devtool: 'inline-source-map',
       mode: 'development',
-      module: webpackConfig.module
-    }
+      module: webpackConfig.module,
+    },
   });
 };

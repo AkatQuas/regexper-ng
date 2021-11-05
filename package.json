@@ -7,11 +7,17 @@
     "name": "Jeffrey Avallone",
     "email": "jeff.avallone@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "AkatQuas",
+      "email": "295140755@qq.com"
+    }
+  ],
   "license": "MIT",
   "private": true,
   "scripts": {
     "docs": "docco-toc --output ./docs $(find ./src/js -name '*.js')",
-    "pretest": "eslint .",
+    "pretest": "eslint --fix .",
     "test": "karma start --single-run",
     "build": "webpack",
     "start": "webpack-dev-server"

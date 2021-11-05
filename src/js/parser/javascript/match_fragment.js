@@ -19,10 +19,10 @@ export default {
         return {
           ax: matrix.x(anchor.ax, anchor.ay),
           ax2: matrix.x(anchor.ax2, anchor.ay),
-          ay: matrix.y(anchor.ax, anchor.ay)
+          ay: matrix.y(anchor.ax, anchor.ay),
         };
-      }
-    }
+      },
+    },
   },
 
   // Renders the fragment into the currently set container.
@@ -39,7 +39,7 @@ export default {
         // Add skip or repeat paths to the container.
         paths = _.flatten([
           this.repeat.skipPath(box),
-          this.repeat.loopPath(box)
+          this.repeat.loopPath(box),
         ]);
 
         this.container.prepend(
@@ -89,5 +89,5 @@ export default {
       // Fragments that have skip or loop lines cannot be merged with others.
       this.canMerge = false;
     }
-  }
+  },
 };

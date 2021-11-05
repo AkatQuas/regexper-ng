@@ -11,7 +11,7 @@ export default {
     g: 'Global',
     m: 'Multiline',
     y: 'Sticky',
-    u: 'Unicode'
+    u: 'Unicode',
   },
 
   // Renders the root into the currently set container.
@@ -52,5 +52,5 @@ export default {
       .map(flag => this.flagLabels[flag]).value();
 
     this.regexp = this.properties.regexp;
-  }
+  },
 };

@@ -17,10 +17,10 @@ export default {
         var matrix = this.transform().localMatrix;
 
         return {
-          ay: matrix.y(0, this.partContainer.getBBox().cy)
+          ay: matrix.y(0, this.partContainer.getBBox().cy),
         };
-      }
-    }
+      },
+    },
   },
 
   // Renders the charset into the currently set container.
@@ -34,12 +34,12 @@ export default {
       .then(() => {
         // Space the parts of the charset vertically in the part container.
         util.spaceVertically(this.elements, {
-          padding: 5
+          padding: 5,
         });
 
         // Label the part container.
         return this.renderLabeledBox(this.label, this.partContainer, {
-          padding: 5
+          padding: 5,
         });
       });
   },
@@ -65,5 +65,5 @@ export default {
     if (this.textValue.match(/\\c[^a-zA-Z]/)) {
       this.state.warnings.push(`The character set "${this.textValue}" contains the \\c escape followed by a character other than A-Z. This can lead to different behavior depending on browser. The representation here is the most common interpretation.`);
     }
-  }
+  },
 };

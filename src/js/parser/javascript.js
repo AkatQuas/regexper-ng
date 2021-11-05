@@ -19,7 +19,7 @@ export default class Parser {
   constructor(container, options) {
     this.options = options || {};
     _.defaults(this.options, {
-      keepContent: false
+      keepContent: false,
     });
 
     this.container = container;
@@ -37,7 +37,7 @@ export default class Parser {
     this._container = cont;
     this._container.innerHTML = [
       document.querySelector('#svg-container-base').innerHTML,
-      this.options.keepContent ? this.container.innerHTML : ''
+      this.options.keepContent ? this.container.innerHTML : '',
     ].join('');
     this._addClass('svg-container');
   }
@@ -90,7 +90,7 @@ export default class Parser {
           .translate(10 - box.x, 10 - box.y));
         svg.attr({
           width: box.width + 20,
-          height: box.height + 20
+          height: box.height + 20,
         });
       })
       // Stop and remove loading indicator after render is totally complete.

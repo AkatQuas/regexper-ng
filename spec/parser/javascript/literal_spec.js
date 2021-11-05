@@ -9,7 +9,7 @@ describe('parser/javascript/literal.js', function() {
     expect(parser.__consume__terminal()).toEqual(jasmine.objectContaining({
       type: 'literal',
       literal: 'x',
-      ordinal: 120
+      ordinal: 120,
     }));
   });
 
@@ -19,7 +19,7 @@ describe('parser/javascript/literal.js', function() {
     expect(parser.__consume__terminal()).toEqual(jasmine.objectContaining({
       type: 'literal',
       literal: 'x',
-      ordinal: 120
+      ordinal: 120,
     }));
   });
 
@@ -55,7 +55,7 @@ describe('parser/javascript/literal.js', function() {
         .then(label => {
           expect(label.select('rect').attr()).toEqual(jasmine.objectContaining({
             rx: '3',
-            ry: '3'
+            ry: '3',
           }));
           done();
         }).catch(done.fail);

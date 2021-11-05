@@ -25,7 +25,7 @@ export default {
         } else {
           return matrix.translate(0, 0);
         }
-      }
+      },
     },
 
     // Label to place of loop path to indicate the number of times that path
@@ -46,7 +46,7 @@ export default {
             return `${this.minimum - 1}\u2026${formatTimes(this.maximum - 1)}`;
           }
         }
-      }
+      },
     },
 
     // Tooltip to place of loop path label to provide further details.
@@ -69,8 +69,8 @@ export default {
           }
         }
         return repeatCount ? `repeats ${repeatCount} in total` : repeatCount;
-      }
-    }
+      },
+    },
   },
 
   // Returns the path spec to render the line that skips over the content for
@@ -118,5 +118,5 @@ export default {
     this.greedy = (this.properties.greedy.textValue === '');
     this.hasSkip = (this.minimum === 0);
     this.hasLoop = (this.maximum === -1 || this.maximum > 1);
-  }
+  },
 };

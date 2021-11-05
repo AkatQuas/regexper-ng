@@ -11,18 +11,18 @@ export default {
     let contents = [
       this.first,
       this.container.text(0, 0, '-'),
-      this.last
+      this.last,
     ];
 
     // Render the nodes of the range.
     return Promise.all([
       this.first.render(this.container.group()),
-      this.last.render(this.container.group())
+      this.last.render(this.container.group()),
     ])
       .then(() => {
         // Space the nodes and hyphen horizontally.
         util.spaceHorizontally(contents, {
-          padding: 5
+          padding: 5,
         });
       });
   },
@@ -37,5 +37,5 @@ export default {
     if (this.first.ordinal > this.last.ordinal) {
       throw `Range out of order in character class: ${this.textValue}`;
     }
-  }
+  },
 };

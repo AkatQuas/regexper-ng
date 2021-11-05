@@ -24,7 +24,7 @@ export default {
 
         // Space matches vertically in the match container.
         util.spaceVertically(this.matches, {
-          padding: 5
+          padding: 5,
         });
 
         containerBox = this.getBBox();
@@ -68,7 +68,7 @@ export default {
 
       return [
         `M0,${containerBox.cy}q10,0 10,${shift}V${edge}`,
-        `M${containerBox.width + 40},${containerBox.cy}q-10,0 -10,${shift}V${edge}`
+        `M${containerBox.width + 40},${containerBox.cy}q-10,0 -10,${shift}V${edge}`,
       ];
     }
   },
@@ -89,7 +89,7 @@ export default {
 
       return [
         `M10,${box.ay - curve}q0,${curve} 10,${curve}`,
-        `M${containerBox.width + 30},${box.ay - curve}q0,${curve} -10,${curve}`
+        `M${containerBox.width + 30},${box.ay - curve}q0,${curve} -10,${curve}`,
       ];
     } else {
       // For match nodes less than 15 pixels from the center of the regexp, a
@@ -98,7 +98,7 @@ export default {
 
       return [
         `M0,${containerBox.cy}c10,0 10,${anchor} 20,${anchor}`,
-        `M${containerBox.width + 40},${containerBox.cy}c-10,0 -10,${anchor} -20,${anchor}`
+        `M${containerBox.width + 40},${containerBox.cy}c-10,0 -10,${anchor} -20,${anchor}`,
       ];
     }
   },
@@ -125,5 +125,5 @@ export default {
           element => element.properties.match)
       );
     }
-  }
+  },
 };

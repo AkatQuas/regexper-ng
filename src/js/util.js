@@ -25,7 +25,7 @@ function normalizeBBox(box) {
   return _.defaults(box, {
     ax: box.x,
     ax2: box.x2,
-    ay: box.cy
+    ay: box.cy,
   });
 }
 
@@ -40,12 +40,12 @@ function spaceHorizontally(items, options) {
     values;
 
   options = _.defaults(options || {}, {
-    padding: 0
+    padding: 0,
   });
 
   values = _.map(items, item => ({
     box: normalizeBBox(item.getBBox()),
-    item
+    item,
   }));
 
   // Calculate where the axis points should be positioned vertically.
@@ -71,12 +71,12 @@ function spaceVertically(items, options) {
     values;
 
   options = _.defaults(options || {}, {
-    padding: 0
+    padding: 0,
   });
 
   values = _.map(items, item => ({
     box: item.getBBox(),
-    item
+    item,
   }));
 
   // Calculate where the center of each item should be positioned horizontally.
@@ -135,5 +135,5 @@ export default {
   wait,
   tick,
   exposeError,
-  icon
+  icon,
 };

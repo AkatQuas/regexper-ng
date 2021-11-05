@@ -15,9 +15,10 @@ function hex(value) {
 }
 
 // [Unicode Property Syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes#syntax)
+//
 // TODO Script and Script_Extensions
 function unicodeProperty(arg) {
-  // [General_Category (gc)](https://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#:~:text=%23%20General_Category%20(gc))
+  // [General_Category (gc)](https://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#:~:text=%23%20General_Category)
   var gcMap = {
     C: 'Other',
     Cc: 'Control',

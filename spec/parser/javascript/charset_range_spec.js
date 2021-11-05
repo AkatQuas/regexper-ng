@@ -7,32 +7,32 @@ describe('parser/javascript/charset_range.js', function() {
   _.forIn({
     'a-z': {
       first: jasmine.objectContaining({ textValue: 'a' }),
-      last: jasmine.objectContaining({ textValue: 'z' })
+      last: jasmine.objectContaining({ textValue: 'z' }),
     },
     '\\b-z': {
       first: jasmine.objectContaining({ textValue: '\\b' }),
-      last: jasmine.objectContaining({ textValue: 'z' })
+      last: jasmine.objectContaining({ textValue: 'z' }),
     },
     '\\f-z': {
       first: jasmine.objectContaining({ textValue: '\\f' }),
-      last: jasmine.objectContaining({ textValue: 'z' })
+      last: jasmine.objectContaining({ textValue: 'z' }),
     },
     '\\n-z': {
       first: jasmine.objectContaining({ textValue: '\\n' }),
-      last: jasmine.objectContaining({ textValue: 'z' })
+      last: jasmine.objectContaining({ textValue: 'z' }),
     },
     '\\r-z': {
       first: jasmine.objectContaining({ textValue: '\\r' }),
-      last: jasmine.objectContaining({ textValue: 'z' })
+      last: jasmine.objectContaining({ textValue: 'z' }),
     },
     '\\t-z': {
       first: jasmine.objectContaining({ textValue: '\\t' }),
-      last: jasmine.objectContaining({ textValue: 'z' })
+      last: jasmine.objectContaining({ textValue: 'z' }),
     },
     '\\v-z': {
       first: jasmine.objectContaining({ textValue: '\\v' }),
-      last: jasmine.objectContaining({ textValue: 'z' })
-    }
+      last: jasmine.objectContaining({ textValue: 'z' }),
+    },
   }, (content, str) => {
     it(`parses "${str}" as a CharsetRange`, function() {
       var parser = new javascript.Parser(str);
@@ -47,7 +47,7 @@ describe('parser/javascript/charset_range.js', function() {
     '\\s-a',
     '\\S-a',
     '\\w-a',
-    '\\W-a'
+    '\\W-a',
   ], str => {
     it(`does not parse "${str}" as a CharsetRange`, function() {
       var parser = new javascript.Parser(str);
@@ -96,7 +96,7 @@ describe('parser/javascript/charset_range.js', function() {
           expect(util.spaceHorizontally).toHaveBeenCalledWith([
             this.node.first,
             'hyphen',
-            this.node.last
+            this.node.last,
           ], { padding: 5 });
           done();
         }).catch(done.fail);

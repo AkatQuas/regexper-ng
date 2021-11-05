@@ -7,7 +7,7 @@ describe('parser/javascript/repeat_any.js', function() {
 
     expect(parser.__consume__repeat_any()).toEqual(jasmine.objectContaining({
       minimum: 0,
-      maximum: -1
+      maximum: -1,
     }));
   });
 

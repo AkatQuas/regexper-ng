@@ -26,7 +26,7 @@
       <div class="section">
         <h3>Escape sequences</h3>
 
-        <figure class="shift-left" data-expr="\w\x7f\u00bb\1\0"></figure>
+        <figure class="shift-left" data-expr="\w\x7f\u00bb\1\0\k<name>\p{P}\P{Sc}"></figure>
 
         <p>Escape sequences are displayed in a green box and contain a description of the type of character(s) they will match.</p>
       </div>
@@ -51,7 +51,7 @@
     <section>
       <h2>Subexpressions</h2>
 
-      <figure class="shift-left" data-expr="(example\s)(?=content)"></figure>
+      <figure class="shift-left" data-expr="(example\s)(?=content)(?<name>Bob)"></figure>
 
       <p>Subexpressions are indicated by a dotted outline around the items that are in the expression. Captured subexpressions are labeled with the group number they will be captured under. Positive and negative lookahead are labeled as such.</p>
     </section>

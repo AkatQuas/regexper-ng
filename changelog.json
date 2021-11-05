@@ -1,5 +1,12 @@
 [
   {
+    "label": "November 5, 2021 Release",
+    "changes": [
+      "Support unicode category, <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes\">details</a>.",
+      "Support named capturing group and related back references. <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Ranges#using_named_groups\">Examples</a>."
+    ]
+  },
+  {
     "label": "September 5, 2020 Release",
     "changes": [
       "Updating build system to use only webpack.",
@@ -8,9 +15,7 @@
   },
   {
     "label": "June 4, 2018 Release",
-    "changes": [
-      "Moving source to GitLab and updating some links on the site."
-    ]
+    "changes": ["Moving source to GitLab and updating some links on the site."]
   },
   {
     "label": "May 24, 2018 Release",
@@ -58,9 +63,7 @@
   },
   {
     "label": "March 8, 2016 Release",
-    "changes": [
-      "Replaced icon font with individual SVG images"
-    ]
+    "changes": ["Replaced icon font with individual SVG images"]
   },
   {
     "label": "March 3, 2016 Release",
@@ -77,9 +80,7 @@
   },
   {
     "label": "November 10, 2015 Release",
-    "changes": [
-      "Fixing Babel integration to include polyfills"
-    ]
+    "changes": ["Fixing Babel integration to include polyfills"]
   },
   {
     "label": "November 1, 2015 Release",

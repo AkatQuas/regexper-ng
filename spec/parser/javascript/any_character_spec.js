@@ -6,7 +6,7 @@ describe('parser/javascript/any_character.js', function() {
     var parser = new javascript.Parser('.');
 
     expect(parser.__consume__terminal()).toEqual(jasmine.objectContaining({
-      type: 'any-character'
+      type: 'any-character',
     }));
   });
 

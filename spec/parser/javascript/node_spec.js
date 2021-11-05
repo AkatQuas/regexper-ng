@@ -35,9 +35,9 @@ describe('parser/javascript/node.js', function() {
           example: {
             get: function() {
               return 'value';
-            }
-          }
-        }
+            },
+          },
+        },
       };
 
       expect(this.node.example).toEqual('value');
@@ -76,7 +76,7 @@ describe('parser/javascript/node.js', function() {
         this.node._anchor = { example: 'value' };
 
         expect(this.node.anchor).toEqual({
-          example: 'value'
+          example: 'value',
         });
       });
 
@@ -89,15 +89,15 @@ describe('parser/javascript/node.js', function() {
     it('returns the normalized bbox of the container merged with the anchor', function() {
       this.node.proxy = {
         anchor: {
-          anchor: 'example anchor'
-        }
+          anchor: 'example anchor',
+        },
       };
       this.node.container = jasmine.createSpyObj('container', ['addClass', 'getBBox']);
       this.node.container.getBBox.and.returnValue({
         bbox: 'example bbox',
         x: 'left',
         x2: 'right',
-        cy: 'center'
+        cy: 'center',
       });
 
       expect(this.node.getBBox()).toEqual({
@@ -108,7 +108,7 @@ describe('parser/javascript/node.js', function() {
         cy: 'center',
         ax: 'left',
         ax2: 'right',
-        ay: 'center'
+        ay: 'center',
       });
     });
 
@@ -193,7 +193,7 @@ describe('parser/javascript/node.js', function() {
 
         this.text.getBBox.and.returnValue({
           width: 42,
-          height: 24
+          height: 24,
         });
 
         this.group.text.and.returnValue(this.text);
@@ -214,7 +214,7 @@ describe('parser/javascript/node.js', function() {
           .then(() => {
             expect(this.rect.attr).toHaveBeenCalledWith({
               width: 52,
-              height: 34
+              height: 34,
             });
             done();
           }).catch(done.fail);
@@ -359,7 +359,7 @@ describe('parser/javascript/node.js', function() {
 
       expect(this.rect.attr).toHaveBeenCalledWith({
         rx: 3,
-        ry: 3
+        ry: 3,
       });
     });
 
@@ -368,12 +368,12 @@ describe('parser/javascript/node.js', function() {
       beforeEach(function() {
         spyOn(this.text, 'getBBox').and.returnValue({
           width: 100,
-          height: 20
+          height: 20,
         });
         spyOn(this.content, 'getBBox').and.returnValue({
           width: 200,
           height: 100,
-          cx: 100
+          cx: 100,
         });
       });
 
@@ -403,7 +403,7 @@ describe('parser/javascript/node.js', function() {
           .then(() => {
             expect(this.rect.attr).toHaveBeenCalledWith({
               width: 210,
-              height: 110
+              height: 110,
             });
             done();
           }).catch(done.fail);
@@ -413,14 +413,14 @@ describe('parser/javascript/node.js', function() {
         this.content.getBBox.and.returnValue({
           width: 50,
           height: 100,
-          cx: 25
+          cx: 25,
         });
         spyOn(this.rect, 'attr').and.callThrough();
         this.node.renderLabeledBox('example label', this.content, { padding: 5 })
           .then(() => {
             expect(this.rect.attr).toHaveBeenCalledWith({
               width: 100,
-              height: 110
+              height: 110,
             });
             done();
           }).catch(done.fail);

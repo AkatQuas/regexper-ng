@@ -1,0 +1,12 @@
+.git/
+node_modules/
+spec/
+build/
+docs/
+.firebaserc
+firebase.json
+karma.conf.js
+LICENSE.txt
+README.md
+Makefile
+.gitlab-ci.yml

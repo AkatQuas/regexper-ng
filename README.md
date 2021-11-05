@@ -28,6 +28,12 @@ These other gulp tasks are available:
     $ yarn build # Build the site into the ./build directory
     $ yarn test # Run JSCS lint and Karma tests
 
+### Docker distribution
+
+To build a docker image distribution:
+
+    $ make build-docker
+
 ## License
 
 See [LICENSE.txt](/LICENSE.txt) file for licensing details.
