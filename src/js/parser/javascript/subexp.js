@@ -27,6 +27,8 @@ export default {
     '?:': 'non-capturing',
     '?=': 'positive lookahead',
     '?!': 'negative lookahead',
+    '?<=': 'positive lookbehind',
+    '?<!': 'negative lookbehind',
   },
 
   // Renders the subexp into the currently set container.

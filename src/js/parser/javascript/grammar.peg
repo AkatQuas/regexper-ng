@@ -14,6 +14,8 @@ grammar JavascriptRegexp
   subexp <- "(" capture:( "?:"
                         / "?="
                         / "?!"
+                        / "?<="
+                        / "?<!"
                         / "?<" name:( [a-zA-Z] [a-zA-Z0-9]* ) ">" )? regexp ")" <Subexp>
   charset <- "[" invert:"^"? parts:( charset_range / charset_terminal )* "]" <Charset>
   charset_range <- first:charset_range_terminal "-" last:charset_range_terminal <CharsetRange>

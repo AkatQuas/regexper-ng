@@ -25,6 +25,12 @@ describe('parser/javascript/subexp.js', function () {
         // so remove the proxy
         // proxy: jasmine.objectContaining({ textValue: 'test' }),
       },
+      '(?<=test)': {
+        regexp: jasmine.objectContaining({ textValue: 'test' }),
+      },
+      '(?<!test)': {
+        regexp: jasmine.objectContaining({ textValue: 'test' }),
+      },
       '(?<name>test)': {
         regexp: jasmine.objectContaining({ textValue: 'test' }),
       },
@@ -121,6 +127,14 @@ describe('parser/javascript/subexp.js', function () {
         },
         '(?:test)': {
           label: 'non-capturing',
+          groupCounter: 1,
+        },
+        '(?<=test)': {
+          label: 'positive lookbehind',
+          groupCounter: 1,
+        },
+        '(?<!test)': {
+          label: 'negative lookbehind',
           groupCounter: 1,
         },
         '(?<name>test)': {

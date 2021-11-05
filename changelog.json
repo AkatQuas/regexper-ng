@@ -2,8 +2,9 @@
   {
     "label": "November 5, 2021 Release",
     "changes": [
-      "Support unicode category, <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes\">details</a>.",
-      "Support named capturing group and related back references. <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Ranges#using_named_groups\">Examples</a>."
+      "Supporting unicode category, <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes\">details</a>.",
+      "Supporting named capturing group and related back references. <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Ranges#using_named_groups\">Examples</a>.",
+      "Supporting negative/position lookbehind."
     ]
   },
   {
