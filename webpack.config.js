@@ -10,9 +10,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const distUrl =
   typeof process.env.DIST_URL === 'string' ? process.env.DIST_URL : '';
 
+/**
+ * @type {import('webpack').Configuration}
+ */
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  devtool: 'source-map',
+  devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',
   entry: './src/js/main.js',
   output: {
     path: path.join(__dirname, './build'),

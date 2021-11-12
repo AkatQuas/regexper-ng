@@ -3,7 +3,7 @@ FROM node:12-alpine as build
 WORKDIR /data
 ADD . /data
 
-RUN yarn install && yarn build
+RUN yarn install && NODE_ENV=production yarn build
 
 FROM node:12-alpine
 

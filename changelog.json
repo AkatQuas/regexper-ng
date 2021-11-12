@@ -1,5 +1,11 @@
 [
   {
+    "label": "November 11, 2021 Release",
+    "changes": [
+      "Supporting <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/dotAll\">'s' flag</a> and <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/hasIndices\">'d' flag</a>."
+    ]
+  },
+  {
     "label": "November 5, 2021 Release",
     "changes": [
       "Supporting unicode category, <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes\">details</a>.",

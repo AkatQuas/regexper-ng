@@ -23,6 +23,10 @@ MAGENTA=$(shell tput setaf 5)
 CYAN=$(shell tput setaf 6)
 WHITE=$(shell tput setaf 7)
 
+define ensure_yarn
+cd $(1) && if [ ! -d "node_modules" ];then yarn;fi
+endef
+
 IMAGE_NAME=regexper
 
 #
@@ -37,7 +41,7 @@ IMAGE_NAME=regexper
 
 SHELL:=/bin/bash
 .DEFAULT_GOAL:=help
-targets = help groupdhelp list-help start lint build test build-docker clean
+targets = help groupdhelp list-help setup start lint build test build-docker clean
 
 
 # All targets.
@@ -57,18 +61,21 @@ list-help: ## List all commands
 
 ##@ Setup
 
+setup: ## install node_modules
+	$(call ensure_yarn, $(CWD))
+
 ##@ Development
 
-start: ## start the project server
-	npx webpack-dev-server
+start: setup ## start the project server
+	NODE_ENV=development npx webpack-dev-server --open
 
-lint: ## lint
+lint: setup ## lint
 	npx eslint --fix .
 
 ##@ Build
 
 build: lint ## build the static regexper website
-	npx webpack
+	NODE_ENV=production npx webpack
 
 test: build ## test anything
 	$(info $(RED)Testing$(NOFORMAT))
