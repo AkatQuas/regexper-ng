@@ -13,7 +13,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "ignorePatterns": ["build/*", "docs/*", "src/**/grammar.js"],
+  "ignorePatterns": ["extensions/**", "build/*", "docs/*", "src/**/grammar.js"],
   "rules": {
     "comma-dangle": [
       "error",

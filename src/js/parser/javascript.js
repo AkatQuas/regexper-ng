@@ -4,9 +4,8 @@
 // is contained in the various subclasses of
 // [Node](./javascript/node.html)
 
-import Snap from 'snapsvg';
 import _ from 'lodash';
-
+import Snap from 'snapsvg';
 import util from '../util.js';
 import javascript from './javascript/parser.js';
 import ParserState from './javascript/parser_state.js';
@@ -80,24 +79,26 @@ export default class Parser {
   render() {
     let svg = Snap(this.container.querySelector('svg'));
 
-    return this.parsed.render(svg.group())
-      // Once rendering is complete, the rendered expression is positioned and
-      // the SVG resized to create some padding around the image contents.
-      .then(result => {
-        let box = result.getBBox();
+    return (
+      this.parsed
+        .render(svg.group())
+        // Once rendering is complete, the rendered expression is positioned and
+        // the SVG resized to create some padding around the image contents.
+        .then((result) => {
+          let box = result.getBBox();
 
-        result.transform(Snap.matrix()
-          .translate(10 - box.x, 10 - box.y));
-        svg.attr({
-          width: box.width + 20,
-          height: box.height + 20,
-        });
-      })
-      // Stop and remove loading indicator after render is totally complete.
-      .then(() => {
-        this._removeClass('loading');
-        this.container.removeChild(this.container.querySelector('.progress'));
-      });
+          result.transform(Snap.matrix().translate(10 - box.x, 10 - box.y));
+          svg.attr({
+            width: box.width + 20,
+            height: box.height + 20,
+          });
+        })
+        // Stop and remove loading indicator after render is totally complete.
+        .then(() => {
+          this._removeClass('loading');
+          this.container.removeChild(this.container.querySelector('.progress'));
+        })
+    );
   }
 
   // Cancels any currently in-progress render.

@@ -23,11 +23,20 @@ MAGENTA=$(shell tput setaf 5)
 CYAN=$(shell tput setaf 6)
 WHITE=$(shell tput setaf 7)
 
-define ensure_yarn
-cd $(1) && if [ ! -d "node_modules" ];then yarn;fi
+define ensure_npm
+cd $(1) && if [ ! -d "node_modules" ];then npm install;fi
+endef
+
+define ensure_npx
+if ! command -v $(1) > /dev/null; then echo "installing $(1) globally use npm" && npm install -g $(1); fi
+endef
+
+define clean_npx
+if command -v $(1) > /dev/null; then npm uninstall -g $(1); fi
 endef
 
 IMAGE_NAME=regexper
+EXTENSION_DIR=$(CWD)/extensions
 
 #
 # Tweak the variables based on your project.
@@ -41,7 +50,7 @@ IMAGE_NAME=regexper
 
 SHELL:=/bin/bash
 .DEFAULT_GOAL:=help
-targets = help groupdhelp list-help setup start lint build test build-docker clean
+targets = help groupdhelp list-help setup start lint build test build-docker build-extensions pack-extensions clean_tools clean
 
 
 # All targets.
@@ -62,7 +71,8 @@ list-help: ## List all commands
 ##@ Setup
 
 setup: ## install node_modules
-	$(call ensure_yarn, $(CWD))
+	$(call ensure_npm, $(CWD))
+	$(call ensure_npx, vsce)
 
 ##@ Development
 
@@ -70,7 +80,7 @@ start: setup ## start the project server
 	NODE_ENV=development npx webpack-dev-server --open
 
 lint: setup ## lint
-	npx eslint --fix .
+	npx eslint --fix $(CWD)/src
 
 ##@ Build
 
@@ -87,8 +97,19 @@ test: build ## test anything
 	$(info $(WHITE)Testing$(NOFORMAT))
 	npx karma start --single-run
 
-build-docker: ## build the static regexper website into docker
+build-docker: setup ## build the static regexper website into docker
 	docker build -t ${IMAGE_NAME} ./
+
+build-extensions: setup ## build the static regexper assest for extensions media
+	npx webpack --config webpack.vsce.js
+
+pack-extensions: setup build-extensions ## pack extensions using vsce
+	cp $(CWD)/static/favicon.ico $(EXTENSION_DIR)/media/icon.ico
+	$(call ensure_npm, $(EXTENSION_DIR))
+	cd $(EXTENSION_DIR) && (rm -rf dist || true) && npx webpack --mode production --no-devtool && vsce package --no-yarn --out $(CWD)
+
+clean_tools: ## clean tools if you need it
+	$(call clean_npx, vsce)
 
 ##@ Cleanup
 

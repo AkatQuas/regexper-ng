@@ -9,15 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: 12
+          node-version: 14
+          cache: 'npm'
       # - run: pwd && ls -al
       # - run: sed -i -E 's#href="/([a-z])#href="/regexper-ng/\1#g' lib/partials/page_top.handlebars
       # - run: sed -i -E 's#a href="/"#a href="/regexper-ng/"#g' lib/partials/page_top.handlebars
       # - run: cat lib/partials/page_top.handlebars
-      - run: yarn install
-      - run: yarn build
+      - run: npm install
+      - run: npx webpack
         env:
           NODE_ENV: production
           DIST_URL: /regexper-ng
