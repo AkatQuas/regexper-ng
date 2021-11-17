@@ -36,6 +36,10 @@ To build a docker image distribution:
 
     $ make build-docker
 
+### VS Code Extension distribution
+
+Check out the [release list](https://github.com/AkatQuas/regexper-ng/releases) and the [installation guidance](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix).
+
 ## License
 
 See [LICENSE.txt](/LICENSE.txt) file for licensing details.
