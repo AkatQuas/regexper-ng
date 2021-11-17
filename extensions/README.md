@@ -12,14 +12,14 @@ Literally, this extension only support valid JavaScript RegExp syntax.
 1. Right click to pop up the menu.
 1. Select the `Visualize Regexp` option.
 
-![Demo selection](https://github.com/AkatQuas/regexper-ng/tree/master/extensions/demo-selection.gif)
+![Demo selection](https://github.com/AkatQuas/regexper-ng/blob/master/extensions/demo-selection.gif?raw=true)
 
 - Debugging regular expression.
 
 1. Press `F1` or `Ctrl/Cmd+Shift+P` to bring up the command palette.
 1. Type `Regexp` to find the command `RegexperNG: Visualize Regexp`.
 
-![Demo visualization](https://github.com/AkatQuas/regexper-ng/tree/master/extensions/demo-visualization.gif)
+![Demo visualization](https://github.com/AkatQuas/regexper-ng/blob/master/extensions/demo-visualization.gif?raw=true)
 
 ## Contribution
 
