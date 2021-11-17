@@ -5,14 +5,13 @@
 // test. Therefore, this code is kept as simple as possible to reduce the need
 // to run it through automated tests.
 
-import '../sass/main.scss';
-
-import util from './util.js';
-import Regexper from './regexper.js';
-import Parser from './parser/javascript.js';
 import _ from 'lodash';
+import '../sass/main.scss';
+import Parser from './parser/javascript.js';
+import Regexper from './regexper.js';
+import util from './util.js';
 
-(function() {
+(function () {
   // Initialize the main page of the site. Functionality is kept in the
   // [Regexper class](./regexper.html).
   if (document.body.querySelector('#content .application')) {
@@ -29,12 +28,12 @@ import _ from 'lodash';
   // Initialize other pages on the site (specifically the documentation page).
   // Any element with a `data-expr` attribute will contain a rendering of the
   // provided regular expression.
-  _.each(document.querySelectorAll('[data-expr]'), element => {
+  _.each(document.querySelectorAll('[data-expr]'), (element) => {
     new Parser(element, { keepContent: true })
       .parse(element.getAttribute('data-expr'))
-      .then(parser => {
+      .then((parser) => {
         parser.render();
       })
       .catch(util.exposeError);
   });
-}());
+})();

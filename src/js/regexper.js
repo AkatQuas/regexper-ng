@@ -1,9 +1,9 @@
 // The Regexper class manages the top-level behavior for the entire
 // application. This includes event handlers for all user interactions.
 
-import util from './util.js';
-import Parser from './parser/javascript.js';
 import _ from 'lodash';
+import Parser from './parser/javascript.js';
+import util from './util.js';
 
 export default class Regexper {
   constructor(root) {
@@ -16,10 +16,19 @@ export default class Regexper {
 
     this.links = this.form.querySelector('ul');
     this.permalink = this.links.querySelector('a[data-action="permalink"]');
-    this.downloadSvg = this.links.querySelector('a[data-action="download-svg"]');
-    this.downloadPng = this.links.querySelector('a[data-action="download-png"]');
+    this.downloadSvg = this.links.querySelector(
+      'a[data-action="download-svg"]'
+    );
+    this.downloadPng = this.links.querySelector(
+      'a[data-action="download-png"]'
+    );
 
     this.svgContainer = root.querySelector('#regexp-render');
+  }
+
+  _cancel_running() {
+    this.running.cancel();
+    this.running = false;
   }
 
   // Event handler for key presses in the regular expression form field.
@@ -39,7 +48,7 @@ export default class Regexper {
   documentKeypressListener(event) {
     // Pressing escape will cancel a currently running render.
     if (event.keyCode === 27 && this.running) {
-      this.running.cancel();
+      this._cancel_running();
     }
   }
 
@@ -53,8 +62,7 @@ export default class Regexper {
 
     try {
       this._setHash(this.field.value);
-    }
-    catch(e) {
+    } catch (e) {
       // Failed to set the URL hash (probably because the expression is too
       // long). Turn off display of the permalink and just show the expression.
       this.permalinkEnabled = false;
@@ -79,7 +87,10 @@ export default class Regexper {
   bindListeners() {
     this.field.addEventListener('keypress', this.keypressListener.bind(this));
     this.form.addEventListener('submit', this.submitListener.bind(this));
-    this.root.addEventListener('keyup', this.documentKeypressListener.bind(this));
+    this.root.addEventListener(
+      'keyup',
+      this.documentKeypressListener.bind(this)
+    );
     window.addEventListener('hashchange', this.hashchangeListener.bind(this));
   }
 
@@ -88,9 +99,8 @@ export default class Regexper {
     if (typeof window.URL === 'function') {
       try {
         let url = new URL('http://regexper.com/#%25');
-        this.buggyHash = (url.hash === '#%');
-      }
-      catch(e) {
+        this.buggyHash = url.hash === '#%';
+      } catch (e) {
         this.buggyHash = false;
       }
     }
@@ -111,8 +121,7 @@ export default class Regexper {
     try {
       let hash = location.hash.slice(1);
       return this.buggyHash ? hash : decodeURIComponent(hash);
-    }
-    catch(e) {
+    } catch (e) {
       return e;
     }
   }
@@ -154,15 +163,17 @@ export default class Regexper {
 
   // Update the URLs of the 'download' and 'permalink' links.
   updateLinks() {
-    let classes = _.without(this.links.className.split(' '), ['hide-download-svg', 'hide-permalink']);
+    let classes = _.without(this.links.className.split(' '), [
+      'hide-download-svg',
+      'hide-permalink',
+    ]);
     let svg = this.svgContainer.querySelector('.svg');
 
     // Create the SVG 'download' image URL.
     try {
       this.downloadSvg.parentNode.style.display = null;
       this.downloadSvg.href = this.buildBlobURL(svg.innerHTML);
-    }
-    catch(e) {
+    } catch (e) {
       // Blobs or URLs created from a blob URL don't work in the current
       // browser. Giving up on the download link.
       classes.push('hide-download-svg');
@@ -172,32 +183,36 @@ export default class Regexper {
     try {
       let canvas = document.createElement('canvas');
       let context = canvas.getContext('2d');
-      let loader = new Image;
+      let loader = new Image();
 
-      loader.width = canvas.width = Number(svg.querySelector('svg').getAttribute('width'));
-      loader.height = canvas.height = Number(svg.querySelector('svg').getAttribute('height'));
+      loader.width = canvas.width = Number(
+        svg.querySelector('svg').getAttribute('width')
+      );
+      loader.height = canvas.height = Number(
+        svg.querySelector('svg').getAttribute('height')
+      );
       loader.onload = () => {
         try {
           context.drawImage(loader, 0, 0, loader.width, loader.height);
-          canvas.toBlob(blob => {
+          canvas.toBlob((blob) => {
             try {
               window.pngBlob = blob;
               this.downloadPng.href = URL.createObjectURL(window.pngBlob);
-              this.links.className = this.links.className.replace(/\bhide-download-png\b/, '');
-            }
-            catch(e) {
+              this.links.className = this.links.className.replace(
+                /\bhide-download-png\b/,
+                ''
+              );
+            } catch (e) {
               // Ignore errors
             }
           }, 'image/png');
-        }
-        catch(e) {
+        } catch (e) {
           // Ignore errors
         }
       };
       loader.src = 'data:image/svg+xml,' + encodeURIComponent(svg.innerHTML);
       classes.push('hide-download-png');
-    }
-    catch(e) {
+    } catch (e) {
       // Ignore errors
     }
 
@@ -216,9 +231,11 @@ export default class Regexper {
   //
   // - __warnings__ - Array of warning messages to display.
   displayWarnings(warnings) {
-    this.warnings.innerHTML = _.map(warnings, warning => (
-      `<li class="inline-icon">${util.icon('#warning')}${warning}</li>`
-    )).join('');
+    this.warnings.innerHTML = _.map(
+      warnings,
+      (warning) =>
+        `<li class="inline-icon">${util.icon('#warning')}${warning}</li>`
+    ).join('');
   }
 
   // Render regular expression
@@ -230,7 +247,7 @@ export default class Regexper {
     // When a render is already in progress, cancel it and try rendering again
     // after a short delay (canceling a render is not instantaneous).
     if (this.running) {
-      this.running.cancel();
+      this._cancel_running();
 
       return util.wait(10).then(() => this.renderRegexp(expression));
     }
@@ -239,50 +256,52 @@ export default class Regexper {
 
     this.running = new Parser(this.svgContainer);
 
-    return this.running
-      // Parse the expression.
-      .parse(expression)
-      // Display any error messages from the parser and abort the render.
-      .catch(message => {
-        this.state = 'has-error';
-        this.error.innerHTML = '';
-        this.error.appendChild(document.createTextNode(message));
+    return (
+      this.running
+        // Parse the expression.
+        .parse(expression)
+        // Display any error messages from the parser and abort the render.
+        .catch((message) => {
+          this.state = 'has-error';
+          this.error.innerHTML = '';
+          this.error.appendChild(document.createTextNode(message));
 
-        parseError = true;
+          parseError = true;
 
-        throw message;
-      })
-      // When parsing is successful, render the parsed expression.
-      .then(parser => parser.render())
-      // Once rendering is complete:
-      //  - Update links
-      //  - Display any warnings
-      //  - Track the completion of the render and how long it took
-      .then(() => {
-        this.state = 'has-results';
-        this.updateLinks();
-        this.displayWarnings(this.running.warnings);
-      })
-      // Handle any errors that happened during the rendering pipeline.
-      // Swallows parse errors and render cancellations. Any other exceptions
-      // are allowed to continue on to be tracked by the global error handler.
-      .catch(message => {
-        if (message === 'Render cancelled') {
-          this.state = '';
-        } else if (!parseError) {
           throw message;
-        }
-      })
-      // Finally, mark rendering as complete (and pass along any exceptions
-      // that were thrown).
-      .then(
-        () => {
-          this.running = false;
-        },
-        message => {
-          this.running = false;
-          throw message;
-        }
-      );
+        })
+        // When parsing is successful, render the parsed expression.
+        .then((parser) => parser.render())
+        // Once rendering is complete:
+        //  - Update links
+        //  - Display any warnings
+        //  - Track the completion of the render and how long it took
+        .then(() => {
+          this.state = 'has-results';
+          this.updateLinks();
+          this.displayWarnings(this.running.warnings);
+        })
+        // Handle any errors that happened during the rendering pipeline.
+        // Swallows parse errors and render cancellations. Any other exceptions
+        // are allowed to continue on to be tracked by the global error handler.
+        .catch((message) => {
+          if (message === 'Render cancelled') {
+            this.state = '';
+          } else if (!parseError) {
+            throw message;
+          }
+        })
+        // Finally, mark rendering as complete (and pass along any exceptions
+        // that were thrown).
+        .then(
+          () => {
+            this.running = false;
+          },
+          (message) => {
+            this.running = false;
+            throw message;
+          }
+        )
+    );
   }
 }

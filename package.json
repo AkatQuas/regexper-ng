@@ -17,7 +17,7 @@
   "private": true,
   "scripts": {
     "docs": "docco-toc --output ./docs $(find ./src/js -name '*.js')",
-    "pretest": "eslint --fix .",
+    "pretest": "eslint --fix src",
     "test": "karma start --single-run",
     "build": "webpack",
     "start": "webpack-dev-server"

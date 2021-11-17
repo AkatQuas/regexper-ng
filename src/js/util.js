@@ -36,30 +36,34 @@ function normalizeBBox(box) {
 // - __items__ - Array of items to be positioned
 // - __options.padding__ - Number of pixels to leave between items
 function spaceHorizontally(items, options) {
-  var verticalCenter,
-    values;
+  var verticalCenter, values;
 
   options = _.defaults(options || {}, {
     padding: 0,
   });
 
-  values = _.map(items, item => ({
+  values = _.map(items, (item) => ({
     box: normalizeBBox(item.getBBox()),
     item,
   }));
 
   // Calculate where the axis points should be positioned vertically.
-  verticalCenter = _.reduce(values,
+  verticalCenter = _.reduce(
+    values,
     (center, { box }) => Math.max(center, box.ay),
-    0);
+    0
+  );
 
   // Position items with padding between them and aligned their axis points.
-  _.reduce(values, (offset, { item, box }) => {
-    item.transform(Snap.matrix()
-      .translate(offset, verticalCenter - box.ay));
+  _.reduce(
+    values,
+    (offset, { item, box }) => {
+      item.transform(Snap.matrix().translate(offset, verticalCenter - box.ay));
 
-    return offset + options.padding + box.width;
-  }, 0);
+      return offset + options.padding + box.width;
+    },
+    0
+  );
 }
 
 // Positions a collection of items centered horizontally in a vertical stack.
@@ -67,30 +71,36 @@ function spaceHorizontally(items, options) {
 // - __items__ - Array of items to be positioned
 // - __options.padding__ - Number of pixels to leave between items
 function spaceVertically(items, options) {
-  var horizontalCenter,
-    values;
+  var horizontalCenter, values;
 
   options = _.defaults(options || {}, {
     padding: 0,
   });
 
-  values = _.map(items, item => ({
+  values = _.map(items, (item) => ({
     box: item.getBBox(),
     item,
   }));
 
   // Calculate where the center of each item should be positioned horizontally.
-  horizontalCenter = _.reduce(values,
-    (center, { box }) =>  Math.max(center, box.cx),
-    0);
+  horizontalCenter = _.reduce(
+    values,
+    (center, { box }) => Math.max(center, box.cx),
+    0
+  );
 
   // Position items with padding between them and align their centers.
-  _.reduce(values, (offset, { item, box }) => {
-    item.transform(Snap.matrix()
-      .translate(horizontalCenter - box.cx, offset));
+  _.reduce(
+    values,
+    (offset, { item, box }) => {
+      item.transform(
+        Snap.matrix().translate(horizontalCenter - box.cx, offset)
+      );
 
-    return offset + options.padding + box.height;
-  }, 0);
+      return offset + options.padding + box.height;
+    },
+    0
+  );
 }
 
 // Creates a Promise that will be resolved after a specified delay.
