@@ -14,21 +14,45 @@ When sending pull requests, please keep them focused on a single issue. I would 
 
 Node is required for working with this site.
 
+> It's preferred to develop on a Unix machine since the build process rely on the command `make`.
+>
+> However, it's still possible to run these process by executing commands directly.
+
 To start with, install the necessary dependencies:
 
-    $ yarn install
+    $ make setup
 
 To start a development server, run:
 
-    $ yarn start
+    $ make start
 
-This will build the site into the ./build directory, start a local start on port 8080, and begin watching the source files for modifications. The site will automatically be rebuilt when files are changed. Also, if you browser has the LiveReload extension, then the page will be reloaded.
+This will build the site into the `./build` directory, start a local start on port 8080, and begin watching the source files for modifications in `./src/`. The site will automatically be rebuilt when files are changed. Also, if you browser has the LiveReload extension, then the page will be reloaded.
 
 These other gulp tasks are available:
 
     $ yarn docs # Build documentation into the ./docs directory
     $ yarn build # Build the site into the ./build directory
     $ yarn test # Run JSCS lint and Karma tests
+
+A snippet of folder structure.
+
+```bash
+src
+|----index.handlebars # entry html template
+|
+|----sass # style files folder
+| |----...
+|
+|----js
+| |----regexper.js # DOM binding with Regexper
+| |----main.js # entry
+| |----parser
+| | |----javascript.js # JavaScript Regexper Parser
+| | |----javascript
+| | | |----grammar.peg # grammar file
+| | | |----regexp.js
+| | | |----...
+```
 
 ### Docker distribution
 
@@ -39,6 +63,32 @@ To build a docker image distribution:
 ### VS Code Extension distribution
 
 Check out the [release list](https://github.com/AkatQuas/regexper-ng/releases) and the [installation guidance](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix).
+
+#### Work with Extension code
+
+> Remember to run `make build_extensions` to build assets for extension to consume.
+
+1. Open the project in VS Code editor.
+1. Press `F5` to run the extension in debug mode. You are free to modify the files in `extensions`.
+
+A snippet of folder structure.
+
+```bash
+extensions
+|----webpack.config.js
+|----package.json
+|
+|----media # assets built by regexper
+| |----main.css
+| |----main.js
+|
+|----src # extension source code
+| |----extension.ts
+| |----utils.ts
+|
+|----dist # output
+| |----...
+```
 
 ## License
 

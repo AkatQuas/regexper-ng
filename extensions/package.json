@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/AkatQuas/regexper-ng.git"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.62.0"
   },
@@ -36,7 +36,7 @@
     "menus": {
       "editor/context": [
         {
-          "when": "editorHasSelection",
+          "when": "editorLangId == javascript && editorHasSelection || editorLangId == typescript && editorHasSelection ",
           "command": "regexper-ng.visualize",
           "group": "z_commands"
         }
