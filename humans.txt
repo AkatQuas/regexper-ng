@@ -1,0 +1,18 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Creator: Jeff Avallone
+    Site: http://gitlab.com/javallone
+    Twitter: @javallone
+    Contributor: AkatQuas
+    Site: https://github.com/AkatQuas
+
+# THANKS
+
+    strfriend.com for the idea, whatever happened to you?
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3, SVG, Sass, Open Iconic
