@@ -1,5 +1,14 @@
 [
   {
+    "label": "July 16, 2026 Release",
+    "changes": [
+      "Supporting <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicodeSets\">'v' flag</a> and Unicode Sets character classes (<code>&&</code>, <code>--</code>, <code>\\q{}</code>).",
+      "Supporting <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Character_escape#hexadecimal_escape\">\\u{...}</a> code point escapes and surrogate pair escapes.",
+      "Supporting ES2025 inline modifier groups (<code>(?ims:...)</code>, <code>(?-i:...)</code>).",
+      "Upgraded build toolchain to Webpack 5, Dart Sass, and modern browser targets."
+    ]
+  },
+  {
     "label": "November 11, 2021 Release",
     "changes": [
       "Supporting <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/dotAll\">'s' flag</a> and <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/hasIndices\">'d' flag</a>."

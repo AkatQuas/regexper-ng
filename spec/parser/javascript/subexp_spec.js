@@ -141,6 +141,18 @@ describe('parser/javascript/subexp.js', function () {
           label: 'group #name',
           groupCounter: 1,
         },
+        '(?i:test)': {
+          label: 'modifiers (+ignore case)',
+          groupCounter: 1,
+        },
+        '(?-i:test)': {
+          label: 'modifiers (-ignore case)',
+          groupCounter: 1,
+        },
+        '(?i-s:test)': {
+          label: 'modifiers (+ignore case; -dot all)',
+          groupCounter: 1,
+        },
       },
       (data, str) => {
         it(`generates the correct label for "${str}"`, function () {
@@ -151,5 +163,15 @@ describe('parser/javascript/subexp.js', function () {
         });
       }
     );
+  });
+
+  describe('lookbehind with slash literals', function () {
+    it('requires escaped slashes inside lookbehind', function () {
+      expect(() => javascript.parse('(?<!\\/\\/)')).not.toThrow();
+    });
+
+    it('rejects unescaped slashes inside lookbehind', function () {
+      expect(() => javascript.parse('(?<!//)')).toThrow();
+    });
   });
 });

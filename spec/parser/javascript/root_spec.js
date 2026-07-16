@@ -41,6 +41,10 @@ describe('parser/javascript/root.js', function () {
         flags: ['Unicode'],
         regexp: jasmine.objectContaining({ textValue: 'test' }),
       },
+      '/test/v': {
+        flags: ['Unicode Sets'],
+        regexp: jasmine.objectContaining({ textValue: 'test' }),
+      },
       '/test/smgi': {
         flags: ['Global', 'Ignore Case', 'Multiline', 'Dot All'],
         regexp: jasmine.objectContaining({ textValue: 'test' }),

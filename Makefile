@@ -73,12 +73,11 @@ list-help: ## List all commands
 setup: ## install node_modules
 	$(call ensure_npm, $(CWD))
 	$(call ensure_npm, $(CWD)/extensions)
-	$(call ensure_npx, vsce)
 
 ##@ Development
 
 start: setup ## start the project server
-	NODE_ENV=development npx webpack_dev-server --open
+	NODE_ENV=development npx webpack serve --open
 
 lint: setup ## lint
 	npx eslint --fix $(CWD)/src
@@ -104,13 +103,13 @@ build_docker: setup ## build the static regexper website into docker
 build_extensions: setup ## build the static regexper assest for extensions media
 	npx webpack --config webpack.vsce.js
 
-pack_extensions: setup build_extensions ## pack extensions using vsce
+pack_extensions: setup build_extensions ## pack extensions using @vscode/vsce
 	cp $(CWD)/static/favicon.ico $(EXTENSION_DIR)/media/icon.ico
 	$(call ensure_npm, $(EXTENSION_DIR))
-	cd $(EXTENSION_DIR) && (rm -rf dist || true) && npx webpack --mode production --no-devtool && vsce package --no-yarn --out $(CWD)
+	cd $(EXTENSION_DIR) && (rm -rf dist || true) && npx webpack --mode production --no-devtool && npx vsce package --out $(CWD)
 
 clean_tools: ## clean tools if you need it
-	$(call clean_npx, vsce)
+	$(call clean_npx, @vscode/vsce)
 
 ##@ Cleanup
 

@@ -30,18 +30,15 @@ This will build the site into the `./build` directory, start a local start on po
 
 These other gulp tasks are available:
 
-    $ yarn docs # Build documentation into the ./docs directory
-    $ yarn build # Build the site into the ./build directory
-    $ yarn test # Run JSCS lint and Karma tests
+    $ npm run docs # Build documentation into the ./docs directory
+    $ npm run build # Build the site into the ./build directory
+    $ npm run test # Run JSCS lint and Karma tests
 
 A snippet of folder structure.
 
 ```bash
 src
 |----index.handlebars # entry html template
-|
-|----sass # style files folder
-| |----...
 |
 |----js
 | |----regexper.js # DOM binding with Regexper
@@ -59,6 +56,8 @@ src
 To build a docker image distribution:
 
     $ make build-docker
+
+    $ docker run -p 8080:8080 regexper:latest
 
 ### VS Code Extension distribution
 

@@ -12,7 +12,6 @@
 
     <link rel="shortcut icon" href="{{#if htmlWebpackPlugin.options.distUrl}}{{htmlWebpackPlugin.options.distUrl}}{{/if}}/favicon.ico" />
     <link rel="author" href="humans.txt" />
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Bangers&text=Regxpr" />
     <!-- Built: {{htmlWebpackPlugin.options.date}} -->
   </head>
   <body>
@@ -24,16 +23,24 @@
       </div>
 
       <nav>
-        <ul>
+        <ul class="nav-list">
           <li>
-            <a class="inline-icon" href="{{#if htmlWebpackPlugin.options.distUrl}}{{htmlWebpackPlugin.options.distUrl}}{{/if}}/changelog.html">{{icon "#list-rich"}}Changelog</a>
+            <a class="inline-icon"
+              href="{{#if htmlWebpackPlugin.options.distUrl}}{{htmlWebpackPlugin.options.distUrl}}{{/if}}/changelog.html">{{icon
+              "list"}}Changelog</a>
           </li>
           <li>
-            <a class="inline-icon" href="{{#if htmlWebpackPlugin.options.distUrl}}{{htmlWebpackPlugin.options.distUrl}}{{/if}}/documentation.html">{{icon "#document"}}Documentation</a>
+            <a class="inline-icon"
+              href="{{#if htmlWebpackPlugin.options.distUrl}}{{htmlWebpackPlugin.options.distUrl}}{{/if}}/documentation.html">{{icon
+              "document"}}Documentation</a>
           </li>
           <li>
-            Source on <a class="inline-icon" href="https://gitlab.com/javallone/regexper-static">{{icon "#code"}}GitLab</a> or
-            <a class="inline-icon" href="https://github.com/AkatQuas/regexper-ng">{{icon "#code"}}GitHub</a>
+            <a class="inline-icon" target="_blank" rel="noopener noreferrer"
+              href="https://gitlab.com/javallone/regexper-static">{{icon "gitlab"}}GitLab</a>
+          </li>
+          <li>
+            <a class="inline-icon" target="_blank" rel="noopener noreferrer" href="https://github.com/AkatQuas/regexper-ng">{{icon
+                "github"}}GitHub</a>
           </li>
         </ul>
       </nav>

@@ -6,7 +6,7 @@
 // to run it through automated tests.
 
 import _ from 'lodash';
-import '../sass/main.scss';
+import '../css/main.css';
 import Parser from './parser/javascript.js';
 import Regexper from './regexper.js';
 import util from './util.js';

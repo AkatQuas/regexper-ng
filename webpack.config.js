@@ -1,28 +1,34 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-/**
- * Leave it to be empty string if no need
- */
 const distUrl =
   typeof process.env.DIST_URL === 'string' ? process.env.DIST_URL : '';
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 /**
  * @type {import('webpack').Configuration}
  */
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
-  devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',
+  mode: isProduction ? 'production' : 'development',
+  devtool: isProduction ? false : 'source-map',
   entry: './src/js/main.js',
   output: {
     path: path.join(__dirname, './build'),
-    filename: '[name]-[hash].js',
+    filename: '[name]-[contenthash].js',
+    clean: true,
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'static'),
+    },
+    port: 8080,
+    hot: true,
+    open: true,
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [{ from: './static' }],
     }),
@@ -55,7 +61,7 @@ module.exports = {
       date: new Date().toISOString(),
     }),
     new MiniCssExtractPlugin({
-      filename: '[name]-[hash].css',
+      filename: '[name]-[contenthash].css',
     }),
   ],
   module: {
@@ -63,24 +69,30 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        use: 'babel-loader',
       },
       {
         test: require.resolve('snapsvg'),
-        loader: 'imports-loader',
-        options: {
-          wrapper: 'window',
-          additionalCode: 'module.exports = 0;',
+        use: {
+          loader: 'imports-loader',
+          options: {
+            wrapper: 'window',
+            additionalCode: 'module.exports = 0;',
+          },
         },
       },
       {
         test: /\.peg$/,
-        loader: require.resolve('./lib/canopy-loader'),
+        use: require.resolve('./lib/canopy-loader'),
       },
       {
-        test: /\.scss$/,
+        test: /\.css$/,
         exclude: /node_modules/,
-        loaders: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+        ],
       },
       {
         test: /\.handlebars$/,

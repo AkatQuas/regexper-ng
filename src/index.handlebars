@@ -3,17 +3,20 @@
 <div class="application">
   <form id="regexp-form">
     <textarea id="regexp-input" autofocus="autofocus" placeholder="Enter JavaScript-style regular expression to display (hotkey: Shift+Enter)"></textarea>
-    <button type="submit">Display</button>
+    <div class="regexp-form-actions">
+      <button type="submit">Display</button>
+      <button type="button" id="random-regexp">Random example</button>
+    </div>
 
     <ul class="inline-list">
       <li class="download-svg">
-        <a href="#" class="inline-icon" data-action="download-svg" download="image.svg" type="image/svg+xml">{{icon "#data-transfer-download"}}Download SVG</a>
+        <a href="#" class="inline-icon" data-action="download-svg" download="image.svg" type="image/svg+xml">{{icon "download"}}Download SVG</a>
       </li>
       <li class="download-png">
-        <a href="#" class="inline-icon" data-action="download-png" download="image.png" type="image/png">{{icon "#data-transfer-download"}}Download PNG</a>
+        <a href="#" class="inline-icon" data-action="download-png" download="image.png" type="image/png">{{icon "download"}}Download PNG</a>
       </li>
       <li class="permalink">
-        <a href="#" class="inline-icon" data-action="permalink">{{icon "#link-intact"}}Permalink</a>
+        <a href="#" class="inline-icon" data-action="permalink">{{icon "link"}}Permalink</a>
       </li>
     </ul>
   </form>

@@ -32,6 +32,8 @@ describe('parser/javascript/escape.js', function () {
       '\\cx': { label: 'ctrl-X (0x18)', ordinal: 24 },
       '\\xab': { label: '0xAB', ordinal: 0xab },
       '\\uabcd': { label: 'U+ABCD', ordinal: 0xabcd },
+      '\\u{1F600}': { label: 'U+1F600', ordinal: 0x1f600 },
+      '\\u{10FFFF}': { label: 'U+10FFFF', ordinal: 0x10ffff },
       '\\p{C}': { label: 'Other', ordinal: -1 },
       '\\p{Other}': { label: 'Other', ordinal: -1 },
       '\\P{C}': { label: 'non-Other', ordinal: -1 },

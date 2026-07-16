@@ -1,7 +1,5 @@
-@import 'base';
-
 svg {
-  background-color: $white;
+  background-color: #fff;
 }
 
 .root text,
@@ -12,37 +10,42 @@ svg {
 .root path {
   fill-opacity: 0;
   stroke-width: 2px;
-  stroke: $black;
+  stroke: #000;
 }
 
 .root circle {
-  fill: $gray;
+  fill: #6b6659;
   stroke-width: 2px;
-  stroke: $black;
+  stroke: #000;
 }
 
-.anchor text, .any-character text {
-  fill: $white;
+.anchor text,
+.any-character text {
+  fill: #fff;
 }
 
-.anchor rect, .any-character rect {
-  fill: $gray;
+.anchor rect,
+.any-character rect {
+  fill: #6b6659;
 }
 
-.escape text, .charset-escape text, .literal text {
-  fill: $black;
+.escape text,
+.charset-escape text,
+.literal text {
+  fill: #000;
 }
 
-.escape rect, .charset-escape rect {
-  fill: $green;
+.escape rect,
+.charset-escape rect {
+  fill: #bada55;
 }
 
 .literal rect {
-  fill: $blue;
+  fill: #dae9e5;
 }
 
 .charset .charset-box {
-  fill: $tan;
+  fill: #cbcbba;
 }
 
 .subexp .subexp-label tspan,
@@ -52,7 +55,7 @@ svg {
 }
 
 .repeat-label {
-    cursor: help;
+  cursor: help;
 }
 
 .subexp .subexp-label tspan,
@@ -61,12 +64,12 @@ svg {
 }
 
 .subexp .subexp-box {
-  stroke: $light-gray;
-  stroke-dasharray: 6,2;
+  stroke: #908c83;
+  stroke-dasharray: 6, 2;
   stroke-width: 2px;
   fill-opacity: 0;
 }
 
 .quote {
-  fill: $light-gray;
+  fill: #908c83;
 }

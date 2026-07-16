@@ -1,0 +1,95 @@
+grammar JavascriptRegexpSets
+  root <- ( ( "/" regexp "/" flags:[yigmusdv]* ) / regexp flags:""? ) <Root>
+  regexp <- match:match alternates:( "|" match )* <Regexp>
+  match <- (!repeat) parts:match_fragment* <Match>
+  anchor <- ( "^" / "$" ) <Anchor>
+  match_fragment <- content:( anchor / subexp / charset / terminal ) repeat:repeat? <MatchFragment>
+  repeat <- spec:( repeat_any / repeat_required / repeat_optional / repeat_spec ) greedy:"?"? <Repeat>
+  repeat_any <- "*" <RepeatAny>
+  repeat_required <- "+" <RepeatRequired>
+  repeat_optional <- "?" <RepeatOptional>
+  repeat_spec <- ( "{" min:[0-9]+ "," max:[0-9]+ "}"
+                 / "{" min:[0-9]+ ",}"
+                 / "{" exact:[0-9]+ "}" ) <RepeatSpec>
+  subexp <- "(" capture:( "?:"
+                        / "?="
+                        / "?!"
+                        / "?<="
+                        / "?<!"
+                        / "?<" name:( [a-zA-Z] [a-zA-Z0-9]* ) ">"
+                        / inline_modifiers_enable
+                        / inline_modifiers_mixed
+                        / inline_modifiers_disable )? regexp ")" <Subexp>
+  inline_modifiers_enable <- "?" enable:[ims]+ ":"
+  inline_modifiers_mixed <- "?" enable:[ims]+ "-" disable:[ims]+ ":"
+  inline_modifiers_disable <- "?" "-" disable:[ims]+ ":"
+  charset <- "[" invert:"^"? body:class_set_body "]" <Charset>
+  class_set_body <- class_subtraction
+                  / class_intersection
+                  / class_union
+  class_subtraction <- left:class_union "--" right:class_union <ClassSubtraction>
+  class_intersection <- left:class_union "&&" right:class_union <ClassIntersection>
+  class_union <- head:class_operand tail:class_operand* <ClassUnion>
+  class_operand <- nested_charset
+                 / charset_string
+                 / class_set_range
+                 / class_set_terminal
+  nested_charset <- "[" invert:"^"? body:class_set_body "]" <NestedCharset>
+  charset_string <- "\\" "q" "{" items:( charset_string_item ( "|" charset_string_item )* ) "}" <CharsetString>
+  charset_string_item <- chars:class_set_char+ <CharsetStringItem>
+  class_set_range <- first:class_set_char "-" last:class_set_char <CharsetRange>
+  class_set_terminal <- class_set_escape <CharsetEscape>
+                      / class_set_literal <Literal>
+  class_set_escape <- "\\" esc:(
+         code:[bdDfnrsStvwW] arg:""?
+       / control_escape
+       / octal_escape
+       / hex_escape
+       / unicode_escape
+       / unicode_code_point_escape
+       / null_escape
+       / named_group_capture_escape
+       / unicode_category_escape
+       / unicode_category_value_escape
+       / non_unicode_category_escape
+       / non_unicode_category_value_escape
+       / code:"b" arg:"" )
+  class_set_char <- class_set_escape <CharsetEscape>
+                  / class_set_literal <Literal>
+  class_set_literal <- ( ""? literal:[^\\\]] )
+                     / ( literal:"\\" &"c" )
+                     / ( "\\" literal:. )
+  terminal <- "." <AnyCharacter>
+            / surrogate_escape <SurrogateEscape>
+            / escape <Escape>
+            / literal <Literal>
+  surrogate_escape <- "\\" "u" lead:hex_4_digits "\\" "u" trail:hex_4_digits
+  escape <- "\\" esc:(
+         code:[bBdDfnrsStvwW1-9] arg:""?
+       / control_escape
+       / octal_escape
+       / hex_escape
+       / unicode_escape
+       / unicode_code_point_escape
+       / null_escape
+       / named_group_capture_escape
+       / unicode_category_escape
+       / unicode_category_value_escape
+       / non_unicode_category_escape
+       / non_unicode_category_value_escape )
+  literal <- ( ""? literal:[^|\\/.\[\(\)?+*$^] )
+           / ( literal:"\\" &"c" )
+           / ( "\\" literal:. )
+
+  control_escape <- code:"c" arg:[a-zA-Z]
+  octal_escape <- code:"0" arg:[0-7]+
+  hex_escape <- code:"x" arg:( [0-9a-fA-F] [0-9a-fA-F] )
+  unicode_escape <- code:"u" arg:hex_4_digits
+  unicode_code_point_escape <- code:"u" "{" arg:[0-9a-fA-F]+ "}"
+  hex_4_digits <- [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F]
+  null_escape <- code:"0" arg:""?
+  unicode_category_escape <- code:"p" "{" arg:( [_0-9a-zA-Z-]+ ) "}"
+  unicode_category_value_escape <- code:"p" "{" arg:( [_0-9a-zA-Z-]+ "=" [_0-9a-zA-Z-]+ ) "}"
+  non_unicode_category_escape <- code:"P" "{" arg:( [_0-9a-zA-Z-]+ ) "}"
+  non_unicode_category_value_escape <- code:"P" "{" arg:( [_0-9a-zA-Z-]+ "=" [_0-9a-zA-Z-]+ ) "}"
+  named_group_capture_escape <- code:"k" "<" arg:( [a-zA-Z] [a-zA-Z0-9]* ) ">"

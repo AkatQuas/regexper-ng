@@ -31,6 +31,12 @@ export default {
     '?<!': 'negative lookbehind',
   },
 
+  modifierFlagLabels: {
+    i: 'ignore case',
+    m: 'multiline',
+    s: 'dot all',
+  },
+
   // Renders the subexp into the currently set container.
   _render() {
     // **NOTE:** `this.label()` **MUST** be called here, in _render, and before
@@ -53,17 +59,51 @@ export default {
 
   // Returns the label for the subexpression.
   label() {
-    if (_.has(this.labelMap, this.properties.capture.textValue)) {
-      return this.labelMap[this.properties.capture.textValue];
-    } else if (
-      this.properties.capture &&
-      this.properties.capture.properties &&
-      this.properties.capture.properties.name
-    ) {
-      return `group #${this.properties.capture.properties.name.textValue}`;
-    } else {
+    const capture = this.properties.capture;
+
+    if (!capture) {
       return `group #${this.state.groupCounter++}`;
     }
+
+    if (_.has(this.labelMap, capture.textValue)) {
+      return this.labelMap[capture.textValue];
+    }
+
+    if (
+      capture.properties &&
+      capture.properties.name
+    ) {
+      return `group #${capture.properties.name.textValue}`;
+    }
+
+    if (
+      capture.properties &&
+      (capture.properties.enable || capture.properties.disable)
+    ) {
+      return this.modifierLabel(capture);
+    }
+
+    return `group #${this.state.groupCounter++}`;
+  },
+
+  modifierLabel(capture) {
+    const parts = [];
+    const enable = capture.properties.enable
+      ? capture.properties.enable.textValue
+      : '';
+    const disable = capture.properties.disable
+      ? capture.properties.disable.textValue
+      : '';
+
+    if (enable) {
+      parts.push(`+${[...enable].map((flag) => this.modifierFlagLabels[flag]).join(', ')}`);
+    }
+
+    if (disable) {
+      parts.push(`-${[...disable].map((flag) => this.modifierFlagLabels[flag]).join(', ')}`);
+    }
+
+    return `modifiers (${parts.join('; ')})`;
   },
 
   setup() {

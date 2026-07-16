@@ -25,6 +25,15 @@ export default {
 
   // Renders the charset into the currently set container.
   _render() {
+    if (this.body && this.label) {
+      this.partContainer = this.container.group();
+
+      return this.body.render(this.partContainer.group())
+        .then(() => this.renderLabeledBox(this.label, this.partContainer, {
+          padding: 5,
+        }));
+    }
+
     this.partContainer = this.container.group();
 
     // Renders each part of the charset into the part container.
@@ -45,6 +54,18 @@ export default {
   },
 
   setup() {
+    if (this.properties.body) {
+      this.body = this.properties.body;
+
+      if (this.properties.invert.textValue === '^') {
+        this.label = 'None of:';
+      } else {
+        this.proxy = this.body;
+      }
+
+      return;
+    }
+
     // The label for the charset will be:
     // - "One of:" for charsets of the form: `[abc]`.
     // - "None of:" for charsets of the form: `[^abc]`.

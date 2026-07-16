@@ -13,6 +13,7 @@ export default {
     m: 'Multiline',
     y: 'Sticky',
     u: 'Unicode',
+    v: 'Unicode Sets',
     s: 'Dot All',
   },
 

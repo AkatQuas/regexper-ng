@@ -2,6 +2,7 @@
 // application. This includes event handlers for all user interactions.
 
 import _ from 'lodash';
+import { randomExample } from './example-expressions.js';
 import Parser from './parser/javascript.js';
 import util from './util.js';
 
@@ -23,6 +24,7 @@ export default class Regexper {
       'a[data-action="download-png"]'
     );
 
+    this.randomButton = root.querySelector('#random-regexp');
     this.svgContainer = root.querySelector('#regexp-render');
   }
 
@@ -83,6 +85,30 @@ export default class Regexper {
     }
   }
 
+  // Event handler for generating and displaying a random example expression.
+  randomExampleListener(event) {
+    event.preventDefault();
+    this.selectExample(randomExample(this.field.value));
+  }
+
+  // Display a selected example expression.
+  //
+  // - __expression__ - Regular expression to display.
+  selectExample(expression) {
+    if (!expression) {
+      return;
+    }
+
+    this.field.value = expression;
+
+    try {
+      this._setHash(expression);
+    } catch (e) {
+      this.permalinkEnabled = false;
+      this.showExpression(expression);
+    }
+  }
+
   // Binds all event listeners.
   bindListeners() {
     this.field.addEventListener('keypress', this.keypressListener.bind(this));
@@ -92,6 +118,13 @@ export default class Regexper {
       this.documentKeypressListener.bind(this)
     );
     window.addEventListener('hashchange', this.hashchangeListener.bind(this));
+
+    if (this.randomButton) {
+      this.randomButton.addEventListener(
+        'click',
+        this.randomExampleListener.bind(this)
+      );
+    }
   }
 
   // Detect if https://bugzilla.mozilla.org/show_bug.cgi?id=483304 is in effect
@@ -234,7 +267,7 @@ export default class Regexper {
     this.warnings.innerHTML = _.map(
       warnings,
       (warning) =>
-        `<li class="inline-icon">${util.icon('#warning')}${warning}</li>`
+        `<li class="inline-icon">${util.icon('warning')}${warning}</li>`
     ).join('');
   }
 
@@ -288,7 +321,13 @@ export default class Regexper {
           if (message === 'Render cancelled') {
             this.state = '';
           } else if (!parseError) {
-            throw message;
+            this.state = 'has-error';
+            this.error.innerHTML = '';
+            this.error.appendChild(
+              document.createTextNode(
+                message instanceof Error ? message.message : String(message)
+              )
+            );
           }
         })
         // Finally, mark rendering as complete (and pass along any exceptions

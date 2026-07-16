@@ -11,7 +11,7 @@
       "request": "launch",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}/extensions"],
       "outFiles": ["${workspaceFolder}/extensions/dist/**/*.js"],
-      "preLaunchTask": "${defaultBuildTask}"
+      "preLaunchTask": "watch extension"
     }
   ]
 }

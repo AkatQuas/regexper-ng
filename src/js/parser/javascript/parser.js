@@ -2,7 +2,8 @@
 // [Node](./javascript/node.html) subclasses in the generated tree. This is all
 // a bit of a hack that is dependent on how canopy creates nodes in its parse
 // tree.
-import parser from './grammar.peg';
+import classicParser from './grammar.peg';
+import setsParser from './grammar_sets.peg';
 
 import Node from './node.js';
 import Root from './root.js';
@@ -16,38 +17,74 @@ import CharsetEscape from './charset_escape.js';
 import CharsetRange from './charset_range.js';
 import Literal from './literal.js';
 import Escape from './escape.js';
+import SurrogateEscape from './surrogate_escape.js';
 import AnyCharacter from './any_character.js';
 import Repeat from './repeat.js';
 import RepeatAny from './repeat_any.js';
 import RepeatOptional from './repeat_optional.js';
 import RepeatRequired from './repeat_required.js';
 import RepeatSpec from './repeat_spec.js';
+import ClassIntersection from './class_intersection.js';
+import ClassSubtraction from './class_subtraction.js';
+import ClassUnion from './class_union.js';
+import NestedCharset from './nested_charset.js';
+import CharsetString from './charset_string.js';
+import CharsetStringItem from './charset_string_item.js';
 
-// Canopy creates an instance of SyntaxNode for each element in the tree, then
-// adds any necessary fields to that instance. In this case, we're replacing
-// the default class with the Node class.
-parser.Parser.SyntaxNode      = Node;
+import { regexModes, splitRegexLiteral } from '../../regex_parts.js';
 
-// Once the SyntaxNode instance is created, the specific node type object is
-// overlayed onto it. This causes the module attribute on the Node to be set,
-// which updates the Node instance into the more specific "subclass" that is
-// used for rendering.
-parser.Parser.Root            = { module: Root };
-parser.Parser.Regexp          = { module: Regexp };
-parser.Parser.Match           = { module: Match };
-parser.Parser.MatchFragment   = { module: MatchFragment };
-parser.Parser.Anchor          = { module: Anchor };
-parser.Parser.Subexp          = { module: Subexp };
-parser.Parser.Charset         = { module: Charset };
-parser.Parser.CharsetEscape   = { module: CharsetEscape };
-parser.Parser.CharsetRange    = { module: CharsetRange };
-parser.Parser.Literal         = { module: Literal };
-parser.Parser.Escape          = { module: Escape };
-parser.Parser.AnyCharacter    = { module: AnyCharacter };
-parser.Parser.Repeat          = { module: Repeat };
-parser.Parser.RepeatAny       = { module: RepeatAny };
-parser.Parser.RepeatOptional  = { module: RepeatOptional };
-parser.Parser.RepeatRequired  = { module: RepeatRequired };
-parser.Parser.RepeatSpec      = { module: RepeatSpec };
+function registerParser(parser) {
+  parser.Parser.SyntaxNode = Node;
 
-export default parser;
+  parser.Parser.Root = { module: Root };
+  parser.Parser.Regexp = { module: Regexp };
+  parser.Parser.Match = { module: Match };
+  parser.Parser.MatchFragment = { module: MatchFragment };
+  parser.Parser.Anchor = { module: Anchor };
+  parser.Parser.Subexp = { module: Subexp };
+  parser.Parser.Charset = { module: Charset };
+  parser.Parser.CharsetEscape = { module: CharsetEscape };
+  parser.Parser.CharsetRange = { module: CharsetRange };
+  parser.Parser.Literal = { module: Literal };
+  parser.Parser.Escape = { module: Escape };
+  parser.Parser.SurrogateEscape = { module: SurrogateEscape };
+  parser.Parser.AnyCharacter = { module: AnyCharacter };
+  parser.Parser.Repeat = { module: Repeat };
+  parser.Parser.RepeatAny = { module: RepeatAny };
+  parser.Parser.RepeatOptional = { module: RepeatOptional };
+  parser.Parser.RepeatRequired = { module: RepeatRequired };
+  parser.Parser.RepeatSpec = { module: RepeatSpec };
+  parser.Parser.ClassIntersection = { module: ClassIntersection };
+  parser.Parser.ClassSubtraction = { module: ClassSubtraction };
+  parser.Parser.ClassUnion = { module: ClassUnion };
+  parser.Parser.NestedCharset = { module: NestedCharset };
+  parser.Parser.CharsetString = { module: CharsetString };
+  parser.Parser.CharsetStringItem = { module: CharsetStringItem };
+}
+
+registerParser(classicParser);
+registerParser(setsParser);
+
+function parserForFlags(flags) {
+  return flags.includes('v') ? setsParser : classicParser;
+}
+
+function parseExpression(expression) {
+  const { pattern, flags } = splitRegexLiteral(expression);
+  const modes = regexModes(flags);
+  const parser = parserForFlags(flags);
+
+  Object.assign(Node.state, modes);
+
+  if (flags) {
+    return parser.parse(`/${pattern}/${flags}`);
+  }
+
+  return parser.parse(pattern);
+}
+
+export default {
+  parse: parseExpression,
+  Parser: classicParser.Parser,
+  SetsParser: setsParser.Parser,
+};

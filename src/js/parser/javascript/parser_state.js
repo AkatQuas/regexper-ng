@@ -8,6 +8,9 @@ export default class ParserState {
     this.cancelRender = false;
     // Warnings that have been generated while rendering.
     this.warnings = [];
+    // Regex parsing modes derived from flags before the pattern is parsed.
+    this.unicodeMode = false;
+    this.unicodeSetsMode = false;
 
     // Used to display the progress indicator
     this._renderCounter = 0;

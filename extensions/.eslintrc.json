@@ -2,7 +2,7 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 6,
+        "ecmaVersion": 2022,
         "sourceType": "module"
     },
     "plugins": [
@@ -10,15 +10,16 @@
     ],
     "rules": {
         "@typescript-eslint/naming-convention": "warn",
-        "@typescript-eslint/semi": "warn",
         "curly": "warn",
         "eqeqeq": "warn",
         "no-throw-literal": "warn",
-        "semi": "off"
+        "semi": ["warn", "always"]
     },
     "ignorePatterns": [
         "out",
         "dist",
+        "media",
+        "webpack.config.js",
         "**/*.d.ts"
     ]
 }

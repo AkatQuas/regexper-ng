@@ -2,6 +2,7 @@
 // the site use some functions defined in this file.
 
 import _ from 'lodash';
+import { icon as renderIcon } from '../../lib/icons.js';
 
 // Generate an `Event` object for triggering a custom event.
 //
@@ -132,9 +133,9 @@ function exposeError(error) {
 
 // Renders an SVG icon.
 //
-// - __selector__ - Selector to the SVG icon to render.
-function icon(selector) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 8 8"><use xlink:href="${selector}" /></svg>`;
+// - __name__ - Icon name (e.g. "download", "warning").
+function icon(name) {
+  return renderIcon(name);
 }
 
 export default {

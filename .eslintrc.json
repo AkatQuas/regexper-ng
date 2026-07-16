@@ -1,5 +1,5 @@
 {
-  "$schema": "https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/eslintrc.json",
+  "$schema": "https://json.schemastore.org/eslintrc.json",
   "env": {
     "es2021": true,
     "node": true

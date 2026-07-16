@@ -135,9 +135,10 @@ describe('regexper.js', function() {
       });
 
       it('cancels the parser', function() {
+        const running = this.regexper.running;
         this.regexper.documentKeypressListener(this.event);
 
-        expect(this.regexper.running.cancel).toHaveBeenCalled();
+        expect(running.cancel).toHaveBeenCalled();
       });
 
     });
@@ -544,12 +545,28 @@ describe('regexper.js', function() {
       beforeEach(function() {
         this.parser = new Parser(this.regexper.svgContainer);
         this.parsePromise.resolve(this.parser);
-        this.renderPromise.reject('example render failure');
+        this.renderPromise.reject(new Error('example render failure'));
+      });
+
+      it('sets the state to "has-error"', function(done) {
+        this.regexper.renderRegexp('example expression')
+          .then(() => {
+            expect(this.regexper.state).toEqual('has-error');
+            done();
+          }).catch(done.fail);
+      });
+
+      it('displays the error message', function(done) {
+        this.regexper.renderRegexp('example expression')
+          .then(() => {
+            expect(this.regexper.error.innerHTML).toEqual('example render failure');
+            done();
+          }).catch(done.fail);
       });
 
       it('sets the running property to false', function(done) {
         this.regexper.renderRegexp('example expression')
-          .then(fail, () => {
+          .then(() => {
             expect(this.regexper.running).toBeFalsy();
             done();
           }).catch(done.fail);

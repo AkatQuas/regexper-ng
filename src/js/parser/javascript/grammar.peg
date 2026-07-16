@@ -1,5 +1,5 @@
 grammar JavascriptRegexp
-  root <- ( ( "/" regexp "/" flags:[yigmusd]* ) / regexp flags:""? ) <Root>
+  root <- ( ( "/" regexp "/" flags:[yigmusdv]* ) / regexp flags:""? ) <Root>
   regexp <- match:match alternates:( "|" match )* <Regexp>
   match <- (!repeat) parts:match_fragment* <Match>
   anchor <- ( "^" / "$" ) <Anchor>
@@ -16,7 +16,13 @@ grammar JavascriptRegexp
                         / "?!"
                         / "?<="
                         / "?<!"
-                        / "?<" name:( [a-zA-Z] [a-zA-Z0-9]* ) ">" )? regexp ")" <Subexp>
+                        / "?<" name:( [a-zA-Z] [a-zA-Z0-9]* ) ">"
+                        / inline_modifiers_enable
+                        / inline_modifiers_mixed
+                        / inline_modifiers_disable )? regexp ")" <Subexp>
+  inline_modifiers_enable <- "?" enable:[ims]+ ":"
+  inline_modifiers_mixed <- "?" enable:[ims]+ "-" disable:[ims]+ ":"
+  inline_modifiers_disable <- "?" "-" disable:[ims]+ ":"
   charset <- "[" invert:"^"? parts:( charset_range / charset_terminal )* "]" <Charset>
   charset_range <- first:charset_range_terminal "-" last:charset_range_terminal <CharsetRange>
   charset_terminal <- charset_escape <CharsetEscape>
@@ -29,6 +35,7 @@ grammar JavascriptRegexp
        / octal_escape
        / hex_escape
        / unicode_escape
+       / unicode_code_point_escape
        / null_escape
        / named_group_capture_escape
        / unicode_category_escape
@@ -41,6 +48,7 @@ grammar JavascriptRegexp
        / octal_escape
        / hex_escape
        / unicode_escape
+       / unicode_code_point_escape
        / null_escape
        / named_group_capture_escape
        / unicode_category_escape
@@ -51,14 +59,17 @@ grammar JavascriptRegexp
                    / ( literal:"\\" &"c" )
                    / ( "\\" literal:[^bdDfnrsStvwW] )
   terminal <- "." <AnyCharacter>
+            / surrogate_escape <SurrogateEscape>
             / escape <Escape>
             / literal <Literal>
+  surrogate_escape <- "\\" "u" lead:hex_4_digits "\\" "u" trail:hex_4_digits
   escape <- "\\" esc:(
          code:[bBdDfnrsStvwW1-9] arg:""?
        / control_escape
        / octal_escape
        / hex_escape
        / unicode_escape
+       / unicode_code_point_escape
        / null_escape
        / named_group_capture_escape
        / unicode_category_escape
@@ -72,7 +83,9 @@ grammar JavascriptRegexp
   control_escape <- code:"c" arg:[a-zA-Z]
   octal_escape <- code:"0" arg:[0-7]+
   hex_escape <- code:"x" arg:( [0-9a-fA-F] [0-9a-fA-F] )
-  unicode_escape <- code:"u" arg:( [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] )
+  unicode_escape <- code:"u" arg:hex_4_digits
+  unicode_code_point_escape <- code:"u" "{" arg:[0-9a-fA-F]+ "}"
+  hex_4_digits <- [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F] [0-9a-fA-F]
   null_escape <- code:"0" arg:""?
   unicode_category_escape <- code:"p" "{" arg:( [_0-9a-zA-Z-]+ ) "}"
   unicode_category_value_escape <- code:"p" "{" arg:( [_0-9a-zA-Z-]+ "=" [_0-9a-zA-Z-]+ ) "}"
