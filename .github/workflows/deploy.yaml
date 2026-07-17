@@ -24,7 +24,18 @@ jobs:
         env:
           NODE_ENV: production
           DIST_URL: /regexper-ng
-      - run: git config user.name "AkatQuas" && git config user.email "noreply@github.com"
-      - run: npx gh-pages --dist build --no-history --branch gh-pages --repo "https://$GH_TOKEN@github.com/AkatQuas/regexper-ng"
-        env:
-          GH_TOKEN: ${{secrets.AUTOMATION_SECRET}}
+      - name: Deploy to GitHub Pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          cp -a build "$RUNNER_TEMP/build"
+
+          git checkout --orphan gh-pages
+          git reset --hard
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+
+          cp -a "$RUNNER_TEMP/build/." .
+          git add -A
+          git diff --staged --quiet || git commit -m "chore: deploy to GitHub Pages [skip ci]"
+          git push -f origin gh-pages
