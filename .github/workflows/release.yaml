@@ -3,6 +3,8 @@ name: Releases 📦
 on:
   push:
     tags:
+      # Just create a tag and push to remote,
+      # this action would create a release
       - '*'
 
 jobs:
