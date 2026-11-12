@@ -11,6 +11,9 @@ export default class ParserState {
     // Regex parsing modes derived from flags before the pattern is parsed.
     this.unicodeMode = false;
     this.unicodeSetsMode = false;
+    this.dotAll = false;
+    this.multiline = false;
+    this.validateSemantics = false;
 
     // Used to display the progress indicator
     this._renderCounter = 0;

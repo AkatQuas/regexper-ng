@@ -27,16 +27,7 @@ define ensure_npm
 cd $(1) && if [ ! -d "node_modules" ];then npm install;fi
 endef
 
-define ensure_npx
-if ! command -v $(1) > /dev/null; then echo "installing $(1) globally use npm" && npm install -g $(1); fi
-endef
-
-define clean_npx
-if command -v $(1) > /dev/null; then npm uninstall -g $(1); fi
-endef
-
 IMAGE_NAME=regexper
-EXTENSION_DIR=$(CWD)/extensions
 
 #
 # Tweak the variables based on your project.
@@ -50,7 +41,7 @@ EXTENSION_DIR=$(CWD)/extensions
 
 SHELL:=/bin/bash
 .DEFAULT_GOAL:=help
-targets = help groupdhelp list-help setup start lint build test build_docker build_extensions pack_extensions clean_tools clean
+targets = help groupdhelp list-help setup start lint build test build_docker clean
 
 
 # All targets.
@@ -72,7 +63,6 @@ list-help: ## List all commands
 
 setup: ## install node_modules
 	$(call ensure_npm, $(CWD))
-	$(call ensure_npm, $(CWD)/extensions)
 
 ##@ Development
 
@@ -99,17 +89,6 @@ test: build ## test anything
 
 build_docker: setup ## build the static regexper website into docker
 	docker build -t ${IMAGE_NAME} ./
-
-build_extensions: setup ## build the static regexper assest for extensions media
-	npx webpack --config webpack.vsce.js
-
-pack_extensions: setup build_extensions ## pack extensions using @vscode/vsce
-	cp $(CWD)/static/favicon.ico $(EXTENSION_DIR)/media/icon.ico
-	$(call ensure_npm, $(EXTENSION_DIR))
-	cd $(EXTENSION_DIR) && (rm -rf dist || true) && npx webpack --mode production --no-devtool && npx vsce package --out $(CWD)
-
-clean_tools: ## clean tools if you need it
-	$(call clean_npx, @vscode/vsce)
 
 ##@ Cleanup
 

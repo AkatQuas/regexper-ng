@@ -10,6 +10,22 @@ function formatTimes(times) {
   }
 }
 
+function repeatCount(node) {
+  if (node.minimum === node.maximum) {
+    if (node.minimum === 0) {
+      return undefined;
+    }
+    return formatTimes(node.minimum);
+  } else if (node.minimum <= 1 && node.maximum >= 2) {
+    return `at most ${formatTimes(node.maximum)}`;
+  } else if (node.minimum >= 2) {
+    if (node.maximum === -1) {
+      return `${node.minimum}+ times`;
+    }
+    return `${node.minimum}\u2026${formatTimes(node.maximum)}`;
+  }
+}
+
 export default {
   definedProperties: {
     // Translation to apply to content to be repeated to account for the loop
@@ -28,47 +44,19 @@ export default {
       },
     },
 
-    // Label to place of loop path to indicate the number of times that path
-    // may be followed.
+    // Label on the loop. It uses the bounds written in the pattern.
     label: {
       get: function() {
-        if (this.minimum === this.maximum) {
-          if (this.minimum === 0) {
-            return undefined;
-          }
-          return formatTimes(this.minimum - 1);
-        } else if (this.minimum <= 1 && this.maximum >= 2) {
-          return `at most ${formatTimes(this.maximum - 1)}`;
-        } else if (this.minimum >= 2) {
-          if (this.maximum === -1) {
-            return `${this.minimum - 1}+ times`;
-          } else {
-            return `${this.minimum - 1}\u2026${formatTimes(this.maximum - 1)}`;
-          }
-        }
+        return repeatCount(this);
       },
     },
 
     // Tooltip to place of loop path label to provide further details.
     tooltip: {
       get: function() {
-        let repeatCount;
-        if (this.minimum === this.maximum) {
-          if (this.minimum === 0) {
-            repeatCount = undefined;
-          } else {
-            repeatCount = formatTimes(this.minimum);
-          }
-        } else if (this.minimum <= 1 && this.maximum >= 2) {
-          repeatCount = `at most ${formatTimes(this.maximum)}`;
-        } else if (this.minimum >= 2) {
-          if (this.maximum === -1) {
-            repeatCount = `${this.minimum}+ times`;
-          } else {
-            repeatCount = `${this.minimum}\u2026${formatTimes(this.maximum)}`;
-          }
-        }
-        return repeatCount ? `repeats ${repeatCount} in total` : repeatCount;
+        const count = repeatCount(this);
+
+        return count ? `repeats ${count} in total` : count;
       },
     },
   },

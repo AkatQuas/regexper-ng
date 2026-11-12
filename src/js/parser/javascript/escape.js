@@ -3,6 +3,7 @@
 // appropriate.
 
 import _ from 'lodash';
+import { assertGroupName } from './group_name.js';
 
 function hex(value) {
   var str = value.toString(16).toUpperCase();
@@ -92,6 +93,12 @@ export default {
     this.code = this.properties.esc.properties.code.textValue;
     // The argument. For an escape such as `\xab` it would be "ab".
     this.arg = this.properties.esc.properties.arg.textValue;
+
+    if (this.code === 'k') {
+      assertGroupName(this.arg);
+    }
+    this.assertEscapeAllowed();
+
     // Retrieves the label, ordinal value, an flag to control adding hex value
     // from the escape code mappings
     [this.label, this.ordinal, addHex] = _.result(this, this.code);
@@ -99,6 +106,29 @@ export default {
     // When requested, add hex code to the label.
     if (addHex) {
       this.label = `${this.label} ${hex(this.ordinal)}`;
+    }
+  },
+
+  assertEscapeAllowed() {
+    const codePoint = this.code === 'u' ? parseInt(this.arg, 16) : NaN;
+
+    if (this.code === 'u' && this.arg && codePoint > 0x10ffff) {
+      throw `Invalid Unicode escape: \\u{${this.arg}}`;
+    }
+
+    if (!this.state || !this.state.validateSemantics) {
+      return;
+    }
+
+    if (this.state.unicodeMode) {
+      if (this.code === '8' || this.code === '9') {
+        throw `Invalid escape: \\${this.code}`;
+      }
+      if (this.code === '0' && this.arg) {
+        throw `Invalid octal escape: \\0${this.arg}`;
+      }
+    } else if (this.code === 'p' || this.code === 'P') {
+      throw `Invalid property escape: \\${this.code}{${this.arg}}`;
     }
   },
 

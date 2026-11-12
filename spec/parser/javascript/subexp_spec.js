@@ -2,6 +2,7 @@ import _ from 'lodash';
 import Snap from 'snapsvg';
 import Node from '../../../src/js/parser/javascript/node.js';
 import javascript from '../../../src/js/parser/javascript/parser.js';
+import Parser from '../../../src/js/parser/javascript.js';
 
 describe('parser/javascript/subexp.js', function () {
   beforeEach(function () {
@@ -138,8 +139,20 @@ describe('parser/javascript/subexp.js', function () {
           groupCounter: 1,
         },
         '(?<name>test)': {
-          label: 'group #name',
-          groupCounter: 1,
+          label: 'group #1 name',
+          groupCounter: 2,
+        },
+        '(?<名字>test)': {
+          label: 'group #1 名字',
+          groupCounter: 2,
+        },
+        '(?<$a>test)': {
+          label: 'group #1 $a',
+          groupCounter: 2,
+        },
+        '(?<_a>test)': {
+          label: 'group #1 _a',
+          groupCounter: 2,
         },
         '(?i:test)': {
           label: 'modifiers (+ignore case)',
@@ -163,6 +176,56 @@ describe('parser/javascript/subexp.js', function () {
         });
       }
     );
+  });
+
+  describe('group names', function () {
+    it('rejects names that are not identifiers', function () {
+      expect(() => {
+        new javascript.Parser('(?<1abc>a)').__consume__subexp();
+      }).toThrow('Invalid capture group name: 1abc');
+    });
+  });
+
+  describe('inline modifiers', function () {
+    function renderText(expression) {
+      const container = document.createElement('div');
+      document.body.appendChild(container);
+      const parser = new Parser(container);
+
+      return parser
+        .parse(expression)
+        .then((instance) => instance.render())
+        .then(() => container.textContent)
+        .finally(() => container.remove());
+    }
+
+    it('lets an inline s flag include line breaks', function (done) {
+      renderText('(?s:.)')
+        .then((text) => {
+          expect(text).toContain('any character');
+          expect(text).not.toContain('except line breaks');
+          done();
+        })
+        .catch(done.fail);
+    });
+
+    it('lets an inline m flag describe line anchors', function (done) {
+      renderText('(?m:^)')
+        .then((text) => {
+          expect(text).toContain('Start of line');
+          done();
+        })
+        .catch(done.fail);
+    });
+
+    it('turns dot-all off inside a disabling group', function (done) {
+      renderText('/(?-s:.)/s')
+        .then((text) => {
+          expect(text).toContain('any character except line breaks');
+          done();
+        })
+        .catch(done.fail);
+    });
   });
 
   describe('lookbehind with slash literals', function () {

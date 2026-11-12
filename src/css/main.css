@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import '@fontsource/bangers/400.css';
 @import './svg.css';
 
 @theme {
@@ -17,21 +16,21 @@
   --color-red: #c2383e;
   --color-blue: #e6f0f9;
   --color-yellow: #ffcf33;
-
-  --font-bangers: 'Bangers', cursive;
 }
 
 @layer base {
   body {
-    font-family: sans-serif;
+    font-family: ui-sans-serif, system-ui, sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    background: var(--color-gray);
-    margin-bottom: 1.5em;
+    color: #1e293b;
+    background: #f4f7fb;
+    margin: 0;
+    min-height: 100vh;
   }
 
   a {
-    color: #000;
+    color: #24578f;
   }
 }
 
@@ -97,13 +96,9 @@
     align-items: center;
     gap: 1em;
     flex-wrap: wrap;
-    background: linear-gradient(
-      to bottom,
-      var(--color-green) 0%,
-      var(--color-dark-green) 100%
-    );
-    padding: 1em;
-    box-shadow: 0 0 10px #000;
+    background: #fff;
+    padding: 1em 1.25em;
+    border-bottom: 1px solid #e2e8f0;
   }
 
   header .logo {
@@ -111,11 +106,12 @@
   }
 
   header .logo span {
-    color: var(--color-gray);
+    color: #64748b;
   }
 
   header h1 {
-    font-family: var(--font-bangers);
+    font-weight: 650;
+    letter-spacing: -0.03em;
   }
 
   header nav {
@@ -139,7 +135,7 @@
   }
 
   header a {
-    color: #000;
+    color: #1e293b;
     text-decoration: inherit;
   }
 
@@ -149,8 +145,14 @@
   }
 
   #content {
-    padding: 1em;
     display: block;
+    max-width: 960px;
+    margin: 1.5rem auto 2rem;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
   #content .copy {
@@ -259,18 +261,15 @@
   #content .documentation figure {
     line-height: 0;
     background: #fff;
-    margin: 0.375em;
-    box-shadow: 0 0 10px #000;
+    margin: 0 0 1em;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
   }
 
-  #content .documentation figure.shift-right {
-    float: right;
-    margin-left: 0.75em;
-  }
-
+  #content .documentation figure.shift-right,
   #content .documentation figure.shift-left {
-    float: left;
-    margin-right: 0.75em;
+    float: none;
   }
 
   #content .documentation figure .svg {
@@ -291,24 +290,26 @@
   }
 
   #content .application form {
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75em;
   }
 
   #content .regexp-form-actions {
     display: flex;
     align-items: center;
     gap: 0.5em;
-    float: left;
   }
 
   #content .application textarea {
     font-size: 1em;
     line-height: 1.5em;
-    border: 0 none;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
     outline: none;
-    background: var(--color-tan);
-    padding: 0 0.5em;
-    margin-bottom: 0.25em;
+    background: #f8fafc;
+    padding: 0.6em 0.75em;
     width: 100% !important;
     box-sizing: border-box;
     font-family:
@@ -325,20 +326,23 @@
     line-height: 1.5em;
     width: auto;
     min-width: 100px;
-    padding: 0 0.75em;
+    padding: 0.35em 0.9em;
     border: 0 none;
-    background: linear-gradient(
-      to bottom,
-      var(--color-green) 0%,
-      var(--color-dark-green) 100%
-    );
-    float: none;
+    border-radius: 8px;
+    background: #3b6ea5;
+    color: #fff;
     cursor: pointer;
   }
 
   #content .application button:hover,
   #content .application button:focus {
-    filter: brightness(1.05);
+    background: #325f90;
+  }
+
+  #content .application button:focus-visible,
+  #content .application textarea:focus-visible {
+    outline: 2px solid #3b6ea5;
+    outline-offset: 2px;
   }
 
   #content .application::after {
@@ -348,12 +352,19 @@
   }
 
   #content .application ul {
-    float: right;
     display: none;
+    margin: 0;
+    padding: 0;
   }
 
   body.has-results #content .application ul {
-    display: inline-block;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75em;
+  }
+
+  #content .application ul.inline-list li::after {
+    content: none;
   }
 
   #content
@@ -385,6 +396,7 @@
     width: 50%;
     height: 0.75em;
     border: 1px solid var(--color-dark-green);
+    border-radius: 999px;
     overflow: hidden;
     margin: 1.5em auto;
   }
@@ -409,7 +421,8 @@
   #error {
     background: var(--color-red);
     color: #fff;
-    padding: 0 0.5em;
+    padding: 0.5em 0.75em;
+    border-radius: 8px;
     white-space: pre;
     font-family: monospace;
     font-weight: bold;
@@ -426,6 +439,7 @@
     line-height: 1.5em;
     font-weight: bold;
     background-color: var(--color-yellow);
+    border-radius: 8px;
     display: none;
   }
 
@@ -441,6 +455,8 @@
     background: #fff;
     width: 100%;
     overflow: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
     text-align: center;
     display: none;
   }

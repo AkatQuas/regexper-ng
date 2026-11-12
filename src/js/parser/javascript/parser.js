@@ -74,7 +74,11 @@ function parseExpression(expression) {
   const modes = regexModes(flags);
   const parser = parserForFlags(flags);
 
-  Object.assign(Node.state, modes);
+  if (!Node.state) {
+    Node.state = {};
+  }
+
+  Object.assign(Node.state, modes, { validateSemantics: true });
 
   if (flags) {
     return parser.parse(`/${pattern}/${flags}`);

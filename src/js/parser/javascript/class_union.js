@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import util from '../../util.js';
+import { assertNoReservedDoubles } from './set_operands.js';
 
 export default {
   type: 'class-union',
@@ -37,5 +38,6 @@ export default {
       : [];
 
     this.operands = [this.properties.head].concat(tailOperands);
+    assertNoReservedDoubles(this.operands);
   },
 };

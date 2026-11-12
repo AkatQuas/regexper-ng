@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import util from '../../util.js';
+import { assertSetOperands, collectOperands } from './set_operands.js';
 
 export default {
   type: 'class-intersection',
@@ -32,9 +33,7 @@ export default {
 
   setup() {
     this.label = 'Intersection:';
-    this.operands = [
-      this.properties.left,
-      this.properties.right,
-    ];
+    this.operands = collectOperands(this.properties);
+    assertSetOperands(this);
   },
 };

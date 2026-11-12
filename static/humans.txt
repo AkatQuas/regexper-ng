@@ -3,11 +3,12 @@
 
 # TEAM
 
-    Creator: Jeff Avallone
+    Remaster: AkatQuas
+    Site: https://github.com/AkatQuas
+
+    Original author: Jeff Avallone
     Site: http://gitlab.com/javallone
     Twitter: @javallone
-    Contributor: AkatQuas
-    Site: https://github.com/AkatQuas
 
 # THANKS
 

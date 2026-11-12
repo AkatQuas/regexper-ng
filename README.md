@@ -1,8 +1,8 @@
 # Regexper
 
-[Code](https://gitlab.com/javallone/regexper-static) for the http://regexper.com/ site.
+Remastered by [AkatQuas](https://github.com/AkatQuas). This version is published at https://akatquas.github.io/regexper-ng/.
 
-[Code](https://github.com/AkatQuas/regexper-ng) for the https://akatquas.github.io/regexper-ng/ site.
+The original railroad-diagram visualizer was created by [Jeff Avallone](https://gitlab.com/javallone/regexper-static) and is published at http://regexper.com/.
 
 ## Contributing
 
@@ -58,36 +58,6 @@ To build a docker image distribution:
     $ make build-docker
 
     $ docker run -p 8080:8080 regexper:latest
-
-### VS Code Extension distribution
-
-Check out the [release list](https://github.com/AkatQuas/regexper-ng/releases) and the [installation guidance](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix).
-
-#### Work with Extension code
-
-> Remember to run `make build_extensions` to build assets for extension to consume.
-
-1. Open the project in VS Code editor.
-1. Press `F5` to run the extension in debug mode. You are free to modify the files in `extensions`.
-
-A snippet of folder structure.
-
-```bash
-extensions
-|----webpack.config.js
-|----package.json
-|
-|----media # assets built by regexper
-| |----main.css
-| |----main.js
-|
-|----src # extension source code
-| |----extension.ts
-| |----utils.ts
-|
-|----dist # output
-| |----...
-```
 
 ## License
 

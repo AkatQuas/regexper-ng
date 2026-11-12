@@ -5,10 +5,10 @@ describe('parser/javascript/anchor.js', function() {
 
   _.forIn({
     '^': {
-      label: 'Start of line',
+      label: 'Start of text',
     },
     '$': {
-      label: 'End of line',
+      label: 'End of text',
     },
   }, (content, str) => {
     it(`parses "${str}" as an Anchor`, function() {

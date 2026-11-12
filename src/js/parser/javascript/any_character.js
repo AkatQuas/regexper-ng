@@ -5,6 +5,10 @@ export default {
   type: 'any-character',
 
   _render() {
-    return this.renderLabel('any character');
+    const label = this.state && this.state.dotAll
+      ? 'any character'
+      : 'any character except line breaks';
+
+    return this.renderLabel(label);
   },
 };

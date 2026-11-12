@@ -92,6 +92,11 @@ export default class Parser {
             width: box.width + 20,
             height: box.height + 20,
           });
+
+          svg.selectAll('path').forEach((path) => {
+            path.attr({ pathLength: 100 });
+            path.addClass('flow');
+          });
         })
         // Stop and remove loading indicator after render is totally complete.
         .then(() => {

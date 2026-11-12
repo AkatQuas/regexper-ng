@@ -1,3 +1,5 @@
+import { assertNoReservedDoublesInText } from './set_operands.js';
+
 export default {
   type: 'charset-string',
 
@@ -13,6 +15,8 @@ export default {
 
   setup() {
     const items = this.properties.items.elements.map((item) => item.textValue);
+
+    items.forEach(assertNoReservedDoublesInText);
 
     this.label = items.length > 1
       ? `strings: ${items.join(' | ')}`

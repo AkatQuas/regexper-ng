@@ -27,7 +27,7 @@
       <div class="section">
         <h3>Escape sequences</h3>
 
-        <figure class="shift-left" data-expr="\w\x7f\u00bb\1\0\k<name>\p{P}\P{Sc}"></figure>
+        <figure class="shift-left" data-expr="/\w\x7f\u00bb\1\0\k<name>\p{P}\P{Sc}/u"></figure>
 
         <p>Escape sequences are displayed in a green box and contain a description of the type of character(s) they will match.</p>
       </div>
@@ -37,7 +37,7 @@
 
         <figure class="shift-left" data-expr="."></figure>
 
-        <p>"Any character" is similar to an escape sequence. It matches any single character.</p>
+        <p>"Any character" is similar to an escape sequence. Without the dot-all flag it matches any character except line breaks. With the <code>s</code> flag, or inside <code>(?s:…)</code>, it matches line breaks too.</p>
       </div>
     </section>
 
@@ -124,7 +124,7 @@
           <figcaption>Non-greedy quantifier</figcaption>
         </figure>
 
-        <p>The ranged quantifier specifies a number of times the pattern may be repeated. The two examples provided here both have a range of "{5,10}", the label for the looping branch indicates the number of times that branch may be followed. The values are one less than specified in the expression since the pattern would have to be matched once before repeating it is an option. So, for these examples, the pattern would be matched once and then the loop would be followed 4 to 9 times, for a total of 5 to 10 matches of the pattern.</p>
+        <p>The ranged quantifier specifies how many times the pattern may match. Both examples use <code>{5,10}</code>, and the loop is labeled “5…10 times”, the same bounds written in the expression. The tooltip repeats that total.</p>
       </div>
     </section>
   </section>

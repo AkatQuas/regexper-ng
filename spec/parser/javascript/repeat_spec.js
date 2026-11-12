@@ -219,42 +219,42 @@ describe('parser/javascript/repeat.js', function() {
       {
         minimum: 2,
         maximum: -1,
-        label: '1+ times',
+        label: '2+ times',
       },
       {
         minimum: 3,
         maximum: -1,
-        label: '2+ times',
+        label: '3+ times',
       },
       {
         minimum: 0,
         maximum: 2,
-        label: 'at most once',
+        label: 'at most 2 times',
       },
       {
         minimum: 0,
         maximum: 3,
-        label: 'at most 2 times',
+        label: 'at most 3 times',
       },
       {
         minimum: 2,
         maximum: 2,
-        label: 'once',
+        label: '2 times',
       },
       {
         minimum: 3,
         maximum: 3,
-        label: '2 times',
+        label: '3 times',
       },
       {
         minimum: 2,
         maximum: 3,
-        label: '1\u20262 times',
+        label: '2\u20263 times',
       },
       {
         minimum: 3,
         maximum: 4,
-        label: '2\u20263 times',
+        label: '3\u20264 times',
       },
 
     ], t => {

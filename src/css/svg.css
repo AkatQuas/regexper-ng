@@ -1,22 +1,23 @@
 svg {
   background-color: #fff;
+  font-family: ui-sans-serif, system-ui, sans-serif;
 }
 
 .root text,
 .root tspan {
-  font: 12px Arial;
+  font: 12px ui-sans-serif, system-ui, sans-serif;
 }
 
 .root path {
   fill-opacity: 0;
-  stroke-width: 2px;
-  stroke: #000;
+  stroke-width: 1.5px;
+  stroke: #1e293b;
 }
 
 .root circle {
-  fill: #6b6659;
-  stroke-width: 2px;
-  stroke: #000;
+  fill: #334155;
+  stroke-width: 1.5px;
+  stroke: #1e293b;
 }
 
 .anchor text,
@@ -26,26 +27,35 @@ svg {
 
 .anchor rect,
 .any-character rect {
-  fill: #6b6659;
+  fill: #334155;
 }
 
 .escape text,
 .charset-escape text,
+.charset-string text,
+.surrogate-escape text,
 .literal text {
-  fill: #000;
+  fill: #1e293b;
 }
 
 .escape rect,
-.charset-escape rect {
-  fill: #bada55;
+.charset-escape rect,
+.charset-string rect,
+.surrogate-escape rect {
+  fill: #dbeafe;
 }
 
 .literal rect {
-  fill: #dae9e5;
+  fill: #f1f5f9;
 }
 
-.charset .charset-box {
-  fill: #cbcbba;
+.charset .charset-box,
+.class-union .class-union-box,
+.class-intersection .class-intersection-box,
+.class-subtraction .class-subtraction-box {
+  fill: #f8fafc;
+  stroke: #cbd5e1;
+  stroke-width: 1px;
 }
 
 .subexp .subexp-label tspan,
@@ -64,12 +74,52 @@ svg {
 }
 
 .subexp .subexp-box {
-  stroke: #908c83;
+  stroke: #94a3b8;
   stroke-dasharray: 6, 2;
-  stroke-width: 2px;
+  stroke-width: 1.5px;
   fill-opacity: 0;
 }
 
 .quote {
-  fill: #908c83;
+  fill: #94a3b8;
+}
+
+.root path.flow {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: rail-draw 0.8s ease forwards;
+}
+
+.root circle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: rail-end 2.8s ease-in-out infinite;
+}
+
+@keyframes rail-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rail-end {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root path.flow {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .root circle {
+    animation: none;
+  }
 }

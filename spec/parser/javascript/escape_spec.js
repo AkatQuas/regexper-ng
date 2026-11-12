@@ -1,8 +1,12 @@
 import _ from 'lodash';
 import Snap from 'snapsvg';
 import javascript from '../../../src/js/parser/javascript/parser.js';
+import Node from '../../../src/js/parser/javascript/node.js';
 
 describe('parser/javascript/escape.js', function () {
+  beforeEach(function () {
+    Node.state = {};
+  });
   _.forIn(
     {
       '\\b': { label: 'word boundary', ordinal: -1 },

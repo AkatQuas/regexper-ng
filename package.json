@@ -2,15 +2,16 @@
   "name": "regexper",
   "version": "1.0.0",
   "description": "Regular expression visualization tool",
-  "homepage": "http://regexper.com",
+  "homepage": "https://akatquas.github.io/regexper-ng/",
   "author": {
-    "name": "Jeffrey Avallone",
-    "email": "jeff.avallone@gmail.com"
+    "name": "AkatQuas",
+    "url": "https://github.com/AkatQuas"
   },
   "contributors": [
     {
-      "name": "AkatQuas",
-      "email": "295140755@qq.com"
+      "name": "Jeffrey Avallone",
+      "email": "jeff.avallone@gmail.com",
+      "url": "http://regexper.com"
     }
   ],
   "license": "MIT",

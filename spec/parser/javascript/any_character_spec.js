@@ -21,7 +21,7 @@ describe('parser/javascript/any_character.js', function() {
       spyOn(this.node, 'renderLabel').and.returnValue('rendered label');
 
       expect(this.node._render()).toEqual('rendered label');
-      expect(this.node.renderLabel).toHaveBeenCalledWith('any character');
+      expect(this.node.renderLabel).toHaveBeenCalledWith('any character except line breaks');
     });
 
   });

@@ -16,7 +16,7 @@ grammar JavascriptRegexp
                         / "?!"
                         / "?<="
                         / "?<!"
-                        / "?<" name:( [a-zA-Z] [a-zA-Z0-9]* ) ">"
+                        / "?<" name:[^>]+ ">"
                         / inline_modifiers_enable
                         / inline_modifiers_mixed
                         / inline_modifiers_disable )? regexp ")" <Subexp>
@@ -91,4 +91,4 @@ grammar JavascriptRegexp
   unicode_category_value_escape <- code:"p" "{" arg:( [_0-9a-zA-Z-]+ "=" [_0-9a-zA-Z-]+ ) "}"
   non_unicode_category_escape <- code:"P" "{" arg:( [_0-9a-zA-Z-]+ ) "}"
   non_unicode_category_value_escape <- code:"P" "{" arg:( [_0-9a-zA-Z-]+ "=" [_0-9a-zA-Z-]+ ) "}"
-  named_group_capture_escape <- code:"k" "<" arg:( [a-zA-Z] [a-zA-Z0-9]* ) ">"
+  named_group_capture_escape <- code:"k" "<" arg:[^>]+ ">"

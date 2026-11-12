@@ -2,6 +2,7 @@
 // labeled box around the contained expression if a label is required.
 
 import _ from 'lodash';
+import { assertGroupName } from './group_name.js';
 
 export default {
   type: 'subexp',
@@ -43,6 +44,7 @@ export default {
     // any child nodes are rendered. This is to keep the group numbers in the
     // correct order.
     let label = this.label();
+    const previousModes = this.pushModifiers();
 
     // Render the contained regexp.
     return (
@@ -53,6 +55,16 @@ export default {
           this.renderLabeledBox(label, this.regexp, {
             padding: 10,
           })
+        )
+        .then(
+          (result) => {
+            this.popModifiers(previousModes);
+            return result;
+          },
+          (error) => {
+            this.popModifiers(previousModes);
+            throw error;
+          }
         )
     );
   },
@@ -73,7 +85,7 @@ export default {
       capture.properties &&
       capture.properties.name
     ) {
-      return `group #${capture.properties.name.textValue}`;
+      return `group #${this.state.groupCounter++} ${capture.properties.name.textValue}`;
     }
 
     if (
@@ -106,10 +118,58 @@ export default {
     return `modifiers (${parts.join('; ')})`;
   },
 
+  pushModifiers() {
+    const previous = {
+      dotAll: this.state && this.state.dotAll,
+      multiline: this.state && this.state.multiline,
+    };
+    const capture = this.properties.capture;
+
+    if (!this.state || !capture || !capture.properties) {
+      return previous;
+    }
+
+    const enable = capture.properties.enable
+      ? capture.properties.enable.textValue
+      : '';
+    const disable = capture.properties.disable
+      ? capture.properties.disable.textValue
+      : '';
+
+    if (enable.includes('s')) {
+      this.state.dotAll = true;
+    }
+    if (disable.includes('s')) {
+      this.state.dotAll = false;
+    }
+    if (enable.includes('m')) {
+      this.state.multiline = true;
+    }
+    if (disable.includes('m')) {
+      this.state.multiline = false;
+    }
+
+    return previous;
+  },
+
+  popModifiers(previous) {
+    if (!this.state || !previous) {
+      return;
+    }
+
+    this.state.dotAll = previous.dotAll;
+    this.state.multiline = previous.multiline;
+  },
+
   setup() {
     // **NOTE:** **DO NOT** call `this.label()` in setup. It will lead to
     // groups being numbered in reverse order.
     this.regexp = this.properties.regexp;
+
+    const capture = this.properties.capture;
+    if (capture && capture.properties && capture.properties.name) {
+      assertGroupName(capture.properties.name.textValue);
+    }
 
     // If there is no need for a label, then proxy to the nested regexp.
     // UPDATED AT "2021/11/04 22:02", we like the label "non-capturing"

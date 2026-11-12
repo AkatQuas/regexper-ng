@@ -2,8 +2,26 @@
 // parsing so Unicode Sets (/v) and Unicode (/u) modes can be applied to the
 // pattern before it is parsed.
 
-const FLAG_PATTERN = /^[yigmusdv]*$/;
-const SLASH_LITERAL = /^\/((?:\\.|[^/\\])+)\/([yigmusdv]*)$/;
+const SLASH_LITERAL = /^\/((?:\\.|[^/\\])+)\/([a-zA-Z]*)$/;
+
+function validateFlags(flags) {
+  if (!/^[yigmusdv]*$/.test(flags)) {
+    throw new Error(`Invalid flags: ${flags}`);
+  }
+
+  const seen = new Set();
+
+  for (const flag of flags) {
+    if (seen.has(flag)) {
+      throw new Error(`Duplicate flag: ${flag}`);
+    }
+    seen.add(flag);
+  }
+
+  if (flags.includes('u') && flags.includes('v')) {
+    throw new Error('Invalid flags: u and v cannot be combined');
+  }
+}
 
 export function splitRegexLiteral(expression) {
   const slashMatch = expression.match(SLASH_LITERAL);
@@ -11,9 +29,7 @@ export function splitRegexLiteral(expression) {
   if (slashMatch) {
     const flags = slashMatch[2];
 
-    if (!FLAG_PATTERN.test(flags)) {
-      throw new Error(`Invalid flags: ${flags}`);
-    }
+    validateFlags(flags);
 
     return {
       pattern: slashMatch[1],
@@ -33,5 +49,10 @@ export function regexModes(flags) {
   const unicodeSetsMode = flags.includes('v');
   const unicodeMode = flags.includes('u') || unicodeSetsMode;
 
-  return { unicodeMode, unicodeSetsMode };
+  return {
+    unicodeMode,
+    unicodeSetsMode,
+    dotAll: flags.includes('s'),
+    multiline: flags.includes('m'),
+  };
 }
